@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/myinusa/Processory/compare/v1.1.0...v1.2.0) (2024-06-23)
+
+
+### Features
+
+* **MemoryReader:** enhance memory reading capabilities with new methods [#7](https://github.com/myinusa/Processory/issues/7) ([2834830](https://github.com/myinusa/Processory/commit/2834830626092eb33a80d07e253956b7f12ad412))
+
 ## [1.1.0](https://github.com/myinusa/Processory/compare/v1.0.0...v1.1.0) (2024-06-23)
 
 
