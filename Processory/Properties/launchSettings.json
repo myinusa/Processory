@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Processory": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}
