@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.0](https://github.com/myinusa/Processory/compare/v1.0.0...v1.1.0) (2024-06-23)
+
+
+### Features
+
+* **MemoryReader:** introduce new MemoryReader class for process memory access ([d6a7b86](https://github.com/myinusa/Processory/commit/d6a7b8655413cce4eb67d4392a36755cacaa92ae))
+* **Processory.csproj:** enable unsafe blocks and add multiple analyzer packages ([d6a7b86](https://github.com/myinusa/Processory/commit/d6a7b8655413cce4eb67d4392a36755cacaa92ae))
+* **Processory.Insight:** add memory reading and logging for screen client ([d6a7b86](https://github.com/myinusa/Processory/commit/d6a7b8655413cce4eb67d4392a36755cacaa92ae))
+* **solution:** integrate .editorconfig into solution items ([d6a7b86](https://github.com/myinusa/Processory/commit/d6a7b8655413cce4eb67d4392a36755cacaa92ae))
+
 ## 1.0.0 (2024-06-23)
 
 
