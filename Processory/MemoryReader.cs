@@ -1,44 +1,138 @@
+using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Processory.Native;
 
-namespace Processory.Memory;
+namespace Processory.Memory {
+    /// <summary>
+    /// Provides functionality to read memory from a process.
+    /// </summary>
+    public class MemoryReader {
+        private readonly ProcessoryClient _processoryClient;
 
-public class MemoryReader {
-    protected readonly ProcessoryClient ProcessoryClient;
-
-    public MemoryReader(ProcessoryClient processoryClient) {
-        this.ProcessoryClient = processoryClient;
-    }
-
-    public byte[] Read(UIntPtr address, int size) {
-        var buffer = new byte[size];
-        var bytesRead = MethodsNative.ReadProcessMemory(ProcessoryClient.ProcessHandle, address, buffer, (UIntPtr)size, out UIntPtr _);
-
-        if (!bytesRead) {
-            return Array.Empty<byte>();
+        /// <summary>
+        /// Initializes a new instance of the MemoryReader class.
+        /// </summary>
+        /// <param name="processoryClient">The ProcessoryClient instance to use for memory operations.</param>
+        public MemoryReader(ProcessoryClient processoryClient) {
+            _processoryClient = processoryClient ?? throw new ArgumentNullException(nameof(processoryClient));
         }
 
-        return buffer;
-    }
+        /// <summary>
+        /// Reads a specified number of bytes from the process memory at the given address.
+        /// </summary>
+        /// <param name="address">The memory address to read from.</param>
+        /// <param name="size">The number of bytes to read.</param>
+        /// <returns>An array of bytes read from the memory, or an empty array if the read operation fails.</returns>
+        public byte[] Read(UIntPtr address, int size) {
+            if (size <= 0) {
+                throw new ArgumentOutOfRangeException(nameof(size), "Size must be greater than zero.");
+            }
 
-    public T Read<T>(ulong offset)
-        where T : unmanaged {
-        T value = default;
-        ReadRef(offset, ref value);
-        return value;
-    }
+            var buffer = new byte[size];
+            bool success = ReadProcessMemory(address, buffer, (UIntPtr)size, out _);
 
-    private unsafe bool ReadProcessMemory(UIntPtr location, void* buffer, nuint numBytes) {
-        return MethodsNative.ReadProcessMemory(ProcessoryClient.ProcessHandle, location, (UIntPtr)buffer, numBytes, out _);
-    }
+            return success ? buffer : Array.Empty<byte>();
+        }
 
-    public unsafe void ReadRef<T>(ulong offset, ref T value)
-        where T : unmanaged {
-        void* buffer = Unsafe.AsPointer(ref value);
-        if (!ReadProcessMemory((UIntPtr)offset, buffer, (nuint)sizeof(T))) {
-            // ThrowHelpers.ThrowReadExternalMemoryExceptionWindows(offset, sizeof(T));
+        /// <summary>
+        /// Reads a value of type T from the process memory at the specified offset.
+        /// </summary>
+        /// <typeparam name="T">The type of value to read.</typeparam>
+        /// <param name="offset">The memory offset to read from.</param>
+        /// <returns>The value read from the memory.</returns>
+        public T Read<T>(ulong offset) where T : unmanaged {
+            T value = default;
+            ReadRef(offset, ref value);
+            return value;
+        }
+
+        /// <summary>
+        /// Reads a value of type T from the process memory at the specified offset into a reference.
+        /// </summary>
+        /// <typeparam name="T">The type of value to read.</typeparam>
+        /// <param name="offset">The memory offset to read from.</param>
+        /// <param name="value">A reference to store the read value.</param>
+        public unsafe void ReadRef<T>(ulong offset, ref T value) where T : unmanaged {
+            void* buffer = Unsafe.AsPointer(ref value);
+            if (!ReadProcessMemory((UIntPtr)offset, buffer, (nuint)sizeof(T))) {
+                throw new InvalidOperationException($"Failed to read memory at offset 0x{offset:X} with size {sizeof(T)}.");
+            }
+        }
+
+        /// <summary>
+        /// Reads process memory using native methods.
+        /// </summary>
+        /// <param name="baseAddress">The base address to read from.</param>
+        /// <param name="buffer">The buffer to store the read data.</param>
+        /// <param name="size">The number of bytes to read.</param>
+        /// <param name="numberOfBytesRead">The number of bytes actually read.</param>
+        /// <returns>True if the read operation succeeds, false otherwise.</returns>
+        private bool ReadProcessMemory(UIntPtr baseAddress, byte[] buffer, UIntPtr size, out UIntPtr numberOfBytesRead) {
+            return MethodsNative.ReadProcessMemory(_processoryClient.ProcessHandle, baseAddress, buffer, size, out numberOfBytesRead);
+        }
+
+        /// <summary>
+        /// Reads process memory using native methods with unsafe pointers.
+        /// </summary>
+        /// <param name="location">The memory location to read from.</param>
+        /// <param name="buffer">A pointer to the buffer to store the read data.</param>
+        /// <param name="numBytes">The number of bytes to read.</param>
+        /// <returns>True if the read operation succeeds, false otherwise.</returns>
+        private unsafe bool ReadProcessMemory(UIntPtr location, void* buffer, nuint numBytes) {
+            return MethodsNative.ReadProcessMemory(_processoryClient.ProcessHandle, location, (UIntPtr)buffer, numBytes, out _);
+        }
+
+        /// <summary>
+        /// Reads an array of type T from the process memory at the specified offset.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the array.</typeparam>
+        /// <param name="offset">The memory offset to read from.</param>
+        /// <param name="count">The number of elements to read.</param>
+        /// <returns>An array of type T read from the memory.</returns>
+        public T[] ReadArray<T>(ulong offset, int count) where T : unmanaged {
+            if (count <= 0) {
+                throw new ArgumentOutOfRangeException(nameof(count), "Count must be greater than zero.");
+            }
+
+            T[] array = new T[count];
+            ReadArrayRef(offset, array);
+            return array;
+        }
+
+        /// <summary>
+        /// Reads an array of type T from the process memory at the specified offset into an existing array.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the array.</typeparam>
+        /// <param name="offset">The memory offset to read from.</param>
+        /// <param name="array">The array to store the read elements.</param>
+        public unsafe void ReadArrayRef<T>(ulong offset, T[] array) where T : unmanaged {
+            if (array == null) {
+                throw new ArgumentNullException(nameof(array));
+            }
+
+            fixed (T* ptr = array) {
+                if (!ReadProcessMemory((UIntPtr)offset, ptr, (nuint)(array.Length * sizeof(T)))) {
+                    throw new InvalidOperationException($"Failed to read array at offset 0x{offset:X} with size {array.Length * sizeof(T)}.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Reads a null-terminated string from the process memory at the specified offset.
+        /// </summary>
+        /// <param name="offset">The memory offset to read from.</param>
+        /// <param name="maxLength">The maximum length of the string to read.</param>
+        /// <returns>The string read from the memory.</returns>
+        public string ReadString(ulong offset, int maxLength = 1024) {
+            if (maxLength <= 0) {
+                throw new ArgumentOutOfRangeException(nameof(maxLength), "Max length must be greater than zero.");
+            }
+
+            byte[] buffer = Read((UIntPtr)offset, maxLength);
+            int nullTerminatorIndex = Array.IndexOf<byte>(buffer, 0);
+            int length = nullTerminatorIndex >= 0 ? nullTerminatorIndex : buffer.Length;
+            return System.Text.Encoding.ASCII.GetString(buffer, 0, length);
         }
     }
-
 }
