@@ -1,15 +1,20 @@
+using Processory.Memory;
 using Processory.Services;
 
 namespace Processory;
 
-public class ProcessoryClient { // Renamed from Processory to ProcessoryClient
-    //private readonly nint _processHandle;
-    public readonly string _processName;
-    public ProcessService ProcessService;
+public class ProcessoryClient {
+    public MemoryReader MemoryReader { get; set; }
+    public ProcessService ProcessService { get; set; }
+    public string ProcessName { get; }
+    public nint ProcessHandle { get; }
 
     public ProcessoryClient(string processName) {
-        _processName = processName;
+        ProcessName = processName;
         ProcessService = new ProcessService(this);
-        // _processHandle = GetProcessHandle();
+        MemoryReader = new MemoryReader(this);
+        ProcessHandle = ProcessService.GetProcessHandle();
     }
+
+
 }

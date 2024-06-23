@@ -13,11 +13,11 @@ public class ProcessService {
 
     public ProcessService(ProcessoryClient processoryClient) {
         ProcessoryClient = processoryClient;
-        processName = processoryClient._processName;
+        processName = processoryClient.ProcessName;
         GetProcessHandle();
     }
 
-    private nint GetProcessHandle() {
+    public nint GetProcessHandle() {
         OpenProcessHandler();
         if (ProcessHandle != null) {
             return NativeMethods.OpenProcess(Flags.ProcessAccess.All, false, ProcessHandle.Id);
