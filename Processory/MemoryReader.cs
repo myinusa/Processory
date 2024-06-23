@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Processory.Native;
+using Processory.Pointers;
 
 namespace Processory.Memory {
     /// <summary>
@@ -41,10 +43,17 @@ namespace Processory.Memory {
         /// <typeparam name="T">The type of value to read.</typeparam>
         /// <param name="offset">The memory offset to read from.</param>
         /// <returns>The value read from the memory.</returns>
-        public T Read<T>(ulong offset) where T : unmanaged {
+        public T Read<T>(ulong offset)
+            where T : unmanaged {
             T value = default;
             ReadRef(offset, ref value);
             return value;
+        }
+
+        public T Read<T>(ulong baseAddress, List<int> offsets)
+            where T : unmanaged {
+            UIntPtr address = _processoryClient.PointerChainFollower.FollowPointerChain(baseAddress, offsets);
+            return Read<T>(address);
         }
 
         /// <summary>
@@ -53,7 +62,8 @@ namespace Processory.Memory {
         /// <typeparam name="T">The type of value to read.</typeparam>
         /// <param name="offset">The memory offset to read from.</param>
         /// <param name="value">A reference to store the read value.</param>
-        public unsafe void ReadRef<T>(ulong offset, ref T value) where T : unmanaged {
+        public unsafe void ReadRef<T>(ulong offset, ref T value)
+            where T : unmanaged {
             void* buffer = Unsafe.AsPointer(ref value);
             if (!ReadProcessMemory((UIntPtr)offset, buffer, (nuint)sizeof(T))) {
                 throw new InvalidOperationException($"Failed to read memory at offset 0x{offset:X} with size {sizeof(T)}.");
@@ -90,7 +100,8 @@ namespace Processory.Memory {
         /// <param name="offset">The memory offset to read from.</param>
         /// <param name="count">The number of elements to read.</param>
         /// <returns>An array of type T read from the memory.</returns>
-        public T[] ReadArray<T>(ulong offset, int count) where T : unmanaged {
+        public T[] ReadArray<T>(ulong offset, int count)
+            where T : unmanaged {
             if (count <= 0) {
                 throw new ArgumentOutOfRangeException(nameof(count), "Count must be greater than zero.");
             }
@@ -106,7 +117,8 @@ namespace Processory.Memory {
         /// <typeparam name="T">The type of elements in the array.</typeparam>
         /// <param name="offset">The memory offset to read from.</param>
         /// <param name="array">The array to store the read elements.</param>
-        public unsafe void ReadArrayRef<T>(ulong offset, T[] array) where T : unmanaged {
+        public unsafe void ReadArrayRef<T>(ulong offset, T[] array)
+            where T : unmanaged {
             if (array == null) {
                 throw new ArgumentNullException(nameof(array));
             }
@@ -133,6 +145,46 @@ namespace Processory.Memory {
             int nullTerminatorIndex = Array.IndexOf<byte>(buffer, 0);
             int length = nullTerminatorIndex >= 0 ? nullTerminatorIndex : buffer.Length;
             return System.Text.Encoding.ASCII.GetString(buffer, 0, length);
+        }
+
+        public IntPtr ReadPointer(IntPtr address) {
+            byte[] buffer = Read((nuint)address, IntPtr.Size);
+
+            if (buffer.Length == 0) {
+                return IntPtr.Zero;
+            }
+
+            return Marshal.ReadIntPtr(Marshal.UnsafeAddrOfPinnedArrayElement(buffer, 0));
+        }
+
+        /// <summary>
+        /// Reads a value of type T from the specified address.
+        /// </summary>
+        /// <typeparam name="T">The type of value to read.</typeparam>
+        /// <param name="address">The address to read from.</param>
+        /// <returns>The value read from the address.</returns>
+        public T ReadPointer<T>(IntPtr address)
+            where T : struct {
+            int size = Marshal.SizeOf<T>();
+            byte[] buffer = Read((nuint)address, size);
+
+            if (buffer.Length == 0) {
+                return default;
+            }
+
+            return ByteArrayToStructure<T>(buffer);
+        }
+
+
+        private static T ByteArrayToStructure<T>(byte[] bytes)
+            where T : struct {
+            GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+            try {
+                return (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T))!;
+            }
+            finally {
+                handle.Free();
+            }
         }
     }
 }

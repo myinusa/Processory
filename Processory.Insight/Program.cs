@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Processory.Insight;
+﻿namespace Processory.Insight;
 
 public class Program {
 
@@ -17,7 +15,8 @@ public class Program {
         }
 
         var screenClient = (ulong)(baseAddress + 0x4C7FF08);
-        var screenClientValue = processory.MemoryReader.Read<uint>(screenClient);
+        var deferAdd = processory.PointerChainFollower.DereferencePointer(screenClient);
+        var screenClientValue = processory.MemoryReader.Read<uint>(deferAdd);
 
         Console.WriteLine("Screen client: {0:X}", screenClient);
         Console.WriteLine("Screen client value: {0}", screenClientValue);

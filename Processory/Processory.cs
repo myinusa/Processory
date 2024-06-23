@@ -1,4 +1,5 @@
 using Processory.Memory;
+using Processory.Pointers;
 using Processory.Services;
 
 namespace Processory;
@@ -8,6 +9,16 @@ public class ProcessoryClient {
     public ProcessService ProcessService { get; set; }
     public string ProcessName { get; }
     public nint ProcessHandle { get; }
+    public PointerChainFollower PointerChainFollower {
+        get {
+            if (ProcessHandle == 0) {
+                return null;
+            }
+            else {
+                return new PointerChainFollower(this);
+            }
+        }
+    }
 
     public ProcessoryClient(string processName) {
         ProcessName = processName;
