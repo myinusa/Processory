@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.3.0](https://github.com/myinusa/Processory/compare/v1.2.0...v1.3.0) (2024-06-23)
+
+
+### Features
+
+* **MemoryReader:** add ReadPointer and ReadPointer&lt;T&gt; methods for enhanced pointer handling [#9](https://github.com/myinusa/Processory/issues/9) ([a8c608a](https://github.com/myinusa/Processory/commit/a8c608ad99273d0090994b21c90a0041de676436))
+* **MemoryReader:** implement Read&lt;T&gt; method overload for pointer chain resolution ([a8c608a](https://github.com/myinusa/Processory/commit/a8c608ad99273d0090994b21c90a0041de676436))
+* **PointerChainFollower:** introduce new class for managing pointer chains [#9](https://github.com/myinusa/Processory/issues/9) ([a8c608a](https://github.com/myinusa/Processory/commit/a8c608ad99273d0090994b21c90a0041de676436))
+* **Processory.Insight:** streamline namespace declaration in Program.cs [#9](https://github.com/myinusa/Processory/issues/9) ([a8c608a](https://github.com/myinusa/Processory/commit/a8c608ad99273d0090994b21c90a0041de676436))
+* **Processory:** integrate PointerChainFollower into ProcessoryClient [#9](https://github.com/myinusa/Processory/issues/9) ([a8c608a](https://github.com/myinusa/Processory/commit/a8c608ad99273d0090994b21c90a0041de676436))
+
 ## [1.2.0](https://github.com/myinusa/Processory/compare/v1.1.0...v1.2.0) (2024-06-23)
 
 
