@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0](https://github.com/myinusa/Processory/compare/v1.4.0...v1.5.0) (2024-06-24)
+
+
+### Features
+
+* **Processory.Native:** introduce DbgHelp with UnDecorateSymbolName method [#13](https://github.com/myinusa/Processory/issues/13) ([e5f318f](https://github.com/myinusa/Processory/commit/e5f318f64c481596eabae6895e6c365ce6bb8680))
+* **Processory:** add RunTimeTypeInformation class for RTTI handling [#13](https://github.com/myinusa/Processory/issues/13) ([e5f318f](https://github.com/myinusa/Processory/commit/e5f318f64c481596eabae6895e6c365ce6bb8680))
+
 ## [1.4.0](https://github.com/myinusa/Processory/compare/v1.3.0...v1.4.0) (2024-06-24)
 
 
