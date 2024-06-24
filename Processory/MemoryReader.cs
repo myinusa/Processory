@@ -10,14 +10,14 @@ namespace Processory.Memory {
     /// Provides functionality to read memory from a process.
     /// </summary>
     public class MemoryReader {
-        private readonly ProcessoryClient _processoryClient;
+        private readonly ProcessoryClient processoryClient;
 
         /// <summary>
-        /// Initializes a new instance of the MemoryReader class.
+        /// Initializes a new instance of the <see cref="MemoryReader"/> class.
         /// </summary>
         /// <param name="processoryClient">The ProcessoryClient instance to use for memory operations.</param>
         public MemoryReader(ProcessoryClient processoryClient) {
-            _processoryClient = processoryClient ?? throw new ArgumentNullException(nameof(processoryClient));
+            this.processoryClient = processoryClient ?? throw new ArgumentNullException(nameof(processoryClient));
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Processory.Memory {
 
         public T Read<T>(ulong baseAddress, List<int> offsets)
             where T : unmanaged {
-            UIntPtr address = _processoryClient.PointerChainFollower.FollowPointerChain(baseAddress, offsets);
+            UIntPtr address = processoryClient.PointerChainFollower.FollowPointerChain(baseAddress, offsets);
             return Read<T>(address);
         }
 
@@ -79,7 +79,7 @@ namespace Processory.Memory {
         /// <param name="numberOfBytesRead">The number of bytes actually read.</param>
         /// <returns>True if the read operation succeeds, false otherwise.</returns>
         private bool ReadProcessMemory(UIntPtr baseAddress, byte[] buffer, UIntPtr size, out UIntPtr numberOfBytesRead) {
-            return MethodsNative.ReadProcessMemory(_processoryClient.ProcessHandle, baseAddress, buffer, size, out numberOfBytesRead);
+            return MethodsNative.ReadProcessMemory(processoryClient.ProcessHandle, baseAddress, buffer, size, out numberOfBytesRead);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Processory.Memory {
         /// <param name="numBytes">The number of bytes to read.</param>
         /// <returns>True if the read operation succeeds, false otherwise.</returns>
         private unsafe bool ReadProcessMemory(UIntPtr location, void* buffer, nuint numBytes) {
-            return MethodsNative.ReadProcessMemory(_processoryClient.ProcessHandle, location, (UIntPtr)buffer, numBytes, out _);
+            return MethodsNative.ReadProcessMemory(processoryClient.ProcessHandle, location, (UIntPtr)buffer, numBytes, out _);
         }
 
         /// <summary>

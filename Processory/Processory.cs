@@ -20,6 +20,17 @@ public class ProcessoryClient {
         }
     }
 
+    public RunTimeTypeInformation RunTimeTypeInformation {
+        get {
+            if (ProcessHandle == 0) {
+                return null;
+            }
+            else {
+                return new RunTimeTypeInformation(this);
+            }
+        }
+    }
+
     public ProcessoryClient(string processName) {
         ProcessName = processName;
         ProcessService = new ProcessService(this);
