@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.0](https://github.com/myinusa/Processory/compare/v1.3.0...v1.4.0) (2024-06-24)
+
+
+### Features
+
+* **assembly:** add AssemblyInfo with version details [#11](https://github.com/myinusa/Processory/issues/11) ([553d299](https://github.com/myinusa/Processory/commit/553d299a33ff18309712feaa1dea37c746264e6d))
+* **build:** update csproj with new build properties and pre-build event [#11](https://github.com/myinusa/Processory/issues/11) ([553d299](https://github.com/myinusa/Processory/commit/553d299a33ff18309712feaa1dea37c746264e6d))
+* **scripts:** add PowerShell script for assembly version update [#11](https://github.com/myinusa/Processory/issues/11) ([553d299](https://github.com/myinusa/Processory/commit/553d299a33ff18309712feaa1dea37c746264e6d))
+
 ## [1.3.0](https://github.com/myinusa/Processory/compare/v1.2.0...v1.3.0) (2024-06-23)
 
 
