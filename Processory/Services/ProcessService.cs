@@ -31,7 +31,7 @@ public class ProcessService {
             var processes = Process.GetProcessesByName(processName);
             if (processes.Length > 0) {
                 ProcessHandle = processes[0];
-                Console.WriteLine("Successfully opened process handle.");
+                //Console.WriteLine("Successfully opened process handle.");
             }
             else {
                 throw new Exception($"Process {processName} not found");
@@ -50,7 +50,7 @@ public class ProcessService {
                 }
                 ProcessHandle = null;
             }
-            Console.WriteLine("Successfully closed process handle.");
+            //Console.WriteLine("Successfully closed process handle.");
         }
         catch (Exception ex) {
             throw new InvalidOperationException(FailedToOpenProcessMessage, ex);
