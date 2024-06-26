@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/myinusa/Processory/compare/v1.5.0...v1.6.0) (2024-06-26)
+
+
+### Features
+
+* add AddressHelper class for address validation ([c4f4b1b](https://github.com/myinusa/Processory/commit/c4f4b1bbcd67951074e3f33fadf1074c92653b85))
+
 ## [1.5.0](https://github.com/myinusa/Processory/compare/v1.4.0...v1.5.0) (2024-06-24)
 
 
