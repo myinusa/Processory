@@ -66,7 +66,7 @@ namespace Processory.Memory {
             where T : unmanaged {
             void* buffer = Unsafe.AsPointer(ref value);
             if (!ReadProcessMemory((UIntPtr)offset, buffer, (nuint)sizeof(T))) {
-                throw new InvalidOperationException($"Failed to read memory at offset 0x{offset:X} with size {sizeof(T)}.");
+                //throw new InvalidOperationException($"Failed to read memory at offset 0x{offset:X} with size {sizeof(T)}.");
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Processory.Memory;
@@ -110,23 +111,41 @@ public class RunTimeTypeInformation {
         // }
 
         nuint structAddr = memoryReader.Read<nuint>(address);
+        //if (!ProcessoryClient.AddressHelper.IsValidAddress((IntPtr)structAddr)) {
+        //    return Array.Empty<string>();
+        //}
         if (structAddr == nuint.Zero) return Array.Empty<string>();
 
         nuint objectLocatorPtr = memoryReader.Read<nuint>(structAddr - (nuint)objectLocatorOffset);
+        //if (!ProcessoryClient.AddressHelper.IsValidAddress((IntPtr)objectLocatorPtr)) {
+        //    return Array.Empty<string>();
+        //}
         if (objectLocatorPtr == nuint.Zero) return Array.Empty<string>();
 
         var baseOffset = memoryReader.Read<int>((ulong)objectLocatorPtr + BaseOffsetPosition);
+        //if (!ProcessoryClient.AddressHelper.IsValidAddress((IntPtr)objectLocatorPtr)) {
+        //    return Array.Empty<string>();
+        //}
         // if (baseOffset == IntPtr.Zero) return Array.Empty<string>();
 
         nuint baseAddress = nuint.Subtract(objectLocatorPtr, baseOffset);
 
         nuint classHierarchyDescriptorPtr = GetClassHierarchyDescriptorPtr(objectLocatorPtr, baseAddress, ClassHierarchyDescriptorOffsetPosition);
+        //if (!ProcessoryClient.AddressHelper.IsValidAddress((IntPtr)classHierarchyDescriptorPtr)) {
+        //    return Array.Empty<string>();
+        //}
         if (classHierarchyDescriptorPtr == nuint.Zero) return Array.Empty<string>();
 
         int baseClassCount = memoryReader.Read<int>((ulong)classHierarchyDescriptorPtr + BaseClassCountPosition);
+        //if (!ProcessoryClient.AddressHelper.IsValidAddress(baseClassCount)) {
+        //    return Array.Empty<string>();
+        //}
         if (baseClassCount == 0 || baseClassCount > MaxBaseClassCount) return Array.Empty<string>();
 
         nuint baseClassArrayPtr = GetBaseClassArrayPtr(classHierarchyDescriptorPtr, baseAddress, BaseClassArrayOffsetPosition);
+        //if (!ProcessoryClient.AddressHelper.IsValidAddress((nint)baseClassArrayPtr)) {
+        //    return Array.Empty<string>();
+        //}
         if (baseClassArrayPtr == nuint.Zero) return Array.Empty<string>();
 
         return GetBaseClassNames(baseClassArrayPtr, baseAddress, baseClassCount) ?? Array.Empty<string>();

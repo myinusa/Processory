@@ -1,3 +1,4 @@
+using Processory.Helpers;
 using Processory.Memory;
 using Processory.Pointers;
 using Processory.Services;
@@ -27,6 +28,17 @@ public class ProcessoryClient {
             }
             else {
                 return new RunTimeTypeInformation(this);
+            }
+        }
+    }
+
+    public AddressHelper AddressHelper {
+        get {
+            if (ProcessHandle == 0) {
+                return null;
+            }
+            else {
+                return new AddressHelper(this);
             }
         }
     }
