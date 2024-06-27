@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.7.0](https://github.com/myinusa/Processory/compare/v1.6.0...v1.7.0) (2024-06-27)
+
+
+### Features
+
+* **Processory:** Add IntPtrExtension class with extension methods ([bf1f4e8](https://github.com/myinusa/Processory/commit/bf1f4e86464cdf654601159392cbeaa1d8126325))
+* **Processory:** Add IsValidPointer method in AddressHelper.cs ([bf1f4e8](https://github.com/myinusa/Processory/commit/bf1f4e86464cdf654601159392cbeaa1d8126325))
+* **Processory:** Add UIntPtrExtension class with extension methods ([bf1f4e8](https://github.com/myinusa/Processory/commit/bf1f4e86464cdf654601159392cbeaa1d8126325))
+
 ## [1.6.0](https://github.com/myinusa/Processory/compare/v1.5.0...v1.6.0) (2024-06-26)
 
 
