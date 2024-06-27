@@ -4,10 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Processory.Memory;
 using Processory.Native;
 
-namespace Processory;
+namespace Processory.Internal;
 public class RunTimeTypeInformation {
     private const int BaseOffsetPosition = 0x14;
     private const int ClassHierarchyDescriptorOffsetPosition = 0x10;

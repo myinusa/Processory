@@ -10,7 +10,7 @@ $assemblyVersion = "$major.$minor.$build.$revision"
 $fileVersion = $assemblyVersion  # Assuming file version is the same as assembly version
 $informationalVersion = $version  # Use the original version tag as informational version
 
-$content = Get-Content -Path "AssemblyInfo.cs"
+$content = Get-Content -Path "Properties/AssemblyInfo.cs"
 
 # Process each line and replace only the necessary parts
 $content = $content | ForEach-Object {
@@ -28,4 +28,4 @@ $content = $content | ForEach-Object {
 }
 
 # Write the updated content back to the file
-$content | Set-Content -Path "AssemblyInfo.cs"
+$content | Set-Content -Path "Properties/AssemblyInfo.cs"

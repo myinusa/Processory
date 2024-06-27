@@ -1,4 +1,4 @@
-using Processory.Memory;
+using Processory.Internal;
 
 namespace Processory.Pointers;
 

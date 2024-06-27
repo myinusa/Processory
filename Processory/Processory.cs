@@ -1,5 +1,5 @@
 using Processory.Helpers;
-using Processory.Memory;
+using Processory.Internal;
 using Processory.Pointers;
 using Processory.Services;
 

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using Processory.Native;
 using Processory.Pointers;
 
-namespace Processory.Memory {
+namespace Processory.Internal {
     /// <summary>
     /// Provides functionality to read memory from a process.
     /// </summary>
@@ -26,13 +26,13 @@ namespace Processory.Memory {
         /// <param name="address">The memory address to read from.</param>
         /// <param name="size">The number of bytes to read.</param>
         /// <returns>An array of bytes read from the memory, or an empty array if the read operation fails.</returns>
-        public byte[] Read(UIntPtr address, int size) {
+        public byte[] Read(nuint address, int size) {
             if (size <= 0) {
                 throw new ArgumentOutOfRangeException(nameof(size), "Size must be greater than zero.");
             }
 
             var buffer = new byte[size];
-            bool success = ReadProcessMemory(address, buffer, (UIntPtr)size, out _);
+            bool success = ReadProcessMemory(address, buffer, (nuint)size, out _);
 
             return success ? buffer : Array.Empty<byte>();
         }
@@ -52,7 +52,7 @@ namespace Processory.Memory {
 
         public T Read<T>(ulong baseAddress, List<int> offsets)
             where T : unmanaged {
-            UIntPtr address = processoryClient.PointerChainFollower.FollowPointerChain(baseAddress, offsets);
+            nuint address = processoryClient.PointerChainFollower.FollowPointerChain(baseAddress, offsets);
             return Read<T>(address);
         }
 
@@ -65,7 +65,7 @@ namespace Processory.Memory {
         public unsafe void ReadRef<T>(ulong offset, ref T value)
             where T : unmanaged {
             void* buffer = Unsafe.AsPointer(ref value);
-            if (!ReadProcessMemory((UIntPtr)offset, buffer, (nuint)sizeof(T))) {
+            if (!ReadProcessMemory((nuint)offset, buffer, (nuint)sizeof(T))) {
                 //throw new InvalidOperationException($"Failed to read memory at offset 0x{offset:X} with size {sizeof(T)}.");
             }
         }
@@ -78,7 +78,7 @@ namespace Processory.Memory {
         /// <param name="size">The number of bytes to read.</param>
         /// <param name="numberOfBytesRead">The number of bytes actually read.</param>
         /// <returns>True if the read operation succeeds, false otherwise.</returns>
-        private bool ReadProcessMemory(UIntPtr baseAddress, byte[] buffer, UIntPtr size, out UIntPtr numberOfBytesRead) {
+        private bool ReadProcessMemory(nuint baseAddress, byte[] buffer, nuint size, out nuint numberOfBytesRead) {
             return MethodsNative.ReadProcessMemory(processoryClient.ProcessHandle, baseAddress, buffer, size, out numberOfBytesRead);
         }
 
@@ -89,8 +89,8 @@ namespace Processory.Memory {
         /// <param name="buffer">A pointer to the buffer to store the read data.</param>
         /// <param name="numBytes">The number of bytes to read.</param>
         /// <returns>True if the read operation succeeds, false otherwise.</returns>
-        private unsafe bool ReadProcessMemory(UIntPtr location, void* buffer, nuint numBytes) {
-            return MethodsNative.ReadProcessMemory(processoryClient.ProcessHandle, location, (UIntPtr)buffer, numBytes, out _);
+        private unsafe bool ReadProcessMemory(nuint location, void* buffer, nuint numBytes) {
+            return MethodsNative.ReadProcessMemory(processoryClient.ProcessHandle, location, (nuint)buffer, numBytes, out _);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Processory.Memory {
             }
 
             fixed (T* ptr = array) {
-                if (!ReadProcessMemory((UIntPtr)offset, ptr, (nuint)(array.Length * sizeof(T)))) {
+                if (!ReadProcessMemory((nuint)offset, ptr, (nuint)(array.Length * sizeof(T)))) {
                     throw new InvalidOperationException($"Failed to read array at offset 0x{offset:X} with size {array.Length * sizeof(T)}.");
                 }
             }
@@ -141,17 +141,17 @@ namespace Processory.Memory {
                 throw new ArgumentOutOfRangeException(nameof(maxLength), "Max length must be greater than zero.");
             }
 
-            byte[] buffer = Read((UIntPtr)offset, maxLength);
+            byte[] buffer = Read((nuint)offset, maxLength);
             int nullTerminatorIndex = Array.IndexOf<byte>(buffer, 0);
             int length = nullTerminatorIndex >= 0 ? nullTerminatorIndex : buffer.Length;
             return System.Text.Encoding.ASCII.GetString(buffer, 0, length);
         }
 
-        public IntPtr ReadPointer(IntPtr address) {
-            byte[] buffer = Read((nuint)address, IntPtr.Size);
+        public nint ReadPointer(nint address) {
+            byte[] buffer = Read((nuint)address, nint.Size);
 
             if (buffer.Length == 0) {
-                return IntPtr.Zero;
+                return nint.Zero;
             }
 
             return Marshal.ReadIntPtr(Marshal.UnsafeAddrOfPinnedArrayElement(buffer, 0));
@@ -163,7 +163,7 @@ namespace Processory.Memory {
         /// <typeparam name="T">The type of value to read.</typeparam>
         /// <param name="address">The address to read from.</param>
         /// <returns>The value read from the address.</returns>
-        public T ReadPointer<T>(IntPtr address)
+        public T ReadPointer<T>(nint address)
             where T : struct {
             int size = Marshal.SizeOf<T>();
             byte[] buffer = Read((nuint)address, size);

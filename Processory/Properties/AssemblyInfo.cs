@@ -11,7 +11,7 @@ using System.Reflection;
 
 #pragma warning disable CS7035 // The specified version string does not conform to the recommended format - major.minor.build.revision
 
-[assembly: AssemblyFileVersion("1.6.240626.2105")]
+[assembly: AssemblyFileVersion("1.6.240627.2038")]
 [assembly: AssemblyInformationalVersion("1.6.0")]
 
 #pragma warning restore CS7035
