@@ -2,6 +2,7 @@ using Processory.Helpers;
 using Processory.Internal;
 using Processory.Pointers;
 using Processory.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Processory;
 
@@ -10,6 +11,7 @@ public class ProcessoryClient {
     public ProcessService ProcessService { get; set; }
     public string ProcessName { get; }
     public nint ProcessHandle { get; }
+    private readonly ILogger logger;
     public PointerChainFollower PointerChainFollower {
         get {
             if (ProcessHandle == 0) {
@@ -43,9 +45,10 @@ public class ProcessoryClient {
         }
     }
 
-    public ProcessoryClient(string processName) {
+    public ProcessoryClient(string processName, ILogger logger = null) {
+        this.logger = logger;
         ProcessName = processName;
-        ProcessService = new ProcessService(this);
+        ProcessService = new ProcessService(this, logger);
         MemoryReader = new MemoryReader(this);
         ProcessHandle = ProcessService.GetProcessHandle();
     }

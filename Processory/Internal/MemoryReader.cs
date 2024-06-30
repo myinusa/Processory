@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text;
 using Processory.Native;
 using Processory.Pointers;
 
@@ -11,7 +12,6 @@ namespace Processory.Internal {
     /// </summary>
     public class MemoryReader {
         private readonly ProcessoryClient processoryClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryReader"/> class.
         /// </summary>
@@ -185,6 +185,37 @@ namespace Processory.Internal {
             finally {
                 handle.Free();
             }
+        }
+
+
+        /// <summary>
+        /// Reads a specified number of bytes from the process memory at the given address into a Span buffer.
+        /// </summary>
+        /// <param name="address">The memory address to read from.</param>
+        /// <param name="buffer">The Span buffer to store the read data.</param>
+        public void ReadR(UIntPtr address, Span<byte> buffer) {
+            if (buffer.Length == 0) {
+                return;
+            }
+
+            ref byte bufferRef = ref MemoryMarshal.GetReference(buffer);
+            var bytesRead = MethodsNative.ReadProcessMemory(processoryClient.ProcessHandle, address, ref bufferRef, (UIntPtr)buffer.Length, out UIntPtr _);
+
+            if (!bytesRead) {
+                // Handle the error as needed, e.g., throw an exception or log the error.
+                // throw new InvalidOperationException($"Failed to read memory at address 0x{address:X} with buffer length {buffer.Length}.");
+            }
+        }
+
+        public string ResolveStringPointerE(UIntPtr initialAddress, List<int> offsets) {
+            UIntPtr address = processoryClient.PointerChainFollower.FollowPointerChain(initialAddress, offsets);
+            var lengthOffset = new List<int>(offsets);
+            lengthOffset[lengthOffset.Count - 1] = 0x0;
+            var length = Read<int>(initialAddress, lengthOffset);
+
+            Span<byte> buffer = stackalloc byte[length];
+            ReadR(address, buffer);
+            return Encoding.UTF8.GetString(buffer);
         }
     }
 }

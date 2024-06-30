@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Processory.Native;
+using Microsoft.Extensions.Logging;
 
 namespace Processory.Services;
 
@@ -10,8 +11,10 @@ public class ProcessService {
     public Process? ProcessHandle { get; set; }
     protected readonly ProcessoryClient ProcessoryClient;
     private readonly string processName;
+    private readonly ILogger logger;
 
-    public ProcessService(ProcessoryClient processoryClient) {
+    public ProcessService(ProcessoryClient processoryClient, ILogger logger) {
+        this.logger = logger;
         ProcessoryClient = processoryClient;
         processName = processoryClient.ProcessName;
         GetProcessHandle();
@@ -31,7 +34,7 @@ public class ProcessService {
             var processes = Process.GetProcessesByName(processName);
             if (processes.Length > 0) {
                 ProcessHandle = processes[0];
-                //Console.WriteLine("Successfully opened process handle.");
+                logger.LogDebug("Successfully opened process handle.");
             }
             else {
                 throw new Exception($"Process {processName} not found");

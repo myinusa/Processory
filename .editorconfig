@@ -3814,8 +3814,8 @@ dotnet_diagnostic.S3869.severity = none
 # # S4159: Classes should implement their "ExportAttribute" interfaces
 # dotnet_diagnostic.S4159.severity = warning
 
-# # S4200: Native methods should be wrapped
-# dotnet_diagnostic.S4200.severity = warning
+# S4200: Native methods should be wrapped
+dotnet_diagnostic.S4200.severity = warning
 
 # # S4201: Null checks should not be used with "is"
 # dotnet_diagnostic.S4201.severity = warning
