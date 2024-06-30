@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.8.0](https://github.com/myinusa/Processory/compare/v1.7.0...v1.8.0) (2024-06-30)
+
+
+### Features
+
+* **Processory:** add new InterfaceManager and update logging in services ([82b6f4f](https://github.com/myinusa/Processory/commit/82b6f4f37e6a470a041c9f5797032bd209fa41ae))
+* **Processory:** integrate Microsoft.Extensions.Logging ([82b6f4f](https://github.com/myinusa/Processory/commit/82b6f4f37e6a470a041c9f5797032bd209fa41ae))
+* **User32:** add new User32 classes for system metrics and window management ([82b6f4f](https://github.com/myinusa/Processory/commit/82b6f4f37e6a470a041c9f5797032bd209fa41ae))
+
 ## [1.7.0](https://github.com/myinusa/Processory/compare/v1.6.0...v1.7.0) (2024-06-27)
 
 
