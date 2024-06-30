@@ -1,6 +1,7 @@
 using System.Diagnostics;
-using Processory.Native;
 using Microsoft.Extensions.Logging;
+using Processory.Native;
+using static Processory.Native.User32.User32;
 
 namespace Processory.Services;
 
@@ -19,6 +20,14 @@ public class ProcessService {
         ProcessoryClient = processoryClient;
         processName = processoryClient.ProcessName;
         GetProcessHandle();
+    }
+
+    public void SimulateF5KeyPress() {
+        // Simulate key down
+        keybd_event(VK_F5, 0, KEYEVENTF_KEYDOWN, UIntPtr.Zero);
+        Thread.Sleep(100); // Wait for 100 milliseconds
+        // Simulate key up
+        keybd_event(VK_F5, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
     }
 
     public nint GetProcessHandle() {

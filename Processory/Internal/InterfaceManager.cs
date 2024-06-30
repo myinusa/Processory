@@ -64,9 +64,9 @@ namespace Processory.Internal {
         }
 
         private void RestoreWindow(IntPtr handle) {
-            if (NativeMethods.IsIconic(handle)) {
+            if (User32.IsIconic(handle)) {
                 logger.LogDebug("Window is minimized, attempting to restore.");
-                if (NativeMethods.ShowWindow(handle, (int)ShowCommands.SW_RESTORE)) {
+                if (User32.ShowWindow(handle, (int)ShowCommands.SW_RESTORE)) {
                     logger.LogDebug("Window restored successfully.");
                 }
                 else {
@@ -80,7 +80,7 @@ namespace Processory.Internal {
         }
 
         private void SetWindowToForeground(IntPtr handle) {
-            if (NativeMethods.SetForegroundWindow(handle)) {
+            if (User32.SetForegroundWindow(handle)) {
                 logger.LogDebug("Window set to foreground successfully.");
             }
             else {
@@ -89,22 +89,22 @@ namespace Processory.Internal {
         }
 
         private void MaximizeWindow(IntPtr handle) {
-            if (!NativeMethods.IsZoomed(handle)) {
+            if (!User32.IsZoomed(handle)) {
                 logger.LogDebug("Window is not maximized, attempting to maximize.");
-                NativeMethods.ShowWindow(handle, (int)ShowCommands.SW_MAXIMIZE);
+                User32.ShowWindow(handle, (int)ShowCommands.SW_MAXIMIZE);
             }
             else {
                 logger.LogDebug("Window is already maximized.");
             }
         }
 
-        private NativeMethods.MonitorInfo? GetMonitorInfo(IntPtr handle) {
-            nint monitor = NativeMethods.MonitorFromWindow(handle, 0);
-            NativeMethods.MonitorInfo mi = new NativeMethods.MonitorInfo {
-                cbSize = (uint)Marshal.SizeOf<NativeMethods.MonitorInfo>()
+        private MonitorInfo? GetMonitorInfo(IntPtr handle) {
+            nint monitor = User32.MonitorFromWindow(handle, 0);
+            MonitorInfo mi = new MonitorInfo {
+                cbSize = (uint)Marshal.SizeOf<MonitorInfo>()
             };
 
-            if (!NativeMethods.GetMonitorInfo(monitor, ref mi)) {
+            if (!User32.GetMonitorInfo(monitor, ref mi)) {
                 logger.LogError("Failed to get monitor info.");
                 return null;
             }
@@ -112,12 +112,12 @@ namespace Processory.Internal {
             return mi;
         }
 
-        private void MoveMouseToCenter(NativeMethods.MonitorInfo monitorInfo) {
+        private void MoveMouseToCenter(MonitorInfo monitorInfo) {
             const int Half = 2;
             int centerX = monitorInfo.rcMonitor.Left + (monitorInfo.rcMonitor.Right - monitorInfo.rcMonitor.Left) / Half;
             int centerY = monitorInfo.rcMonitor.Top + (monitorInfo.rcMonitor.Bottom - monitorInfo.rcMonitor.Top) / Half;
 
-            NativeMethods.SetCursorPos(centerX, centerY);
+            User32.SetCursorPos(centerX, centerY);
         }
     }
 }

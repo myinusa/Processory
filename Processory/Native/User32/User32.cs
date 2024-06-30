@@ -2,22 +2,31 @@
 
 namespace Processory.Native.User32;
 
-public static partial class NativeMethods {
-    [LibraryImport("user32.DLL", StringMarshalling = StringMarshalling.Utf16)]
-    public static partial IntPtr FindWindow(string lpClassName, string lpWindowName);
+public static class User32 {
+    // Import the keybd_event function from user32.dll
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+    // Virtual key code for F5
+    public const byte VK_F5 = 0x74;
+    // Key event constants
+    public const uint KEYEVENTF_KEYDOWN = 0x0000;
+    public const uint KEYEVENTF_KEYUP = 0x0002;
 
-    [LibraryImport("user32.dll")]
-    public static partial int GetSystemMetrics(int nIndex);
+    [DllImport("user32.DLL")]
+    public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+    [DllImport("user32.dll")]
+    public static extern int GetSystemMetrics(int nIndex);
 
     [DllImport("user32.dll")]
     public static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
 
-    [LibraryImport("user32.dll")]
-    public static partial void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, int dwExtraInfo);
+    [DllImport("user32.dll")]
+    public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, int dwExtraInfo);
 
-    [LibraryImport("user32.dll")]
+    [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool SetForegroundWindow(IntPtr hWnd);
+    public static extern bool SetForegroundWindow(IntPtr hWnd);
 
     public const int SM_CXVIRTUALSCREEN = 78;
     public const int SM_CYVIRTUALSCREEN = 79;
@@ -31,8 +40,8 @@ public static partial class NativeMethods {
     [DllImport("user32.dll")]
     public static extern bool GetMonitorInfo(IntPtr hMonitor, ref MonitorInfo lpmi);
 
-    [LibraryImport("user32.dll")]
-    public static partial IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
+    [DllImport("user32.dll")]
+    public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
 
     [DllImport("user32.dll")]
     public static extern bool GetClientRect(IntPtr hWnd, out Rect lpRect);
@@ -51,9 +60,9 @@ public static partial class NativeMethods {
     [DllImport("user32.dll")]
     public static extern bool SetCursorPos(int X, int Y);
 
-    [LibraryImport("user32.dll")]
+    [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool IsIconic(IntPtr hWnd);
+    public static extern bool IsIconic(IntPtr hWnd);
 
     #region ShowWindow
     /// <summary>
@@ -70,12 +79,12 @@ public static partial class NativeMethods {
     /// If the window was previously visible, the return value is nonzero.
     /// If the window was previously hidden, the return value is zero.
     /// </returns>
-    [LibraryImport("user32.dll", SetLastError = true)]
+    [DllImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool ShowWindow(IntPtr hWnd, int nCmdShow);
+    public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
     #endregion
 
-    [LibraryImport("user32.dll")]
+    [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool IsZoomed(IntPtr hWnd);
+    public static extern bool IsZoomed(IntPtr hWnd);
 }
