@@ -9,6 +9,7 @@ namespace Processory;
 public class ProcessoryClient {
     public MemoryReader MemoryReader { get; set; }
     public ProcessService ProcessService { get; set; }
+    public InterfaceManager InterfaceManager { get; set; }
     public string ProcessName { get; }
     public nint ProcessHandle { get; }
     private readonly ILogger logger;
@@ -45,10 +46,11 @@ public class ProcessoryClient {
         }
     }
 
-    public ProcessoryClient(string processName, ILogger logger = null) {
-        this.logger = logger;
+    public ProcessoryClient(string processName, ILoggerFactory loggerFactory = null) {
+        this.logger = loggerFactory?.CreateLogger<ProcessoryClient>();
         ProcessName = processName;
-        ProcessService = new ProcessService(this, logger);
+        ProcessService = new ProcessService(this, loggerFactory);
+        InterfaceManager = new InterfaceManager(this, loggerFactory);
         MemoryReader = new MemoryReader(this);
         ProcessHandle = ProcessService.GetProcessHandle();
     }

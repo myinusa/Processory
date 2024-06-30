@@ -13,8 +13,9 @@ public class ProcessService {
     private readonly string processName;
     private readonly ILogger logger;
 
-    public ProcessService(ProcessoryClient processoryClient, ILogger logger) {
-        this.logger = logger;
+    public ProcessService(ProcessoryClient processoryClient, ILoggerFactory loggerFactory) {
+        // this.logger = logger;
+        logger = loggerFactory.CreateLogger<ProcessService>();
         ProcessoryClient = processoryClient;
         processName = processoryClient.ProcessName;
         GetProcessHandle();
