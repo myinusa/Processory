@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.9.0](https://github.com/myinusa/Processory/compare/v1.8.0...v1.9.0) (2024-06-30)
+
+
+### Features
+
+* **ProcessoryClient:** integrate InterfaceManager with dependency injection ([236ecbe](https://github.com/myinusa/Processory/commit/236ecbe4aa370ddb0a492d0f537076e016d79594))
+* **ProcessService:** implement SimulateF5KeyPress method ([ae41cde](https://github.com/myinusa/Processory/commit/ae41cde14bed65fce06635da22bc54fab7e4a772))
+* **User32:** add keybd_event and update DLL imports for user32 functions ([ae41cde](https://github.com/myinusa/Processory/commit/ae41cde14bed65fce06635da22bc54fab7e4a772))
+
 ## [1.8.0](https://github.com/myinusa/Processory/compare/v1.7.0...v1.8.0) (2024-06-30)
 
 
