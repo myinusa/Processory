@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.10.0](https://github.com/myinusa/Processory/compare/v1.9.0...v1.10.0) (2024-07-05)
+
+
+### Features
+
+* add AddressService class to handle address retrieval ([16a5421](https://github.com/myinusa/Processory/commit/16a5421d61a84027da59f6c1c80bc82bd3a236d2))
+* add AddressService property to ProcessoryClient ([16a5421](https://github.com/myinusa/Processory/commit/16a5421d61a84027da59f6c1c80bc82bd3a236d2))
+* add CSVDataOffsetManager class for managing CSV data offsets ([16a5421](https://github.com/myinusa/Processory/commit/16a5421d61a84027da59f6c1c80bc82bd3a236d2))
+* add CSVDataOffsetManager to ProcessoryClient ([16a5421](https://github.com/myinusa/Processory/commit/16a5421d61a84027da59f6c1c80bc82bd3a236d2))
+* update ProcessoryClient constructor to include CSVDataOffsetManager ([16a5421](https://github.com/myinusa/Processory/commit/16a5421d61a84027da59f6c1c80bc82bd3a236d2))
+
 ## [1.9.0](https://github.com/myinusa/Processory/compare/v1.8.0...v1.9.0) (2024-06-30)
 
 
