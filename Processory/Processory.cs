@@ -1,8 +1,8 @@
+using Microsoft.Extensions.Logging;
 using Processory.Helpers;
 using Processory.Internal;
 using Processory.Pointers;
 using Processory.Services;
-using Microsoft.Extensions.Logging;
 using Processory.Utilities;
 
 namespace Processory;
@@ -65,7 +65,7 @@ public class ProcessoryClient {
         ProcessService = new ProcessService(this, loggerFactory);
         CSVDataOffsetManager = new CSVDataOffsetManager(loggerFactory, nameOfCSV);
         InterfaceManager = new InterfaceManager(this, loggerFactory);
-        MemoryReader = new MemoryReader(this);
+        MemoryReader = new MemoryReader(this, loggerFactory);
         ProcessHandle = ProcessService.GetProcessHandle();
     }
 

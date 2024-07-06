@@ -3,8 +3,10 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using Microsoft.Extensions.Logging;
 using Processory.Native;
 using Processory.Pointers;
+using Processory.Utilities;
 
 namespace Processory.Internal {
     /// <summary>
@@ -12,11 +14,13 @@ namespace Processory.Internal {
     /// </summary>
     public class MemoryReader {
         private readonly ProcessoryClient processoryClient;
+        private readonly ILogger logger;
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryReader"/> class.
         /// </summary>
         /// <param name="processoryClient">The ProcessoryClient instance to use for memory operations.</param>
-        public MemoryReader(ProcessoryClient processoryClient) {
+        public MemoryReader(ProcessoryClient processoryClient, ILoggerFactory loggerFactory) {
+            logger = loggerFactory.CreateLogger<MemoryReader>();
             this.processoryClient = processoryClient ?? throw new ArgumentNullException(nameof(processoryClient));
         }
 
@@ -216,6 +220,34 @@ namespace Processory.Internal {
             Span<byte> buffer = stackalloc byte[length];
             ReadR(address, buffer);
             return Encoding.UTF8.GetString(buffer);
+        }
+
+        public T ReadUnsignedFileOffset<T>(UIntPtr address, string key)
+            where T : unmanaged {
+            Row foundRow = processoryClient.CSVDataOffsetManager.GetRowByStringName(key);
+            UIntPtr addressChain = processoryClient.PointerChainFollower.FollowPointerChain(address.ToUInt64(), foundRow.Offsets);
+            return processoryClient.MemoryReader.Read<T>(addressChain);
+        }
+
+        public T ReadAbsolute<T>(string key)
+            where T : unmanaged {
+            Row foundRow = processoryClient.CSVDataOffsetManager.GetRowByStringName(key);
+            if (foundRow.Parent != string.Empty) {
+                var parentAddress = processoryClient.AddressService.GetAbsoluteAddress(foundRow.Parent);
+                logger.LogDebug("Parent address {Parent:X}", parentAddress);
+                UIntPtr deferAddress = processoryClient.PointerChainFollower.DereferencePointer(parentAddress);
+
+                UIntPtr resolvedAddress = processoryClient.PointerChainFollower.FollowPointerChain(deferAddress, foundRow.Offsets);
+                logger.LogDebug("Resolved address {Resolved:X}", resolvedAddress);
+                return processoryClient.MemoryReader.Read<T>(resolvedAddress);
+            }
+
+            var address = processoryClient.AddressService.GetAbsoluteAddress(key);
+            return processoryClient.MemoryReader.Read<T>(address);
+        }
+
+        public string ReadOffsetString(UIntPtr address, string key) {
+            return processoryClient.MemoryReader.ResolveStringPointerE(address, processoryClient.CSVDataOffsetManager.GetOffsetsByRowName(key));
         }
     }
 }
