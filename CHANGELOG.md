@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.12.0](https://github.com/myinusa/Processory/compare/v1.11.0...v1.12.0) (2024-07-06)
+
+
+### Features
+
+* **CSVDataOffsetManager:** conditionally load CSV rows based on file name existence ([492affb](https://github.com/myinusa/Processory/commit/492affb3510ad7cb769bb77a9856db51194401e8))
+* **Processory.csproj:** add warning level settings for Debug and Release configurations ([492affb](https://github.com/myinusa/Processory/commit/492affb3510ad7cb769bb77a9856db51194401e8))
+* **ProcessService:** integrate InputSimulator for simulating key presses and mouse clicks ([492affb](https://github.com/myinusa/Processory/commit/492affb3510ad7cb769bb77a9856db51194401e8))
+* **User32:** add new virtual key constants and mouse event constants ([492affb](https://github.com/myinusa/Processory/commit/492affb3510ad7cb769bb77a9856db51194401e8))
+
 ## [1.11.0](https://github.com/myinusa/Processory/compare/v1.10.0...v1.11.0) (2024-07-06)
 
 
