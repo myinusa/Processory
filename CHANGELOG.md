@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.11.0](https://github.com/myinusa/Processory/compare/v1.10.0...v1.11.0) (2024-07-06)
+
+
+### Features
+
+* **memory-reader:** add ILogger to MemoryReader for logging support ([1e09edd](https://github.com/myinusa/Processory/commit/1e09eddf6f7c78d945caf851f7e47d7867f5be73))
+* **memory-reader:** add ReadOffsetString method for reading offset strings ([1e09edd](https://github.com/myinusa/Processory/commit/1e09eddf6f7c78d945caf851f7e47d7867f5be73))
+* **memory-reader:** implement ReadAbsolute method for reading absolute addresses with logging ([1e09edd](https://github.com/myinusa/Processory/commit/1e09eddf6f7c78d945caf851f7e47d7867f5be73))
+* **memory-reader:** implement ReadUnsignedFileOffset method for reading unsigned file offsets ([1e09edd](https://github.com/myinusa/Processory/commit/1e09eddf6f7c78d945caf851f7e47d7867f5be73))
+
 ## [1.10.0](https://github.com/myinusa/Processory/compare/v1.9.0...v1.10.0) (2024-07-05)
 
 
