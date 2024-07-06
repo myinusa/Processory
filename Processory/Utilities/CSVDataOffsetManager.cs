@@ -12,7 +12,9 @@ namespace Processory.Utilities {
         public CSVDataOffsetManager(ILoggerFactory loggerFactory, string nameOfCSVFile) {
             logger = loggerFactory.CreateLogger<CSVDataOffsetManager>();
             this.nameOfCSVFile = nameOfCSVFile;
-            LoadRowsFromCsv();
+            if (nameOfCSVFile.Any()) {
+                LoadRowsFromCsv();
+            }
         }
 
         public static List<Row> LoadedRows { get; private set; } = new List<Row>();

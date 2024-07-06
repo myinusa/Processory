@@ -8,9 +8,18 @@ public static class User32 {
     public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
     // Virtual key code for F5
     public const byte VK_F5 = 0x74;
+    public const byte VK_CONTROL = 0x11;
+    public const byte VK_A = 0x41;
     // Key event constants
     public const uint KEYEVENTF_KEYDOWN = 0x0000;
     public const uint KEYEVENTF_KEYUP = 0x0002;
+    public const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
+    public const int MOUSEEVENTF_RIGHTUP = 0x0010;
+    public const int MOUSEEVENTF_LEFTDOWN = 0x0002;
+    public const int MOUSEEVENTF_LEFTUP = 0x0004;
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo);
 
     [DllImport("user32.DLL")]
     public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
@@ -21,8 +30,8 @@ public static class User32 {
     [DllImport("user32.dll")]
     public static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
 
-    [DllImport("user32.dll")]
-    public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, int dwExtraInfo);
+    //[DllImport("user32.dll")]
+    //public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, int dwExtraInfo);
 
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]

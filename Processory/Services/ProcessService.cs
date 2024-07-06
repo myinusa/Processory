@@ -22,12 +22,22 @@ public class ProcessService {
         GetProcessHandle();
     }
 
+    private readonly InputSimulator inputSimulator = new InputSimulator();
+
     public void SimulateF5KeyPress() {
-        // Simulate key down
-        keybd_event(VK_F5, 0, KEYEVENTF_KEYDOWN, UIntPtr.Zero);
-        Thread.Sleep(100); // Wait for 100 milliseconds
-        // Simulate key up
-        keybd_event(VK_F5, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+        inputSimulator.SimulateKeyPress(VK_F5);
+    }
+
+    public void SimulateCtrlAPress() {
+        inputSimulator.SimulateKeyCombo(VK_CONTROL, VK_A);
+    }
+
+    public void SimulateRightClick() {
+        inputSimulator.SimulateMouseClick(MOUSEEVENTF_RIGHTDOWN);
+    }
+
+    public void SimulateLeftClick() {
+        inputSimulator.SimulateMouseClick(MOUSEEVENTF_LEFTDOWN);
     }
 
     public nint GetProcessHandle() {
