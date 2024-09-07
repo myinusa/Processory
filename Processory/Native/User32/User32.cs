@@ -6,6 +6,11 @@ public static class User32 {
     // Import the keybd_event function from user32.dll
     [DllImport("user32.dll", SetLastError = true)]
     public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+
+
     // Virtual key code for F5
     public const byte VK_F5 = 0x74;
     public const byte VK_CONTROL = 0x11;

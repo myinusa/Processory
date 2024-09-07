@@ -21,6 +21,7 @@ namespace Processory.Internal {
                 else {
                     logger.LogWarning("Failed to move mouse to center of monitor.");
                 }
+
                 logger.LogDebug("Finished WindowService");
             }
             catch (Exception e) {
@@ -31,21 +32,27 @@ namespace Processory.Internal {
         public bool MoveMouseToCenterOfMonitor(string windowTitle) {
             var handle = processoryClient.ProcessService.ProcessHandle.MainWindowHandle;
             var mainWindowTitle = processoryClient.ProcessService.ProcessHandle.MainWindowTitle;
+            var millisecondsTimeout = 1000;
 
             if (!IsValidWindow(handle, mainWindowTitle, windowTitle)) {
                 return false;
             }
 
             RestoreWindow(handle);
+            Thread.Sleep(millisecondsTimeout);
             SetWindowToForeground(handle);
-            MaximizeWindow(handle);
+            Thread.Sleep(millisecondsTimeout);
+            // MaximizeWindow(handle);
+            SnapWindowToRightHalf(handle);
+            Thread.Sleep(millisecondsTimeout);
 
             var monitorInfo = GetMonitorInfo(handle);
             if (monitorInfo == null) {
                 return false;
             }
 
-            MoveMouseToCenter(monitorInfo.Value);
+            // MoveMouseToCenter(monitorInfo.Value);
+            MoveMouseToCenterOfRightHalf(monitorInfo.Value);
             return true;
         }
 
@@ -98,6 +105,27 @@ namespace Processory.Internal {
             }
         }
 
+        private void SnapWindowToRightHalf(IntPtr handle) {
+            MonitorInfo? monitorInfo = GetMonitorInfo(handle);
+            if (monitorInfo == null) {
+                logger.LogError("Failed to get monitor info for snapping window.");
+                return;
+            }
+
+            int monitorWidth = monitorInfo.Value.rcMonitor.Right - monitorInfo.Value.rcMonitor.Left;
+            int monitorHeight = monitorInfo.Value.rcMonitor.Bottom - monitorInfo.Value.rcMonitor.Top;
+            int rightHalfWidth = monitorWidth / 2;
+            int rightHalfLeft = monitorInfo.Value.rcMonitor.Left + rightHalfWidth;
+
+            if (!User32.MoveWindow(handle, rightHalfLeft, monitorInfo.Value.rcMonitor.Top, rightHalfWidth, monitorHeight, true)) {
+                int errorCode = Marshal.GetLastWin32Error();
+                logger.LogWarning("Failed to snap window to the right half of the screen. Error code: {ErrorCode}", errorCode);
+            }
+            else {
+                logger.LogDebug("Window snapped to the right half of the screen successfully.");
+            }
+        }
+
         private MonitorInfo? GetMonitorInfo(IntPtr handle) {
             nint monitor = User32.MonitorFromWindow(handle, 0);
             MonitorInfo mi = new MonitorInfo {
@@ -114,10 +142,22 @@ namespace Processory.Internal {
 
         private void MoveMouseToCenter(MonitorInfo monitorInfo) {
             const int Half = 2;
-            int centerX = monitorInfo.rcMonitor.Left + (monitorInfo.rcMonitor.Right - monitorInfo.rcMonitor.Left) / Half;
+            int centerX = monitorInfo.rcMonitor.Left +
+                          (monitorInfo.rcMonitor.Right - monitorInfo.rcMonitor.Left) / Half;
             int centerY = monitorInfo.rcMonitor.Top + (monitorInfo.rcMonitor.Bottom - monitorInfo.rcMonitor.Top) / Half;
 
             User32.SetCursorPos(centerX, centerY);
+        }
+
+        private void MoveMouseToCenterOfRightHalf(MonitorInfo monitorInfo) {
+            int monitorWidth = monitorInfo.rcMonitor.Right - monitorInfo.rcMonitor.Left;
+            int rightHalfWidth = monitorWidth / 2;
+            int rightHalfLeft = monitorInfo.rcMonitor.Left + rightHalfWidth;
+            int centerX = rightHalfLeft + rightHalfWidth / 2;
+            int centerY = monitorInfo.rcMonitor.Top + (monitorInfo.rcMonitor.Bottom - monitorInfo.rcMonitor.Top) / 2;
+
+            User32.SetCursorPos(centerX, centerY);
+            logger.LogDebug("Mouse moved to center of the right half of the screen successfully.");
         }
     }
 }
