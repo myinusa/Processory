@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.13.0](https://github.com/myinusa/Processory/compare/v1.12.0...v1.13.0) (2024-09-07)
+
+
+### Features
+
+* **InterfaceManager.cs:** add functionality to snap window to the right half of the screen ([c0051d8](https://github.com/myinusa/Processory/commit/c0051d8af60655b47553e7146d9e4c1716f8d2ed))
+* **InterfaceManager.cs:** implement method to move mouse to center of the right half of the screen ([c0051d8](https://github.com/myinusa/Processory/commit/c0051d8af60655b47553e7146d9e4c1716f8d2ed))
+* **Processory.Tests.csproj:** add warning level suppression for Debug and Release configurations ([c0051d8](https://github.com/myinusa/Processory/commit/c0051d8af60655b47553e7146d9e4c1716f8d2ed))
+* **User32.cs:** add MoveWindow method to User32 class ([c0051d8](https://github.com/myinusa/Processory/commit/c0051d8af60655b47553e7146d9e4c1716f8d2ed))
+
 ## [1.12.0](https://github.com/myinusa/Processory/compare/v1.11.0...v1.12.0) (2024-07-06)
 
 
