@@ -29,3 +29,17 @@ $content = $content | ForEach-Object {
 
 # Write the updated content back to the file
 $content | Set-Content -Path "Properties/AssemblyInfo.cs"
+
+# Update .csproj file
+$csprojPath = "Processory.csproj"
+$csprojContent = Get-Content -Path $csprojPath
+
+$csprojContent = $csprojContent | ForEach-Object {
+    $line = $_
+    if ($line -match '<VersionPrefix>.*</VersionPrefix>') {
+        $line = $line -replace '<VersionPrefix>.*</VersionPrefix>', "<VersionPrefix>$assemblyVersion</VersionPrefix>"
+    }
+    $line
+}
+
+$csprojContent | Set-Content -Path $csprojPath
