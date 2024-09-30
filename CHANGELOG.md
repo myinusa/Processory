@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.14.0](https://github.com/myinusa/Processory/compare/v1.13.0...v1.14.0) (2024-09-30)
+
+
+### Features
+
+* **Processory:** add new properties for package generation and repository details ([e676763](https://github.com/myinusa/Processory/commit/e676763144c8e4c4f0b489d4498f0a9340ca0e46))
+* **Processory:** include README.md in package files ([e676763](https://github.com/myinusa/Processory/commit/e676763144c8e4c4f0b489d4498f0a9340ca0e46))
+
+
+### Bug Fixes
+
+* **Processory.Tests:** update Microsoft.NET.Test.Sdk to 17.11.1 and xunit to 2.9.2 ([e676763](https://github.com/myinusa/Processory/commit/e676763144c8e4c4f0b489d4498f0a9340ca0e46))
+* **Processory:** update assembly file version and informational version to 1.13.0 ([e676763](https://github.com/myinusa/Processory/commit/e676763144c8e4c4f0b489d4498f0a9340ca0e46))
+* **Processory:** update Roslynator analyzers to 4.12.6 ([e676763](https://github.com/myinusa/Processory/commit/e676763144c8e4c4f0b489d4498f0a9340ca0e46))
+
 ## [1.13.0](https://github.com/myinusa/Processory/compare/v1.12.0...v1.13.0) (2024-09-07)
 
 
