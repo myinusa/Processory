@@ -1,0 +1,35 @@
+{
+    "folders": [
+        {
+            "path": ".."
+        }
+    ],
+    "settings": {
+        "dotnet.defaultSolution": "Processory.sln",
+        "workbench.colorCustomizations": {
+            "dotnetAcquisitionExtension.enableTelemetry": true,
+            "dotnet.backgroundAnalysis.analyzerDiagnosticsScope": "openFiles",
+            "cSpell.words": [
+                "appsettings"
+            ],
+            "activityBar.activeBackground": "#0d4572",
+            "activityBar.background": "#0d4572",
+            "activityBar.foreground": "#e7e7e7",
+            "activityBar.inactiveForeground": "#e7e7e799",
+            "activityBarBadge.background": "#000000",
+            "activityBarBadge.foreground": "#e7e7e7",
+            "commandCenter.border": "#e7e7e799",
+            "sash.hoverBorder": "#0d4572",
+            "statusBar.background": "#082944",
+            "statusBar.foreground": "#e7e7e7",
+            "statusBarItem.hoverBackground": "#0d4572",
+            "statusBarItem.remoteBackground": "#082944",
+            "statusBarItem.remoteForeground": "#e7e7e7",
+            "titleBar.activeBackground": "#082944",
+            "titleBar.activeForeground": "#e7e7e7",
+            "titleBar.inactiveBackground": "#08294499",
+            "titleBar.inactiveForeground": "#e7e7e799"
+        },
+        "peacock.color": "#082944",
+    }
+}

@@ -25,13 +25,14 @@
     <Title>Processory</Title>
   </PropertyGroup>
 
+  <!-- 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <WarningLevel>0</WarningLevel>
-  </PropertyGroup>
+  </PropertyGroup> -->
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="powershell -File Utilities\UpdateAssemblyVersion.ps1" />
