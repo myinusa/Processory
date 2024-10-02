@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.15.0](https://github.com/myinusa/Processory/compare/v1.14.0...v1.15.0) (2024-10-02)
+
+
+### Features
+
+* **Processory.Insight/Program.cs:** integrate Microsoft Logging and configure logger factory ([150c91f](https://github.com/myinusa/Processory/commit/150c91fd9c2f99a5d1ed3aca939910c58110962c))
+* **Processory/Pointers/PointerChainFollower.cs:** add method to resolve pointer chain ([150c91f](https://github.com/myinusa/Processory/commit/150c91fd9c2f99a5d1ed3aca939910c58110962c))
+* **Processory/Processory.csproj:** update version prefix ([150c91f](https://github.com/myinusa/Processory/commit/150c91fd9c2f99a5d1ed3aca939910c58110962c))
+* **Processory/Services/ProcessService.cs:** initialize InputSimulator using object initializer syntax ([150c91f](https://github.com/myinusa/Processory/commit/150c91fd9c2f99a5d1ed3aca939910c58110962c))
+
 ## [1.14.0](https://github.com/myinusa/Processory/compare/v1.13.0...v1.14.0) (2024-09-30)
 
 
