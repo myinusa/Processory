@@ -60,4 +60,24 @@ public class PointerChainFollower {
 
         return currentAddress;
     }
+
+    public nuint ResolvePointerChain(ulong baseAddress, List<int> offsets) {
+        if (offsets == null || offsets.Count == 0) {
+            throw new ArgumentException("Offsets list cannot be null or empty.", nameof(offsets));
+        }
+
+        if (offsets.Count == 1) {
+            offsets.Add(0x0);
+        }
+
+        nuint num = (nuint)baseAddress;
+        for (int i = 0; i < offsets.Count; i++) {
+            num = UIntPtr.Add(num, offsets[i]);
+            if (i < offsets.Count - 1) {
+                num = ProcessoryClient.MemoryReader.ReadPointer<nuint>((nint)num);
+            }
+        }
+
+        return num;
+    }
 }

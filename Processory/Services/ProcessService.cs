@@ -8,21 +8,21 @@ namespace Processory.Services;
 public class ProcessService {
     private const string ProcessNotFoundMessage = "Process {0} not found";
     private const string FailedToOpenProcessMessage = "Failed to open process";
-    private const string FailedToCloseProcessMessage = "Failed to close process handle";
+    //private const string FailedToCloseProcessMessage = "Failed to close process handle";
     public Process? ProcessHandle { get; set; }
-    protected readonly ProcessoryClient ProcessoryClient;
+    private readonly ProcessoryClient processoryClient;
     private readonly string processName;
     private readonly ILogger logger;
 
     public ProcessService(ProcessoryClient processoryClient, ILoggerFactory loggerFactory) {
         // this.logger = logger;
         logger = loggerFactory.CreateLogger<ProcessService>();
-        ProcessoryClient = processoryClient;
+        this.processoryClient = processoryClient;
         processName = processoryClient.ProcessName;
         GetProcessHandle();
     }
 
-    private readonly InputSimulator inputSimulator = new InputSimulator();
+    private readonly InputSimulator inputSimulator = new();
 
     public void SimulateF5KeyPress() {
         inputSimulator.SimulateKeyPress(VK_F5);
