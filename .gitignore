@@ -19,6 +19,8 @@ output-key-value-pairs*
 [Bb]uild[Ll]og.*
 packages/
 
+release-command.md
+
 *_i.c
 *_p.c
 *.ilk
