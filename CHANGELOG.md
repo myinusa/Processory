@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.16.0](https://github.com/myinusa/Processory/compare/v1.15.0...v1.16.0) (2024-10-04)
+
+
+### Features
+
+* implement ResolveStringPointerList method in MemoryReader ([0ecc8d8](https://github.com/myinusa/Processory/commit/0ecc8d8c63f3392cf7901b8745720adcff43e2c8))
+
+
+### Bug Fixes
+
+* correct formatting of loggerFactory creation in Program.cs ([0ecc8d8](https://github.com/myinusa/Processory/commit/0ecc8d8c63f3392cf7901b8745720adcff43e2c8))
+
 ## [1.15.0](https://github.com/myinusa/Processory/compare/v1.14.0...v1.15.0) (2024-10-02)
 
 
