@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.0](https://github.com/myinusa/Processory/compare/v1.16.0...v1.17.0) (2024-10-19)
+
+
+### Features
+
+* **Processory.Tests/UnitMemoryTest.cs:** Add test for process validity and memory reading functionality. ([b3cbbd0](https://github.com/myinusa/Processory/commit/b3cbbd01fb08dccf3abb97b7240a9576cb6b2636))
+
 ## [1.16.0](https://github.com/myinusa/Processory/compare/v1.15.0...v1.16.0) (2024-10-04)
 
 
