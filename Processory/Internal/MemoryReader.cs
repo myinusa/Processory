@@ -1,12 +1,9 @@
-using System;
-using System.Diagnostics;
+using Microsoft.Extensions.Logging;
+using Processory.Native;
+using Processory.Utilities;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using Microsoft.Extensions.Logging;
-using Processory.Native;
-using Processory.Pointers;
-using Processory.Utilities;
 
 namespace Processory.Internal {
     /// <summary>
@@ -243,7 +240,7 @@ namespace Processory.Internal {
                     // Console.WriteLine($"nullIndex: {nullIndex}");
                     // If no more null terminator is found, take the rest of the span
                     if (nullIndex == -1) {
-                    // if (nullIndex < -1) {
+                        // if (nullIndex < -1) {
                         nullIndex = span.Length - startIndex;
                         Span<byte> segment1 = span.Slice(startIndex, nullIndex);
                         strings.Add(Encoding.UTF8.GetString(segment1));

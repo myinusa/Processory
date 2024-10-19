@@ -1,6 +1,6 @@
-using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using Processory.Native.User32;
+using System.Runtime.InteropServices;
 
 namespace Processory.Internal {
     public class InterfaceManager {

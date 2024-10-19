@@ -1,8 +1,8 @@
-using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Microsoft.Extensions.Logging;
+using System.Globalization;
 
 namespace Processory.Utilities {
     public class CSVDataOffsetManager {

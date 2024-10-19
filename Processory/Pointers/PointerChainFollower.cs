@@ -1,5 +1,3 @@
-using Processory.Internal;
-
 namespace Processory.Pointers;
 
 public class PointerChainFollower {

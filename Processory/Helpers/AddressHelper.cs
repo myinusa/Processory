@@ -1,5 +1,5 @@
-using System.Runtime.InteropServices;
 using Processory.Native;
+using System.Runtime.InteropServices;
 using static Processory.Native.Flags;
 using static Processory.Native.Structures;
 

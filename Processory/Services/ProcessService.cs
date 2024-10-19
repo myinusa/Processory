@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Processory.Native;
+using System.Diagnostics;
 using static Processory.Native.User32.User32;
 
 namespace Processory.Services;

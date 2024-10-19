@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Logging;
 using static Processory.Native.User32.User32;
 
 namespace Processory.Services;

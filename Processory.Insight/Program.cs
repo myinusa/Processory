@@ -41,7 +41,7 @@ public class Program {
         Console.WriteLine("Total game info count: {0}", breakpad_exception.Count);
         // 
         for (int i = 0; i < breakpad_exception.Count; i++) {
-           Console.WriteLine("[{0}] | Game info: {1}", i, breakpad_exception[i]);
+            Console.WriteLine("[{0}] | Game info: {1}", i, breakpad_exception[i]);
         }
         Console.WriteLine("-------------------------------------------------------------");
 
