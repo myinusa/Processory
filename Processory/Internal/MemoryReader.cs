@@ -1,9 +1,9 @@
-using Microsoft.Extensions.Logging;
-using Processory.Native;
-using Processory.Utilities;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using Microsoft.Extensions.Logging;
+using Processory.Native;
+using Processory.Utilities;
 
 namespace Processory.Internal {
     /// <summary>
@@ -12,10 +12,7 @@ namespace Processory.Internal {
     public class MemoryReader {
         private readonly ProcessoryClient processoryClient;
         private readonly ILogger logger;
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryReader"/> class.
-        /// </summary>
-        /// <param name="processoryClient">The ProcessoryClient instance to use for memory operations.</param>
+
         public MemoryReader(ProcessoryClient processoryClient, ILoggerFactory loggerFactory) {
             logger = loggerFactory.CreateLogger<MemoryReader>();
             this.processoryClient = processoryClient ?? throw new ArgumentNullException(nameof(processoryClient));

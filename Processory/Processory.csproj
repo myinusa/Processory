@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -12,7 +13,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>1.16.241019.1807</VersionPrefix>
+    <VersionPrefix>1.17.241129.2147</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>

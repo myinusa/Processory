@@ -60,10 +60,25 @@ public class Structures {
     }
 
     internal enum ProcessorArchitecture {
-        X86 = 0,
-        X64 = 9,
+        /// <summary>
+        /// The ARM processor architecture.
+        /// </summary>
         Arm = -1,
+        /// <summary>
+        /// The x86 processor architecture.
+        /// </summary>
+        X86 = 0,
+        /// <summary>
+        /// The Itanium processor architecture.
+        /// </summary>
         Itanium = 6,
+        /// <summary>
+        /// The x64 processor architecture (also known as AMD64 or Intel 64).
+        /// </summary>
+        X64 = 9,
+        /// <summary>
+        /// The processor architecture is unknown or not recognized.
+        /// </summary>
         Unknown = 0xFFFF
     }
 
@@ -99,7 +114,7 @@ public class Structures {
         public uint NumberOfProcessors;
 
         /// <summary>
-        /// An obsolete member that is retained for compatibility. 
+        /// An obsolete member that is retained for compatibility.
         /// </summary>
         public uint ProcessorType;
 

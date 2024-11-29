@@ -8,7 +8,7 @@ public static class User32 {
     public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
 
     [DllImport("user32.dll", SetLastError = true)]
-    public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+    public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
 
 
     // Virtual key code for F5
@@ -33,7 +33,7 @@ public static class User32 {
     public static extern int GetSystemMetrics(int nIndex);
 
     [DllImport("user32.dll")]
-    public static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
+    public static extern bool PostMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
 
     //[DllImport("user32.dll")]
     //public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, int dwExtraInfo);
@@ -47,8 +47,8 @@ public static class User32 {
 
     // Define the POINT struct for the ClientToScreen function
     public struct Point {
-        public int X;
-        public int Y;
+        public int X { get; set; }
+        public int Y { get; set; }
     }
 
     [DllImport("user32.dll")]
@@ -72,7 +72,7 @@ public static class User32 {
     public const int SW_MAXIMIZE = 3;
 
     [DllImport("user32.dll")]
-    public static extern bool SetCursorPos(int X, int Y);
+    public static extern bool SetCursorPos(int x, int y);
 
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]

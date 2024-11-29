@@ -1,6 +1,6 @@
+using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using Processory.Native.User32;
-using System.Runtime.InteropServices;
 
 namespace Processory.Internal {
     public class InterfaceManager {
@@ -30,7 +30,7 @@ namespace Processory.Internal {
         }
 
         public bool MoveMouseToCenterOfMonitor(string windowTitle) {
-            var handle = processoryClient.ProcessService.ProcessHandle.MainWindowHandle;
+            var handle = processoryClient.ProcessService.ProcessHandle!.MainWindowHandle;
             var mainWindowTitle = processoryClient.ProcessService.ProcessHandle.MainWindowTitle;
             var millisecondsTimeout = 1000;
 
@@ -91,7 +91,7 @@ namespace Processory.Internal {
                 logger.LogDebug("Window set to foreground successfully.");
             }
             else {
-                logger.LogWarning("Failed to set the window to foreground.");
+                throw new Exception("Failed to set the window to foreground.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Processory.Internal {
         private MonitorInfo? GetMonitorInfo(IntPtr handle) {
             nint monitor = User32.MonitorFromWindow(handle, 0);
             MonitorInfo mi = new MonitorInfo {
-                cbSize = (uint)Marshal.SizeOf<MonitorInfo>()
+                CbSize = (uint)Marshal.SizeOf<MonitorInfo>()
             };
 
             if (!User32.GetMonitorInfo(monitor, ref mi)) {
@@ -140,11 +140,11 @@ namespace Processory.Internal {
             return mi;
         }
 
-        private void MoveMouseToCenter(MonitorInfo monitorInfo) {
+        private static void MoveMouseToCenter(MonitorInfo monitorInfo) {
             const int Half = 2;
             int centerX = monitorInfo.rcMonitor.Left +
-                          (monitorInfo.rcMonitor.Right - monitorInfo.rcMonitor.Left) / Half;
-            int centerY = monitorInfo.rcMonitor.Top + (monitorInfo.rcMonitor.Bottom - monitorInfo.rcMonitor.Top) / Half;
+                          ((monitorInfo.rcMonitor.Right - monitorInfo.rcMonitor.Left) / Half);
+            int centerY = monitorInfo.rcMonitor.Top + ((monitorInfo.rcMonitor.Bottom - monitorInfo.rcMonitor.Top) / Half);
 
             User32.SetCursorPos(centerX, centerY);
         }
@@ -153,8 +153,8 @@ namespace Processory.Internal {
             int monitorWidth = monitorInfo.rcMonitor.Right - monitorInfo.rcMonitor.Left;
             int rightHalfWidth = monitorWidth / 2;
             int rightHalfLeft = monitorInfo.rcMonitor.Left + rightHalfWidth;
-            int centerX = rightHalfLeft + rightHalfWidth / 2;
-            int centerY = monitorInfo.rcMonitor.Top + (monitorInfo.rcMonitor.Bottom - monitorInfo.rcMonitor.Top) / 2;
+            int centerX = rightHalfLeft + (rightHalfWidth / 2);
+            int centerY = monitorInfo.rcMonitor.Top + ((monitorInfo.rcMonitor.Bottom - monitorInfo.rcMonitor.Top) / 2);
 
             User32.SetCursorPos(centerX, centerY);
             logger.LogDebug("Mouse moved to center of the right half of the screen successfully.");

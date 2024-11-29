@@ -44,7 +44,8 @@ namespace Processory {
         /// </summary>
         /// <typeparam name="T">The type of the service to get.</typeparam>
         /// <returns>The service instance or null if the process handle is invalid.</returns>
-        private T GetService<T>() where T : class {
+        private T GetService<T>()
+            where T : class {
             if (ProcessHandle == 0) {
                 return null;
             }
@@ -55,7 +56,7 @@ namespace Processory {
                 var t when t == typeof(AddressHelper) => new AddressHelper(this) as T,
                 var t when t == typeof(AddressService) => new AddressService(this) as T,
                 _ => throw new InvalidOperationException($"Unsupported service type: {typeof(T).Name}")
-            };
+            } ?? throw new InvalidOperationException();
         }
     }
 }
