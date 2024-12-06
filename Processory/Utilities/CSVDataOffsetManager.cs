@@ -1,8 +1,8 @@
+using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Microsoft.Extensions.Logging;
-using System.Globalization;
 
 namespace Processory.Utilities {
     public class CSVDataOffsetManager {
@@ -75,7 +75,8 @@ namespace Processory.Utilities {
         /// </summary>
         /// <returns>The client path.</returns>
         private string GetClientPath() {
-            var path = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
+            // var path = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
+            var path = Directory.GetParent(Environment.CurrentDirectory)?.FullName ?? Environment.CurrentDirectory;
             var filePath = Path.Combine(path, nameOfCSVFile);
             if (!File.Exists(filePath)) {
                 logger.LogError("Failed at: {Path}", GetLastThreeParts(filePath));
