@@ -84,7 +84,7 @@ namespace Processory.Utilities {
                 logger.LogError("Failed at: {Path}", GetLastThreeParts(filePath));
                 path = Environment.CurrentDirectory;
             }
-            logger.LogDebug("Found at: {Path}", GetLastThreeParts(filePath));
+            // logger.LogDebug("Found at: {Path}", GetLastThreeParts(filePath));
             return path;
         }
 
