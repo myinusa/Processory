@@ -52,7 +52,7 @@ namespace Processory.Utilities {
         /// <returns>The row with the specified name.</returns>
         /// <exception cref="ArgumentException">Thrown when the provided name is null or whitespace.</exception>
         /// <exception cref="ApplicationException">Thrown when the row cannot be retrieved.</exception>
-        public Row GetRowByStringName(string name) {
+        public static Row GetRowByStringName(string name) {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("The provided name is null or whitespace.", nameof(name));
 
@@ -65,7 +65,7 @@ namespace Processory.Utilities {
         /// </summary>
         /// <param name="rowName">The name of the row.</param>
         /// <returns>A list of offsets.</returns>
-        public List<int> GetOffsetsByRowName(string rowName) {
+        public static List<int> GetOffsetsByRowName(string rowName) {
             var foundRow = GetRowByStringName(rowName);
             return foundRow?.Offsets ?? new List<int>();
         }

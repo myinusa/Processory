@@ -24,7 +24,7 @@ public class AddressService {
     /// <param name="key">The key to look up the address for.</param>
     /// <returns>The absolute address if found and valid; otherwise, 0.</returns>
     public ulong GetAbsoluteAddress(string key) {
-        Row foundRow = ProcessoryClient.CSVDataOffsetManager.GetRowByStringName(key);
+        Row foundRow = CSVDataOffsetManager.GetRowByStringName(key);
         if (foundRow.Category != "address") {
             return 0;
         }

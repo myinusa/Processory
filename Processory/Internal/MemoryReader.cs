@@ -268,14 +268,14 @@ namespace Processory.Internal {
 
         public T ReadUnsignedFileOffset<T>(UIntPtr address, string key)
             where T : unmanaged {
-            Row foundRow = processoryClient.CSVDataOffsetManager.GetRowByStringName(key);
+            Row foundRow = CSVDataOffsetManager.GetRowByStringName(key);
             UIntPtr addressChain = processoryClient.PointerChainFollower.FollowPointerChain(address.ToUInt64(), foundRow.Offsets);
             return processoryClient.MemoryReader.Read<T>(addressChain);
         }
 
         public T ReadAbsolute<T>(string key)
             where T : unmanaged {
-            Row foundRow = processoryClient.CSVDataOffsetManager.GetRowByStringName(key);
+            Row foundRow = CSVDataOffsetManager.GetRowByStringName(key);
             if (foundRow.Parent != string.Empty) {
                 var parentAddress = processoryClient.AddressService.GetAbsoluteAddress(foundRow.Parent);
                 logger.LogDebug("Parent address {Parent:X}", parentAddress);
@@ -291,7 +291,7 @@ namespace Processory.Internal {
         }
 
         public string ReadOffsetString(UIntPtr address, string key) {
-            return processoryClient.MemoryReader.ResolveStringPointerE(address, processoryClient.CSVDataOffsetManager.GetOffsetsByRowName(key));
+            return processoryClient.MemoryReader.ResolveStringPointerE(address, CSVDataOffsetManager.GetOffsetsByRowName(key));
         }
     }
 }
