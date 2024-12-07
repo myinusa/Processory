@@ -1,6 +1,6 @@
+using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Processory.Native;
-using System.Diagnostics;
 using static Processory.Native.User32.User32;
 
 namespace Processory.Services;
@@ -25,19 +25,19 @@ public class ProcessService {
     private readonly InputSimulator inputSimulator = new();
 
     public void SimulateF5KeyPress() {
-        inputSimulator.SimulateKeyPress(VK_F5);
+        inputSimulator.SimulateKeyPress(KeyboardConstants.VK_F5);
     }
 
     public void SimulateCtrlAPress() {
-        inputSimulator.SimulateKeyCombo(VK_CONTROL, VK_A);
+        inputSimulator.SimulateKeyCombo(KeyboardConstants.VK_CONTROL, KeyboardConstants.VK_A);
     }
 
     public void SimulateRightClick() {
-        inputSimulator.SimulateMouseClick(MOUSEEVENTF_RIGHTDOWN);
+        inputSimulator.SimulateMouseClick(MouseEventConstants.MOUSEEVENTF_RIGHTDOWN);
     }
 
     public void SimulateLeftClick() {
-        inputSimulator.SimulateMouseClick(MOUSEEVENTF_LEFTDOWN);
+        inputSimulator.SimulateMouseClick(MouseEventConstants.MOUSEEVENTF_LEFTDOWN);
     }
 
     public nint GetProcessHandle() {
@@ -73,7 +73,6 @@ public class ProcessService {
                 }
                 ProcessHandle = null;
             }
-            //Console.WriteLine("Successfully closed process handle.");
         }
         catch (Exception ex) {
             throw new InvalidOperationException(FailedToOpenProcessMessage, ex);
@@ -91,6 +90,9 @@ public class ProcessService {
     }
 
     private void LogProcessInfo() {
+        if (ProcessHandle == null) {
+            return;
+        }
         Console.WriteLine($"Process: {ProcessHandle.ProcessName} - {ProcessHandle.Id}");
     }
 
@@ -100,8 +102,9 @@ public class ProcessService {
         IntPtr endAddress = GetModuleEndAddress();
 
         if (baseAddress != IntPtr.Zero && moduleSize > 0) {
-            Console.WriteLine("Module: {0}, Base Address: {1:X8}, End Address: {2:X8}",
-                            processName, baseAddress.ToInt64(), endAddress.ToInt64());
+            Console.WriteLine(
+                "Module: {0}, Base Address: {1:X8}, End Address: {2:X8}",
+                processName, baseAddress.ToInt64(), endAddress.ToInt64());
         }
         else {
             Console.WriteLine("Module: {0} not found or has no size.", processName);

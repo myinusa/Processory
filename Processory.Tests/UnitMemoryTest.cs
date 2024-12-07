@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using Processory.Internal;
 using Xunit.Abstractions;
 
 namespace Processory.Tests {

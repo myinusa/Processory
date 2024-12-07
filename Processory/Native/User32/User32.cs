@@ -10,19 +10,6 @@ public static class User32 {
     [DllImport("user32.dll", SetLastError = true)]
     public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
 
-
-    // Virtual key code for F5
-    public const byte VK_F5 = 0x74;
-    public const byte VK_CONTROL = 0x11;
-    public const byte VK_A = 0x41;
-    // Key event constants
-    public const uint KEYEVENTF_KEYDOWN = 0x0000;
-    public const uint KEYEVENTF_KEYUP = 0x0002;
-    public const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
-    public const int MOUSEEVENTF_RIGHTUP = 0x0010;
-    public const int MOUSEEVENTF_LEFTDOWN = 0x0002;
-    public const int MOUSEEVENTF_LEFTUP = 0x0004;
-
     [DllImport("user32.dll", SetLastError = true)]
     public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo);
 
@@ -34,9 +21,6 @@ public static class User32 {
 
     [DllImport("user32.dll")]
     public static extern bool PostMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
-
-    //[DllImport("user32.dll")]
-    //public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, int dwExtraInfo);
 
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -65,9 +49,6 @@ public static class User32 {
 
     [DllImport("user32.dll")]
     public static extern bool ClientToScreen(IntPtr hWnd, out Point lpPoint);
-
-    public const uint MOUSEEVENTF_ABSOLUTE = 0x8000;
-    public const uint MOUSEEVENTF_MOVE = 0x0001;
 
     public const int SW_MAXIMIZE = 3;
 
