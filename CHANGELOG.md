@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.18.0](https://github.com/myinusa/Processory/compare/v1.17.0...v1.18.0) (2024-12-07)
+
+
+### Features
+
+* add KeyboardConstants class for virtual key codes ([e31750b](https://github.com/myinusa/Processory/commit/e31750bd7fd0badb015ce6677a81794b43f0317c))
+* add MouseEventConstants class for mouse event flags ([e31750b](https://github.com/myinusa/Processory/commit/e31750bd7fd0badb015ce6677a81794b43f0317c))
+* add NullSafe utility class for safe dereferencing ([e31750b](https://github.com/myinusa/Processory/commit/e31750bd7fd0badb015ce6677a81794b43f0317c))
+* **CSVDataOffsetManager:** add csvPath parameter to constructor ([8452c85](https://github.com/myinusa/Processory/commit/8452c856d2dd8239075fa28ece23fd91ebeac859))
+* **Processory:** add csvPath parameter to ProcessoryClient constructor ([8452c85](https://github.com/myinusa/Processory/commit/8452c856d2dd8239075fa28ece23fd91ebeac859))
+* **WindowManager:** add new class to handle window operations like IsValidWindow, RestoreWindow, SetWindowToForeground, SnapWindowToRightHalf, and GetMonitorInfo ([54ac980](https://github.com/myinusa/Processory/commit/54ac9807f98064695d11c29a78a0ce6fd5adf825))
+
+
+### Bug Fixes
+
+* add null check in LogProcessInfo method in ProcessService ([e31750b](https://github.com/myinusa/Processory/commit/e31750bd7fd0badb015ce6677a81794b43f0317c))
+* **CSVDataOffsetManager:** enable logger for loading CSV data ([8452c85](https://github.com/myinusa/Processory/commit/8452c856d2dd8239075fa28ece23fd91ebeac859))
+
 ## [1.17.0](https://github.com/myinusa/Processory/compare/v1.16.0...v1.17.0) (2024-10-19)
 
 
