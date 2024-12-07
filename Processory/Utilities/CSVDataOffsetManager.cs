@@ -7,11 +7,13 @@ using Microsoft.Extensions.Logging;
 namespace Processory.Utilities {
     public class CSVDataOffsetManager {
         private readonly string nameOfCSVFile;
+        private readonly string csvPath;
         private readonly ILogger logger;
 
-        public CSVDataOffsetManager(ILoggerFactory loggerFactory, string nameOfCSVFile) {
+        public CSVDataOffsetManager(ILoggerFactory loggerFactory, string nameOfCSVFile, string csvPath) {
             logger = loggerFactory.CreateLogger<CSVDataOffsetManager>();
             this.nameOfCSVFile = nameOfCSVFile;
+            this.csvPath = csvPath;
             if (nameOfCSVFile.Any()) {
                 LoadRowsFromCsv();
             }
@@ -26,7 +28,7 @@ namespace Processory.Utilities {
         /// Loads rows from the CSV file if not already loaded.
         /// </summary>
         public void LoadRowsFromCsv() {
-            //logger.LogDebug("Loading CSV data from: {Path}", AddressPath);
+            logger.LogDebug("Loading CSV data from: {Path}", AddressPath);
             if (LoadedRows.Any()) return;
 
             try {
@@ -75,8 +77,8 @@ namespace Processory.Utilities {
         /// </summary>
         /// <returns>The client path.</returns>
         private string GetClientPath() {
-            // var path = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
-            var path = Directory.GetParent(Environment.CurrentDirectory)?.FullName ?? Environment.CurrentDirectory;
+            var defaultPath = Directory.GetParent(Environment.CurrentDirectory)?.FullName ?? Environment.CurrentDirectory;
+            string path = csvPath ?? defaultPath;
             var filePath = Path.Combine(path, nameOfCSVFile);
             if (!File.Exists(filePath)) {
                 logger.LogError("Failed at: {Path}", GetLastThreeParts(filePath));

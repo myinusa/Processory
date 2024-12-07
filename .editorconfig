@@ -4021,8 +4021,8 @@ dotnet_diagnostic.S4200.severity = none
 
 # ## StyleCop.Analyzers
 
-# # SA0001: XML comment analysis disabled
-# dotnet_diagnostic.SA0001.severity = warning
+# SA0001: XML comment analysis disabled
+dotnet_diagnostic.SA0001.severity = none
 
 # # SA0002: Invalid settings file
 # dotnet_diagnostic.SA0002.severity = warning

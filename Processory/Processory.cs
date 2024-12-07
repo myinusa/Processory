@@ -29,11 +29,12 @@ namespace Processory {
         /// <param name="processName">The name of the process to interact with.</param>
         /// <param name="loggerFactory">The logger factory for creating loggers.</param>
         /// <param name="nameOfCSV">The name of the CSV file for data offsets.</param>
-        public ProcessoryClient(string processName, ILoggerFactory loggerFactory = null, string nameOfCSV = "") {
+        /// <param name="csvPath">The path to the CSV file for data offsets.</param>
+        public ProcessoryClient(string processName, ILoggerFactory loggerFactory = null, string nameOfCSV = "", string csvPath = "") {
             logger = loggerFactory?.CreateLogger<ProcessoryClient>();
             ProcessName = processName;
             ProcessService = new ProcessService(this, loggerFactory);
-            CSVDataOffsetManager = new CSVDataOffsetManager(loggerFactory, nameOfCSV);
+            CSVDataOffsetManager = new CSVDataOffsetManager(loggerFactory, nameOfCSV, csvPath);
             InterfaceManager = new InterfaceManager(this, loggerFactory);
             MemoryReader = new MemoryReader(this, loggerFactory);
             ProcessHandle = ProcessService.GetProcessHandle();
