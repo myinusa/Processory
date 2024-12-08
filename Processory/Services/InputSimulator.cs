@@ -1,6 +1,6 @@
 using static Processory.Native.KeyboardConstants;
+using static Processory.Native.KeyboardMouseEvents;
 using static Processory.Native.MouseEventConstants;
-using static Processory.Native.User32.User32;
 
 namespace Processory.Services;
 
