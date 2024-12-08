@@ -6,5 +6,7 @@ public static class WindowConstants {
     public const uint SWP_SHOWWINDOW = 0x0040;
     public const int SW_RESTORE = 9;
     public const int SW_MAXIMIZE = 3;
+    public const int SM_CXVIRTUALSCREEN = 78;
+    public const int SM_CYVIRTUALSCREEN = 79;
     public static readonly IntPtr HWND_TOP = new(0);
 }
