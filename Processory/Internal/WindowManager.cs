@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
+using Processory.Native;
 using Processory.Native.User32;
 using static Processory.Native.WindowConstants;
 
@@ -116,12 +117,12 @@ public class WindowManager {
     }
 
     public MonitorInfo? GetMonitorInfo(IntPtr handle) {
-        nint monitor = User32.MonitorFromWindow(handle, 0);
+        nint monitor = MonitorManagement.MonitorFromWindow(handle, 0);
         MonitorInfo mi = new() {
             CbSize = (uint)Marshal.SizeOf<MonitorInfo>()
         };
 
-        if (!User32.GetMonitorInfo(monitor, ref mi)) {
+        if (!MonitorManagement.GetMonitorInfo(monitor, ref mi)) {
             logger.LogError("Failed to get monitor info.");
             return null;
         }

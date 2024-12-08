@@ -26,12 +26,6 @@ public static class User32 {
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool SetForegroundWindow(IntPtr hWnd);
 
-    [DllImport("user32.dll")]
-    public static extern bool GetMonitorInfo(IntPtr hMonitor, ref MonitorInfo lpmi);
-
-    [DllImport("user32.dll")]
-    public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
-
     public static string GetWindowStatus(IntPtr hWnd) {
         if (!IsWindow(hWnd)) {
             return "Invalid";
