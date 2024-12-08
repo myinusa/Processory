@@ -26,30 +26,11 @@ public static class User32 {
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool SetForegroundWindow(IntPtr hWnd);
 
-    // Define the POINT struct for the ClientToScreen function
-    public struct Point {
-        public int X { get; set; }
-        public int Y { get; set; }
-    }
-
     [DllImport("user32.dll")]
     public static extern bool GetMonitorInfo(IntPtr hMonitor, ref MonitorInfo lpmi);
 
     [DllImport("user32.dll")]
     public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
-
-    [DllImport("user32.dll")]
-    public static extern bool GetClientRect(IntPtr hWnd, out Rect lpRect);
-
-    [DllImport("user32.dll")]
-    public static extern bool GetCursorPos(out Point lpPoint);
-
-    [DllImport("user32.dll")]
-    public static extern bool ClientToScreen(IntPtr hWnd, out Point lpPoint);
-
-
-    [DllImport("user32.dll")]
-    public static extern bool SetCursorPos(int x, int y);
 
     public static string GetWindowStatus(IntPtr hWnd) {
         if (!IsWindow(hWnd)) {

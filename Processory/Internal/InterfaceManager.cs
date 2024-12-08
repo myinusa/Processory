@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Processory.Native;
 using Processory.Native.User32;
 
 namespace Processory.Internal {
@@ -67,7 +68,7 @@ namespace Processory.Internal {
             int centerX = rightHalfLeft + (rightHalfWidth / 2);
             int centerY = monitorInfo.rcMonitor.Top + ((monitorInfo.rcMonitor.Bottom - monitorInfo.rcMonitor.Top) / 2);
 
-            User32.SetCursorPos(centerX, centerY);
+            CursorManagement.SetCursorPos(centerX, centerY);
             logger.LogDebug("Mouse moved to center of the right half of the screen successfully.");
         }
     }
