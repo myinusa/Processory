@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.19.0](https://github.com/myinusa/Processory/compare/v1.18.0...v1.19.0) (2024-12-08)
+
+
+### Features
+
+* **Processory/Internal/InterfaceManager.cs:** Add logging for invalid window handle and log debug information for window status ([a58066f](https://github.com/myinusa/Processory/commit/a58066f009fc6f6746b02eefcdfee79b7ed3bde7))
+
+
+### Bug Fixes
+
+* **Processory/Internal/WindowManager.cs:** BringWindowToFront method with improved error handling and retry mechanism ([a58066f](https://github.com/myinusa/Processory/commit/a58066f009fc6f6746b02eefcdfee79b7ed3bde7))
+* **Processory/Native/User32/User32.cs:** Implement GetWindowStatus method to retrieve window status ([a58066f](https://github.com/myinusa/Processory/commit/a58066f009fc6f6746b02eefcdfee79b7ed3bde7))
+
 ## [1.18.0](https://github.com/myinusa/Processory/compare/v1.17.0...v1.18.0) (2024-12-07)
 
 
