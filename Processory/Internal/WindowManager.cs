@@ -46,8 +46,47 @@ public class WindowManager {
             logger.LogDebug("Window set to foreground successfully.");
         }
         else {
-            Environment.Exit(1);
             logger.LogError("Failed to set the window to foreground.");
+            Environment.Exit(1);
+        }
+    }
+
+    public void BringWindowToFront(IntPtr handle) {
+        if (handle == IntPtr.Zero) {
+            logger.LogError("Invalid window handle.");
+            return;
+        }
+
+        // Restore the window if it is minimized
+        RestoreWindow(handle);
+
+        // Attempt to set the window to the foreground
+        if (!User32.SetForegroundWindow(handle)) {
+            logger.LogWarning("Initial attempt to set the window to foreground failed. Trying alternative methods.");
+
+            // Try to bring the window to the top
+            if (!User32.BringWindowToTop(handle)) {
+                int errorCode = Marshal.GetLastWin32Error();
+                logger.LogError("Failed to bring the window to the top. Error code: {ErrorCode}", errorCode);
+            }
+
+            // Try to set the window position
+            if (!User32.SetWindowPos(handle, User32.HWND_TOP, 0, 0, 0, 0, User32.SWP_NOMOVE | User32.SWP_NOSIZE | User32.SWP_SHOWWINDOW)) {
+                int errorCode = Marshal.GetLastWin32Error();
+                logger.LogError("Failed to set the window position. Error code: {ErrorCode}", errorCode);
+            }
+
+            // Retry setting the window to the foreground
+            if (!User32.SetForegroundWindow(handle)) {
+                int errorCode = Marshal.GetLastWin32Error();
+                logger.LogError("Final attempt to set the window to foreground failed. Error code: {ErrorCode}", errorCode);
+            }
+            else {
+                logger.LogDebug("Window set to foreground successfully on retry.");
+            }
+        }
+        else {
+            logger.LogDebug("Window set to foreground successfully.");
         }
     }
 

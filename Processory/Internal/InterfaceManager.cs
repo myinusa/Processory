@@ -36,12 +36,17 @@ namespace Processory.Internal {
             var mainWindowTitle = processoryClient.ProcessService.ProcessHandle.MainWindowTitle;
 
             if (!windowManager.IsValidWindow(handle, mainWindowTitle, windowTitle)) {
+                logger.LogError("Invalid window handle.");
                 return false;
             }
 
-            windowManager.RestoreWindow(handle);
+            var windowStatus = User32.GetWindowStatus(handle);
+            logger.LogDebug("Window status: {WindowStatus}", windowStatus);
+
+            // windowManager.RestoreWindow(handle);
             Thread.Sleep(MillisecondsTimeout);
-            windowManager.SetWindowToForeground(handle);
+            // windowManager.SetWindowToForeground(handle);
+            windowManager.BringWindowToFront(handle);
             Thread.Sleep(MillisecondsTimeout);
             windowManager.SnapWindowToRightHalf(handle);
             Thread.Sleep(MillisecondsTimeout);
