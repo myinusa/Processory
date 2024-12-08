@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using Processory.Native.User32;
+using static Processory.Native.WindowConstants;
 
 namespace Processory.Internal;
 
@@ -71,7 +72,7 @@ public class WindowManager {
             }
 
             // Try to set the window position
-            if (!User32.SetWindowPos(handle, User32.HWND_TOP, 0, 0, 0, 0, User32.SWP_NOMOVE | User32.SWP_NOSIZE | User32.SWP_SHOWWINDOW)) {
+            if (!User32.SetWindowPos(handle, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW)) {
                 int errorCode = Marshal.GetLastWin32Error();
                 logger.LogError("Failed to set the window position. Error code: {ErrorCode}", errorCode);
             }
@@ -116,7 +117,7 @@ public class WindowManager {
 
     public MonitorInfo? GetMonitorInfo(IntPtr handle) {
         nint monitor = User32.MonitorFromWindow(handle, 0);
-        MonitorInfo mi = new MonitorInfo {
+        MonitorInfo mi = new() {
             CbSize = (uint)Marshal.SizeOf<MonitorInfo>()
         };
 

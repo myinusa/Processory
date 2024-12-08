@@ -50,7 +50,6 @@ public static class User32 {
     [DllImport("user32.dll")]
     public static extern bool ClientToScreen(IntPtr hWnd, out Point lpPoint);
 
-    public const int SW_MAXIMIZE = 3;
 
     [DllImport("user32.dll")]
     public static extern bool SetCursorPos(int x, int y);
@@ -93,18 +92,6 @@ public static class User32 {
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool IsHungAppWindow(IntPtr hWnd);
 
-    // [DllImport("user32.dll")]
-    // [return: MarshalAs(UnmanagedType.Bool)]
-    // public static extern bool IsIconic(IntPtr hWnd);
-
-    // [DllImport("user32.dll")]
-    // [return: MarshalAs(UnmanagedType.Bool)]
-    // public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-    // [DllImport("user32.dll")]
-    // [return: MarshalAs(UnmanagedType.Bool)]
-    // public static extern bool SetForegroundWindow(IntPtr hWnd);
-
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool BringWindowToTop(IntPtr hWnd);
@@ -113,22 +100,6 @@ public static class User32 {
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
-    // [DllImport("user32.dll")]
-    // public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
-
-    // [DllImport("user32.dll", CharSet = CharSet.Auto)]
-    // [return: MarshalAs(UnmanagedType.Bool)]
-    // public static extern bool GetMonitorInfo(IntPtr hMonitor, ref MonitorInfo lpmi);
-
-    // [DllImport("user32.dll")]
-    // [return: MarshalAs(UnmanagedType.Bool)]
-    // public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, [MarshalAs(UnmanagedType.Bool)] bool bRepaint);
-
-    public static readonly IntPtr HWND_TOP = new IntPtr(0);
-    public const uint SWP_NOMOVE = 0x0002;
-    public const uint SWP_NOSIZE = 0x0001;
-    public const uint SWP_SHOWWINDOW = 0x0040;
-    public const int SW_RESTORE = 9;
 
     /// <summary>
     /// Determines whether the specified window is minimized (iconic).
