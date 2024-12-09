@@ -247,8 +247,8 @@ dotnet_remove_unnecessary_suppression_exclusions = none
 # # IDE0001: Simplify name
 # dotnet_diagnostic.IDE0001.severity = warning
 
-# # IDE0002: Simplify member access
-# dotnet_diagnostic.IDE0002.severity = warning
+# IDE0002: Simplify member access
+dotnet_diagnostic.IDE0002.severity = warning
 
 # # IDE0003: Remove this or Me qualification
 # dotnet_diagnostic.IDE0003.severity = warning

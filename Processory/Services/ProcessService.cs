@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Processory.Native;
+using static Processory.Services.KeyboardMouseSimulator;
 
 namespace Processory.Services;
 
@@ -21,22 +22,20 @@ public class ProcessService {
         GetProcessHandle();
     }
 
-    // private readonly InputSimulator inputSimulator = new();
-
     public static void SimulateF5KeyPress() {
-        KeyboardMouseSimulator.SimulateKeyPress(KeyboardConstants.VK_F5);
+        SimulateKeyPress(KeyboardConstants.VK_F5);
     }
 
     public static void SimulateCtrlAPress() {
-        KeyboardMouseSimulator.SimulateKeyCombo(KeyboardConstants.VK_CONTROL, KeyboardConstants.VK_A);
+        SimulateKeyCombo(KeyboardConstants.VK_CONTROL, KeyboardConstants.VK_A);
     }
 
     public static void SimulateRightClick() {
-        KeyboardMouseSimulator.SimulateMouseClick(MouseEventConstants.MOUSEEVENTF_RIGHTDOWN);
+        SimulateMouseClick(MouseEventConstants.MOUSEEVENTF_RIGHTDOWN);
     }
 
     public static void SimulateLeftClick() {
-        KeyboardMouseSimulator.SimulateMouseClick(MouseEventConstants.MOUSEEVENTF_LEFTDOWN);
+        SimulateMouseClick(MouseEventConstants.MOUSEEVENTF_LEFTDOWN);
     }
 
     public nint GetProcessHandle() {
