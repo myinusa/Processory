@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.19.0](https://github.com/myinusa/Processory/compare/v1.18.0...v1.19.0) (2024-12-09)
+
+
+### Features
+
+* **.editorconfig:** Update IDE0002 diagnostic severity to warning ([976f88b](https://github.com/myinusa/Processory/commit/976f88b2dd7b00ffaca30483d10d2c0b0c77ff80))
+* **KeyboardConstants:** Added constants for virtual-key codes and key event flags. ([502017a](https://github.com/myinusa/Processory/commit/502017a3927a6ba7f5f077fe58b71cce83109f70))
+* **Processorory/Native/CursorManagement:** Add CursorManagement class with SetCursorPos method ([a171757](https://github.com/myinusa/Processory/commit/a1717575f27748cb3d4d26a715bd58a1eae4937b))
+* **Processory/Internal/InterfaceManager.cs:** Add logging for invalid window handle and log debug information for window status ([a58066f](https://github.com/myinusa/Processory/commit/a58066f009fc6f6746b02eefcdfee79b7ed3bde7))
+* **Processory/Native/KeyboardMouseEvents.cs:** Add new methods for keyboard and mouse events ([85a51a6](https://github.com/myinusa/Processory/commit/85a51a6854479601dcf8be7d8704dcfd6623b792))
+* **Processory/Native/MonitorManagement.cs:** added new file containing MonitorManagement class with necessary DllImport methods for user32.dll. ([017369f](https://github.com/myinusa/Processory/commit/017369fbab0eccb14e4b2c498c17d07b287934f5))
+
+
+### Bug Fixes
+
+* **Processory/Internal/WindowManager.cs:** BringWindowToFront method with improved error handling and retry mechanism ([a58066f](https://github.com/myinusa/Processory/commit/a58066f009fc6f6746b02eefcdfee79b7ed3bde7))
+* **Processory/Native/User32/User32.cs:** Implement GetWindowStatus method to retrieve window status ([a58066f](https://github.com/myinusa/Processory/commit/a58066f009fc6f6746b02eefcdfee79b7ed3bde7))
+* **ProcessService.cs:** Remove redundant private field declaration ([976f88b](https://github.com/myinusa/Processory/commit/976f88b2dd7b00ffaca30483d10d2c0b0c77ff80))
+* **User32/User32.cs:** Corrected SetForegroundWindow API call ([bdb4c8a](https://github.com/myinusa/Processory/commit/bdb4c8a4cdae3bc5013bdc963942813d92e80689))
+
 ## [1.18.0](https://github.com/myinusa/Processory/compare/v1.17.0...v1.18.0) (2024-12-07)
 
 
