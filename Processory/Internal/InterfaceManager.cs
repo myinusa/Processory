@@ -1,6 +1,9 @@
 using Microsoft.Extensions.Logging;
 using Processory.Native;
 using Processory.Native.User32;
+using static Processory.Native.Window.WindowInformation;
+using static Processory.Native.Window.WindowManagement;
+using static Processory.Native.Window.WindowState;
 
 namespace Processory.Internal {
     public class InterfaceManager {
@@ -42,7 +45,7 @@ namespace Processory.Internal {
                 return false;
             }
 
-            var windowStatus = User32.GetWindowStatus(handle);
+            var windowStatus = GetWindowStatus(handle);
             logger.LogDebug("Window status: {WindowStatus}", windowStatus);
 
             int retryCount = 0;
@@ -50,9 +53,9 @@ namespace Processory.Internal {
 
             while (retryCount < maxRetries) {
                 logger.LogDebug("[1/4] Checking if the window is focused.");
-                if (User32.GetForegroundWindow() != handle) {
+                if (GetForegroundWindow() != handle) {
                     logger.LogDebug("Window is not focused, attempting to bring it to the foreground.");
-                    User32.TrySetForegroundWindow(handle, out _);
+                    TrySetForegroundWindow(handle, out _);
                     logger.LogDebug("Window brought to the foreground.");
                     Thread.Sleep(MillisecondsTimeout);
                     retryCount++;

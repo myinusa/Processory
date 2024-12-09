@@ -4,6 +4,9 @@ using Microsoft.Extensions.Logging;
 using Processory.Native;
 using Processory.Native.User32;
 using static Processory.Native.CursorManagement;
+using static Processory.Native.Window.WindowInformation;
+using static Processory.Native.Window.WindowManagement;
+using static Processory.Native.Window.WindowState;
 using static Processory.Native.WindowConstants;
 
 namespace Processory.Internal;
@@ -30,7 +33,7 @@ public class WindowManager {
     }
 
     public void EnsureWindowIsForeground(IntPtr handle) {
-        IntPtr foregroundWindow = User32.GetForegroundWindow();
+        IntPtr foregroundWindow = GetForegroundWindow();
         if (handle != foregroundWindow) {
             logger.LogDebug("The provided window handle is not the foreground window.");
         }
@@ -41,9 +44,9 @@ public class WindowManager {
 
 
     public void RestoreWindow(IntPtr handle) {
-        if (User32.IsIconic(handle)) {
+        if (IsIconic(handle)) {
             logger.LogDebug("Window is minimized, attempting to restore.");
-            if (User32.ShowWindow(handle, (int)ShowCommands.SW_RESTORE)) {
+            if (ShowWindow(handle, (int)ShowCommands.SW_RESTORE)) {
                 logger.LogDebug("Window restored successfully.");
             }
             else {
@@ -57,7 +60,7 @@ public class WindowManager {
     }
 
     public void SetWindowToForeground(IntPtr handle) {
-        if (User32.SetForegroundWindow(handle)) {
+        if (SetForegroundWindow(handle)) {
             logger.LogDebug("Window set to foreground successfully.");
         }
         else {
@@ -76,23 +79,23 @@ public class WindowManager {
         RestoreWindow(handle);
 
         // Attempt to set the window to the foreground
-        if (!User32.SetForegroundWindow(handle)) {
+        if (!SetForegroundWindow(handle)) {
             logger.LogWarning("Initial attempt to set the window to foreground failed. Trying alternative methods.");
 
             // Try to bring the window to the top
-            if (!User32.BringWindowToTop(handle)) {
+            if (!BringWindowToTop(handle)) {
                 int errorCode = Marshal.GetLastWin32Error();
                 logger.LogError("Failed to bring the window to the top. Error code: {ErrorCode}", errorCode);
             }
 
             // Try to set the window position
-            if (!User32.SetWindowPos(handle, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW)) {
+            if (!SetWindowPos(handle, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW)) {
                 int errorCode = Marshal.GetLastWin32Error();
                 logger.LogError("Failed to set the window position. Error code: {ErrorCode}", errorCode);
             }
 
             // Retry setting the window to the foreground
-            if (!User32.SetForegroundWindow(handle)) {
+            if (!SetForegroundWindow(handle)) {
                 int errorCode = Marshal.GetLastWin32Error();
                 logger.LogError("Final attempt to set the window to foreground failed. Error code: {ErrorCode}", errorCode);
             }
@@ -117,7 +120,7 @@ public class WindowManager {
         int rightHalfWidth = monitorWidth / 2;
         int rightHalfLeft = monitorInfo.Value.rcMonitor.Left + rightHalfWidth;
 
-        if (!User32.MoveWindow(handle, rightHalfLeft, monitorInfo.Value.rcMonitor.Top, rightHalfWidth,
+        if (!MoveWindow(handle, rightHalfLeft, monitorInfo.Value.rcMonitor.Top, rightHalfWidth,
                 monitorHeight, true)) {
             int errorCode = Marshal.GetLastWin32Error();
             logger.LogWarning(
@@ -151,23 +154,23 @@ public class WindowManager {
             return null;
         }
 
-        IntPtr windowHandle = User32.WindowFromPoint(cursorPos);
+        IntPtr windowHandle = WindowFromPoint(cursorPos);
         if (windowHandle == IntPtr.Zero) {
             logger.LogError("No window found under cursor.");
             return null;
         }
 
-        int length = User32.GetWindowTextLength(windowHandle);
+        int length = GetWindowTextLength(windowHandle);
         if (length == 0) {
             logger.LogError("Failed to get window title length.");
             return null;
         }
 
         var windowTitle = new System.Text.StringBuilder(length + 1);
-        User32.GetWindowText(windowHandle, windowTitle, windowTitle.Capacity);
+        GetWindowText(windowHandle, windowTitle, windowTitle.Capacity);
 
         uint processId;
-        User32.GetWindowThreadProcessId(windowHandle, out processId);
+        GetWindowThreadProcessId(windowHandle, out processId);
 
         var process = Process.GetProcessById((int)processId);
         string processName = process.ProcessName;
