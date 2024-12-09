@@ -1,7 +1,9 @@
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using Processory.Native;
 using Processory.Native.User32;
+using static Processory.Native.CursorManagement;
 using static Processory.Native.WindowConstants;
 
 namespace Processory.Internal;
@@ -27,6 +29,17 @@ public class WindowManager {
         return true;
     }
 
+    public void EnsureWindowIsForeground(IntPtr handle) {
+        IntPtr foregroundWindow = User32.GetForegroundWindow();
+        if (handle != foregroundWindow) {
+            logger.LogDebug("The provided window handle is not the foreground window.");
+        }
+        else {
+            logger.LogWarning("The provided window handle is already the foreground window.");
+        }
+    }
+
+
     public void RestoreWindow(IntPtr handle) {
         if (User32.IsIconic(handle)) {
             logger.LogDebug("Window is minimized, attempting to restore.");
@@ -49,7 +62,7 @@ public class WindowManager {
         }
         else {
             logger.LogError("Failed to set the window to foreground.");
-            Environment.Exit(1);
+            // Environment.Exit(1);
         }
     }
 
@@ -128,5 +141,37 @@ public class WindowManager {
         }
 
         return mi;
+    }
+
+
+    public (string windowTitle, string processName)? GetWindowTitleAndProcessNameUnderCursor() {
+        var cursorPos = default(Point);
+        if (!GetCursorPos(ref cursorPos)) {
+            logger.LogError("Failed to get cursor position.");
+            return null;
+        }
+
+        IntPtr windowHandle = User32.WindowFromPoint(cursorPos);
+        if (windowHandle == IntPtr.Zero) {
+            logger.LogError("No window found under cursor.");
+            return null;
+        }
+
+        int length = User32.GetWindowTextLength(windowHandle);
+        if (length == 0) {
+            logger.LogError("Failed to get window title length.");
+            return null;
+        }
+
+        var windowTitle = new System.Text.StringBuilder(length + 1);
+        User32.GetWindowText(windowHandle, windowTitle, windowTitle.Capacity);
+
+        uint processId;
+        User32.GetWindowThreadProcessId(windowHandle, out processId);
+
+        var process = Process.GetProcessById((int)processId);
+        string processName = process.ProcessName;
+
+        return (windowTitle.ToString(), processName);
     }
 }

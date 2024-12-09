@@ -1,4 +1,6 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text;
+using static Processory.Native.CursorManagement;
 
 namespace Processory.Native.User32;
 
@@ -15,9 +17,22 @@ public static class User32 {
     [DllImport("user32.dll")]
     public static extern bool PostMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
 
-    [DllImport("user32.dll")]
+    [DllImport("user32.dll", SetLastError = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Auto)]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+    public static bool TrySetForegroundWindow(IntPtr hWnd, out int errorCode) {
+        bool result = SetForegroundWindow(hWnd);
+        if (!result) {
+            errorCode = Marshal.GetLastWin32Error();
+            return false;
+        }
+        errorCode = 0;
+        return true;
+    }
+
+    [DllImport("user32.dll")]
+    public static extern IntPtr GetForegroundWindow();
 
     public static string GetWindowStatus(IntPtr hWnd) {
         if (!IsWindow(hWnd)) {
@@ -104,4 +119,16 @@ public static class User32 {
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool IsZoomed(IntPtr hWnd);
+
+    [DllImport("user32.dll")]
+    public static extern IntPtr WindowFromPoint(Point point);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern int GetWindowTextLength(IntPtr hWnd);
+
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+    [DllImport("user32.dll")]
+    public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 }

@@ -9,8 +9,11 @@ public static class CursorManagement {
         public int Y { get; set; }
     }
 
+    // [DllImport("user32.dll")]
+    // public static extern bool GetCursorPos(out Point lpPoint);
+
     [DllImport("user32.dll")]
-    public static extern bool GetCursorPos(out Point lpPoint);
+    public static extern bool GetCursorPos(ref Point lpPoint);
 
     [DllImport("user32.dll")]
     public static extern bool SetCursorPos(int x, int y);

@@ -15,6 +15,7 @@ namespace Processory.Internal {
             windowManager = new WindowManager(logger);
         }
 
+
         public void Run(string windowName) {
             try {
                 logger.LogDebug("Starting WindowService");
@@ -44,13 +45,37 @@ namespace Processory.Internal {
             var windowStatus = User32.GetWindowStatus(handle);
             logger.LogDebug("Window status: {WindowStatus}", windowStatus);
 
-            // windowManager.RestoreWindow(handle);
+            int retryCount = 0;
+            const int maxRetries = 3;
+
+            while (retryCount < maxRetries) {
+                logger.LogDebug("[1/4] Checking if the window is focused.");
+                if (User32.GetForegroundWindow() != handle) {
+                    logger.LogDebug("Window is not focused, attempting to bring it to the foreground.");
+                    User32.TrySetForegroundWindow(handle, out _);
+                    logger.LogDebug("Window brought to the foreground.");
+                    Thread.Sleep(MillisecondsTimeout);
+                    retryCount++;
+                }
+                else {
+                    break;
+                }
+            }
+
+            if (retryCount == maxRetries) {
+                logger.LogWarning("Failed to bring the window to the foreground after {MaxRetries} attempts.", maxRetries);
+                return false;
+            }
+
+            windowManager.EnsureWindowIsForeground(handle);
+
+            windowManager.RestoreWindow(handle);
             Thread.Sleep(MillisecondsTimeout);
-            // windowManager.SetWindowToForeground(handle);
             windowManager.BringWindowToFront(handle);
             Thread.Sleep(MillisecondsTimeout);
             windowManager.SnapWindowToRightHalf(handle);
             Thread.Sleep(MillisecondsTimeout);
+            // windowManager.SetWindowToForeground(handle);
 
             var monitorInfo = windowManager.GetMonitorInfo(handle);
             if (monitorInfo == null) {
@@ -71,5 +96,6 @@ namespace Processory.Internal {
             CursorManagement.SetCursorPos(centerX, centerY);
             logger.LogDebug("Mouse moved to center of the right half of the screen successfully.");
         }
+
     }
 }
