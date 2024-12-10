@@ -142,7 +142,7 @@ namespace Processory.Internal {
             byte[] buffer = Read((nuint)offset, maxLength);
             int nullTerminatorIndex = Array.IndexOf<byte>(buffer, 0);
             int length = nullTerminatorIndex >= 0 ? nullTerminatorIndex : buffer.Length;
-            return System.Text.Encoding.ASCII.GetString(buffer, 0, length);
+            return Encoding.ASCII.GetString(buffer, 0, length);
         }
 
         public nint ReadPointer(nint address) {
