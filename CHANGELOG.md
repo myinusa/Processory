@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.20.0](https://github.com/myinusa/Processory/compare/v1.19.0...v1.20.0) (2024-12-10)
+
+
+### Features
+
+* **Processory/Processory.csproj:** update target framework to net8.0 ([a5ea490](https://github.com/myinusa/Processory/commit/a5ea49003477fe790ac4bf2dd3dc3085f5922d6a))
+
+
+### Bug Fixes
+
+* **Processor.Tests/Processor.Tests.csproj, Processor.Insight/Processor.Insight.csproj, Processory.csproj, Processory/Properties/AssemblyInfo.cs:** update assembly version and informational version ([a5ea490](https://github.com/myinusa/Processory/commit/a5ea49003477fe790ac4bf2dd3dc3085f5922d6a))
+
 ## [1.19.0](https://github.com/myinusa/Processory/compare/v1.18.0...v1.19.0) (2024-12-09)
 
 
