@@ -1,5 +1,4 @@
 ﻿using System.Runtime.InteropServices;
-using static Processory.Native.CursorManagement;
 
 namespace Processory.Native.User32;
 
