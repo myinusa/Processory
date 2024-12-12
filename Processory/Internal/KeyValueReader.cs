@@ -4,16 +4,10 @@ using Processory.Utilities;
 using static Processory.Errors.ErrorMessages;
 
 namespace Processory.Internal;
-public class KeyValueReader {
-    private readonly ProcessoryClient processoryClient;
-    private readonly ILogger<KeyValueReader> logger;
-    private readonly HashSet<string> validKeys;
-
-    public KeyValueReader(ProcessoryClient processoryClient, ILoggerFactory loggerFactory) {
-        this.processoryClient = processoryClient ?? throw new ArgumentNullException(nameof(processoryClient));
-        logger = loggerFactory.CreateLogger<KeyValueReader>();
-        validKeys = CSVDataOffsetManager.GetAllKeys();
-    }
+public class KeyValueReader(ProcessoryClient processoryClient, ILoggerFactory loggerFactory) {
+    private readonly ProcessoryClient processoryClient = processoryClient ?? throw new ArgumentNullException(nameof(processoryClient));
+    private readonly ILogger<KeyValueReader> logger = loggerFactory.CreateLogger<KeyValueReader>();
+    private readonly HashSet<string> validKeys = CSVDataOffsetManager.GetAllKeys();
 
     public T ReadAbsolute<T>(string key, HashSet<string>? validKeys = null)
         where T : unmanaged {
