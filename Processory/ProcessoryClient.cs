@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Processory.Helpers;
 using Processory.Internal;
 using Processory.Pointers;
@@ -30,13 +31,14 @@ namespace Processory {
         /// <param name="loggerFactory">The logger factory for creating loggers.</param>
         /// <param name="nameOfCSV">The name of the CSV file for data offsets.</param>
         /// <param name="csvPath">The path to the CSV file for data offsets.</param>
-        public ProcessoryClient(string processName, ILoggerFactory loggerFactory = null, string nameOfCSV = "", string csvPath = "") {
+        public ProcessoryClient(string processName, ILoggerFactory? loggerFactory = null, string nameOfCSV = "", string csvPath = "") {
+            var effectiveLoggerFactory = loggerFactory ?? new NullLoggerFactory();
             ProcessName = processName;
-            ProcessService = new ProcessService(this, loggerFactory);
-            CSVDataOffsetManager = new CSVDataOffsetManager(loggerFactory, nameOfCSV, csvPath);
-            InterfaceManager = new InterfaceManager(this, loggerFactory);
-            MemoryReader = new MemoryReader(this, loggerFactory);
-            KeyValueReader = new KeyValueReader(this, loggerFactory);
+            ProcessService = new ProcessService(this, effectiveLoggerFactory);
+            CSVDataOffsetManager = new CSVDataOffsetManager(effectiveLoggerFactory, nameOfCSV, csvPath);
+            InterfaceManager = new InterfaceManager(this, effectiveLoggerFactory);
+            MemoryReader = new MemoryReader(this, effectiveLoggerFactory);
+            KeyValueReader = new KeyValueReader(this, effectiveLoggerFactory);
             ProcessHandle = ProcessService.GetProcessHandle();
         }
 
