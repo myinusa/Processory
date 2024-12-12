@@ -53,10 +53,10 @@ public class Structures {
         /// </summary>
         ReadWriteGuard = 0x104,
         /// <summary>
-        /// Marks the region of virtual memory as non-cacheable 
+        /// Marks the region of virtual memory as non-cacheable
         /// </summary>
         NoCache = 0x200,
-        Writable = ReadWrite | WriteCopy | ExecuteReadWrite | ExecuteWriteCopy | Guard | ReadWriteGuard,
+        // Writable = ReadWrite | WriteCopy | ExecuteReadWrite | ExecuteWriteCopy | Guard | ReadWriteGuard,
     }
 
     internal enum ProcessorArchitecture {

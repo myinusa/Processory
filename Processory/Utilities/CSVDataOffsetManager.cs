@@ -20,7 +20,7 @@ namespace Processory.Utilities {
             }
         }
 
-        public static List<Row> LoadedRows { get; private set; } = new List<Row>();
+        public static List<Row> LoadedRows { get; private set; } = [];
 
         public string ClientPath => GetClientPath();
         public string AddressPath => Path.Combine(ClientPath, nameOfCSVFile);

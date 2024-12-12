@@ -17,7 +17,6 @@ namespace Processory {
         public CSVDataOffsetManager CSVDataOffsetManager { get; }
         public string ProcessName { get; }
         public nint ProcessHandle { get; }
-        private readonly ILogger logger;
 
         public PointerChainFollower PointerChainFollower => GetService<PointerChainFollower>();
         public RunTimeTypeInformation RunTimeTypeInformation => GetService<RunTimeTypeInformation>();
@@ -32,7 +31,6 @@ namespace Processory {
         /// <param name="nameOfCSV">The name of the CSV file for data offsets.</param>
         /// <param name="csvPath">The path to the CSV file for data offsets.</param>
         public ProcessoryClient(string processName, ILoggerFactory loggerFactory = null, string nameOfCSV = "", string csvPath = "") {
-            logger = loggerFactory?.CreateLogger<ProcessoryClient>();
             ProcessName = processName;
             ProcessService = new ProcessService(this, loggerFactory);
             CSVDataOffsetManager = new CSVDataOffsetManager(loggerFactory, nameOfCSV, csvPath);
