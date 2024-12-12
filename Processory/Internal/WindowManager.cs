@@ -177,4 +177,53 @@ public class WindowManager {
 
         return (windowTitle.ToString(), processName);
     }
+
+    // public bool MoveMouseToCenterOfMonitor(string windowTitle) {
+    //     bool success = false;
+
+    //     Process[] processes = Process.GetProcesses();
+    //     foreach (var process in processes) {
+    //         if (process.MainWindowTitle != windowTitle) continue;
+    //         NativeMethods.ShowWindow(process.MainWindowHandle, (int)ShowCommands.SW_RESTORE);
+
+    //         // Set the window to foreground
+    //         NativeMethods.SetForegroundWindow(process.MainWindowHandle);
+
+    //         // Maximize the window
+    //         // ShowWindow(process.MainWindowHandle, SW_MAXIMIZE);
+
+    //         // Check if the window is already maximized
+    //         if (!NativeMethods.IsZoomed(process.MainWindowHandle)) {
+    //             // Maximize the window
+    //             NativeMethods.ShowWindow(process.MainWindowHandle, (int)ShowCommands.SW_MAXIMIZE);
+    //         }
+
+    //         // Get the client rectangle of the window
+    //         NativeMethods.GetClientRect(process.MainWindowHandle, out NativeMethods.RECT rect);
+
+    //         // Get the screen coordinates of the client area of the window
+    //         NativeMethods.ClientToScreen(process.MainWindowHandle, out NativeMethods.POINT point);
+
+    //         // Get the monitor where the window is located
+    //         nint monitor = NativeMethods.MonitorFromWindow(process.MainWindowHandle, 0);
+
+    //         // Get the monitor info
+    //         NativeMethods.MONITORINFO mi = default;
+    //         mi.cbSize = (uint)Marshal.SizeOf(mi);
+    //         NativeMethods.GetMonitorInfo(monitor, ref mi);
+
+    //         const int Half = 2;
+
+    //         // Calculate the center of the monitor
+    //         centerX = mi.rcMonitor.Left + (mi.rcMonitor.Right - mi.rcMonitor.Left) / Half;
+    //         centerY = mi.rcMonitor.Top + (mi.rcMonitor.Bottom - mi.rcMonitor.Top) / Half;
+
+    //         // Move the mouse to the center of the monitor
+    //         NativeMethods.SetCursorPos(centerX, centerY);
+
+    //         success = true;
+    //     }
+
+    //     return success;
+    // }
 }

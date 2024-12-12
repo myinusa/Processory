@@ -4057,8 +4057,8 @@ dotnet_diagnostic.SA1005.severity = none
 # SA1009: Closing parenthesis should be spaced correctly
 dotnet_diagnostic.SA1009.severity = none
 
-# # SA1010: Opening square brackets should be spaced correctly
-# dotnet_diagnostic.SA1010.severity = warning
+# SA1010: Opening square brackets should be spaced correctly
+dotnet_diagnostic.SA1010.severity = none
 
 # SA1011: Closing square brackets should be spaced correctly
 dotnet_diagnostic.SA1011.severity = none
