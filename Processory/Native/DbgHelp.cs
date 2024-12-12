@@ -3,12 +3,12 @@ using System.Text;
 
 namespace Processory.Native;
 
-public static partial class NativeMethods {
+public static class DbgHelpInterop {
     [DllImport("dbghelp.dll", SetLastError = true, PreserveSig = true, CharSet = CharSet.Unicode)]
     public static extern int UnDecorateSymbolName(
-        [In] string DecoratedName,
-        [Out] StringBuilder UnDecoratedName,
-        [In][MarshalAs(UnmanagedType.U4)] int UndecoratedLength,
-        [In][MarshalAs(UnmanagedType.U4)] int Flags
+        [In] string decoratedName,
+        [Out] StringBuilder unDecoratedName,
+        [In][MarshalAs(UnmanagedType.U4)] int undecoratedLength,
+        [In][MarshalAs(UnmanagedType.U4)] int flags
     );
 }

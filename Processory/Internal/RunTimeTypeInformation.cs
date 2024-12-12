@@ -82,7 +82,7 @@ public class RunTimeTypeInformation {
 
         if (name.EndsWith("@@")) {
             var sb = new StringBuilder(255);
-            NativeMethods.UnDecorateSymbolName("?" + name, sb, sb.Capacity, undecoratedOptions);
+            DbgHelpInterop.UnDecorateSymbolName("?" + name, sb, sb.Capacity, undecoratedOptions);
             name = sb.ToString();
         }
 
