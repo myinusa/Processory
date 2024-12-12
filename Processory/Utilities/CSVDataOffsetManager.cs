@@ -1,7 +1,6 @@
 using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
-using CsvHelper.TypeConversion;
 using Microsoft.Extensions.Logging;
 using Processory.Exceptions;
 using static Processory.Errors.ErrorMessages;
@@ -106,32 +105,6 @@ namespace Processory.Utilities {
         /// <returns>A HashSet of unique keys.</returns>
         public static HashSet<string> GetAllKeys() {
             return LoadedRows.Select(row => row.Name).ToHashSet(StringComparer.OrdinalIgnoreCase);
-        }
-    }
-
-    public class Row {
-        public string Name { get; set; } = string.Empty;
-        public string Category { get; set; } = string.Empty;
-        public string Parent { get; set; } = string.Empty;
-        public List<int> Offsets { get; set; } = new List<int>();
-    }
-
-    public class RowMap : ClassMap<Row> {
-        public RowMap() {
-            Map(m => m.Name).Name("name");
-            Map(m => m.Category).Name("category");
-            Map(m => m.Parent).Name("parent");
-            Map(m => m.Offsets).Name("offsets").TypeConverter<OffsetsConverter>();
-        }
-    }
-
-    public class OffsetsConverter : DefaultTypeConverter {
-        public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData) {
-            if (string.IsNullOrEmpty(text))
-                return new List<int>();
-
-            var offsets = text.Split(',');
-            return offsets.Select(o => int.Parse(o.Replace("0x", string.Empty), NumberStyles.HexNumber)).ToList();
         }
     }
 }
