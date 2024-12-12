@@ -63,7 +63,7 @@ namespace Processory.Internal {
         public unsafe void ReadRef<T>(ulong offset, ref T value)
             where T : unmanaged {
             void* buffer = Unsafe.AsPointer(ref value);
-            if (!ReadProcessMemory((nuint)offset, buffer, (nuint)sizeof(T))) {
+            if (!ReadProcessMemoryUnsafe((nuint)offset, buffer, (nuint)sizeof(T))) {
                 //throw new InvalidOperationException($"Failed to read memory at offset 0x{offset:X} with size {sizeof(T)}.");
             }
         }
@@ -87,45 +87,8 @@ namespace Processory.Internal {
         /// <param name="buffer">A pointer to the buffer to store the read data.</param>
         /// <param name="numBytes">The number of bytes to read.</param>
         /// <returns>True if the read operation succeeds, false otherwise.</returns>
-        private unsafe bool ReadProcessMemory(nuint location, void* buffer, nuint numBytes) {
+        internal unsafe bool ReadProcessMemoryUnsafe(nuint location, void* buffer, nuint numBytes) {
             return MethodsNative.ReadProcessMemory(processoryClient.ProcessHandle, location, (nuint)buffer, numBytes, out _);
-        }
-
-        /// <summary>
-        /// Reads an array of type T from the process memory at the specified offset.
-        /// </summary>
-        /// <typeparam name="T">The type of elements in the array.</typeparam>
-        /// <param name="offset">The memory offset to read from.</param>
-        /// <param name="count">The number of elements to read.</param>
-        /// <returns>An array of type T read from the memory.</returns>
-        public T[] ReadArray<T>(ulong offset, int count)
-            where T : unmanaged {
-            if (count <= 0) {
-                throw new ArgumentOutOfRangeException(nameof(count), "Count must be greater than zero.");
-            }
-
-            T[] array = new T[count];
-            ReadArrayRef(offset, array);
-            return array;
-        }
-
-        /// <summary>
-        /// Reads an array of type T from the process memory at the specified offset into an existing array.
-        /// </summary>
-        /// <typeparam name="T">The type of elements in the array.</typeparam>
-        /// <param name="offset">The memory offset to read from.</param>
-        /// <param name="array">The array to store the read elements.</param>
-        public unsafe void ReadArrayRef<T>(ulong offset, T[] array)
-            where T : unmanaged {
-            if (array == null) {
-                throw new ArgumentNullException(nameof(array));
-            }
-
-            fixed (T* ptr = array) {
-                if (!ReadProcessMemory((nuint)offset, ptr, (nuint)(array.Length * sizeof(T)))) {
-                    throw new InvalidOperationException($"Failed to read array at offset 0x{offset:X} with size {array.Length * sizeof(T)}.");
-                }
-            }
         }
 
         /// <summary>
@@ -170,21 +133,8 @@ namespace Processory.Internal {
                 return default;
             }
 
-            return ByteArrayToStructure<T>(buffer);
+            return MemoryArrayReader.ByteArrayToStructure<T>(buffer);
         }
-
-
-        private static T ByteArrayToStructure<T>(byte[] bytes)
-            where T : struct {
-            GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-            try {
-                return (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T))!;
-            }
-            finally {
-                handle.Free();
-            }
-        }
-
 
         /// <summary>
         /// Reads a specified number of bytes from the process memory at the given address into a Span buffer.
