@@ -3,6 +3,8 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Microsoft.Extensions.Logging;
+using Processory.Exceptions;
+using static Processory.Errors.ErrorMessages;
 
 namespace Processory.Utilities {
     public class CSVDataOffsetManager {
@@ -59,7 +61,7 @@ namespace Processory.Utilities {
                 throw new ArgumentException("The provided name is null or whitespace.", nameof(name));
 
             var result = LoadedRows.Find(row => row.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-            return result ?? throw new ApplicationException("Failed to retrieve the row from the CSV data.");
+            return result ?? throw new RowNotFoundException(RowNotFoundErrorMessage);
         }
 
         /// <summary>
@@ -69,7 +71,7 @@ namespace Processory.Utilities {
         /// <returns>A list of offsets.</returns>
         public static List<int> GetOffsetsByRowName(string rowName) {
             var foundRow = GetRowByStringName(rowName);
-            return foundRow?.Offsets ?? new List<int>();
+            return foundRow?.Offsets ?? [];
         }
 
         /// <summary>
@@ -96,6 +98,14 @@ namespace Processory.Utilities {
         private static string GetLastThreeParts(string filePath) {
             var parts = filePath.Split(Path.DirectorySeparatorChar);
             return string.Join(Path.DirectorySeparatorChar.ToString(), parts.Skip(Math.Max(0, parts.Length - 4)));
+        }
+
+        /// <summary>
+        /// Retrieves all unique keys from the loaded CSV data.
+        /// </summary>
+        /// <returns>A HashSet of unique keys.</returns>
+        public static HashSet<string> GetAllKeys() {
+            return LoadedRows.Select(row => row.Name).ToHashSet(StringComparer.OrdinalIgnoreCase);
         }
     }
 

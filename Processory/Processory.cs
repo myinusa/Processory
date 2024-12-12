@@ -10,12 +10,13 @@ namespace Processory {
     /// Represents a client for interacting with a process.
     /// </summary>
     public class ProcessoryClient {
-        public MemoryReader MemoryReader { get; private set; }
-        public ProcessService ProcessService { get; private set; }
-        public InterfaceManager InterfaceManager { get; private set; }
-        public CSVDataOffsetManager CSVDataOffsetManager { get; private set; }
+        public MemoryReader MemoryReader { get; }
+        public KeyValueReader KeyValueReader { get; }
+        public ProcessService ProcessService { get; }
+        public InterfaceManager InterfaceManager { get; }
+        public CSVDataOffsetManager CSVDataOffsetManager { get; }
         public string ProcessName { get; }
-        public nint ProcessHandle { get; private set; }
+        public nint ProcessHandle { get; }
         private readonly ILogger logger;
 
         public PointerChainFollower PointerChainFollower => GetService<PointerChainFollower>();
@@ -37,6 +38,7 @@ namespace Processory {
             CSVDataOffsetManager = new CSVDataOffsetManager(loggerFactory, nameOfCSV, csvPath);
             InterfaceManager = new InterfaceManager(this, loggerFactory);
             MemoryReader = new MemoryReader(this, loggerFactory);
+            KeyValueReader = new KeyValueReader(this, loggerFactory);
             ProcessHandle = ProcessService.GetProcessHandle();
         }
 
