@@ -50,7 +50,7 @@ namespace Processory {
         private T GetService<T>()
             where T : class {
             if (ProcessHandle == 0) {
-                return null;
+                throw new InvalidOperationException("Cannot get service: Process handle is invalid.");
             }
 
             return typeof(T) switch {
