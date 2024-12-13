@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.21.0](https://github.com/myinusa/Processory/compare/v1.20.0...v1.21.0) (2024-12-12)
+
+
+### Features
+
+* **Processory/Errors:** Add ErrorMessages.cs ([3528cf1](https://github.com/myinusa/Processory/commit/3528cf14b39e96e947fc256d713ea18d782dfb06))
+* **Processory/Exceptions:** Add RowNotFoundException.cs ([3528cf1](https://github.com/myinusa/Processory/commit/3528cf14b39e96e947fc256d713ea18d782dfb06))
+* **Processory/Internal/MemoryArrayReader.cs:** Add MemoryArrayReader class with ReadArray and ReadArrayRef methods ([906007c](https://github.com/myinusa/Processory/commit/906007c9988a7c67027bb70f2828907aa1ea7b2f))
+* **Processory/Native/DbgHelp.cs:** UnDecorateSymbolName function now uses DbgHelpInterop class ([0d01c01](https://github.com/myinusa/Processory/commit/0d01c012f86e2c169d79a701febcd980344da498))
+
+
+### Bug Fixes
+
+* **Processory/Internal/KeyValueReader.cs:** Corrected the logic for reading absolute values, addressing potential null pointer dereferences and invalid keys. ([e84e810](https://github.com/myinusa/Processory/commit/e84e810b7375895321403577e861653245828721))
+* **Processory/Internal/RunTimeTypeInformation.cs:** AddressHelper.cs and RunTimeTypeInformation.cs are now using Processory.Native instead of System.Runtime.InteropServices ([0d01c01](https://github.com/myinusa/Processory/commit/0d01c012f86e2c169d79a701febcd980344da498))
+* **Processory/ProcessoryClient.cs:** replace null with an InvalidOperationException when process handle is invalid ([1eb9e76](https://github.com/myinusa/Processory/commit/1eb9e760e59289e8231ded8fe344566df699e21a))
+
 ## [1.20.0](https://github.com/myinusa/Processory/compare/v1.19.0...v1.20.0) (2024-12-10)
 
 
