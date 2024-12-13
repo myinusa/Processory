@@ -571,8 +571,8 @@ dotnet_diagnostic.IDE0120.severity = none
 # # CA1014: Mark assemblies with CLSCompliant
 # dotnet_diagnostic.CA1014.severity = warning
 
-# # CA1016: Mark assemblies with assembly version
-# dotnet_diagnostic.CA1016.severity = warning
+# CA1016: Mark assemblies with assembly version
+dotnet_diagnostic.CA1016.severity = none
 
 # # CA1017: Mark assemblies with ComVisible
 # dotnet_diagnostic.CA1017.severity = warning
@@ -3616,8 +3616,8 @@ dotnet_diagnostic.S3869.severity = none
 # # S3903: Types should be defined in named namespaces
 # dotnet_diagnostic.S3903.severity = warning
 
-# # S3904: Assemblies should have version information
-# dotnet_diagnostic.S3904.severity = warning
+# S3904: Assemblies should have version information
+dotnet_diagnostic.S3904.severity = none
 
 # # S3906: Event Handlers should have the correct signature
 # dotnet_diagnostic.S3906.severity = warning

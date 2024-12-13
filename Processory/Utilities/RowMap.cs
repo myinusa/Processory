@@ -1,7 +1,6 @@
 using CsvHelper.Configuration;
 
 namespace Processory.Utilities {
-
     public class RowMap : ClassMap<Row> {
         public RowMap() {
             Map(m => m.Name).Name("name");

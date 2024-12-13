@@ -1,11 +1,7 @@
 namespace Processory.Pointers;
 
-public class PointerChainFollower {
-    protected readonly ProcessoryClient ProcessoryClient;
-
-    public PointerChainFollower(ProcessoryClient processoryClient) {
-        ProcessoryClient = processoryClient;
-    }
+public class PointerChainFollower(ProcessoryClient processoryClient) {
+    private readonly ProcessoryClient processoryClient = processoryClient;
 
     /// <summary>
     /// Reads a pointer value from the specified address and returns it as a <see cref="UIntPtr"/>.
@@ -26,7 +22,7 @@ public class PointerChainFollower {
     /// and returns the actual address that the pointer points to.
     /// </example>
     public UIntPtr DereferencePointer(ulong address) {
-        return new UIntPtr((uint)ProcessoryClient.MemoryReader.ReadPointer((nint)address));
+        return new UIntPtr((uint)processoryClient.MemoryReader.ReadPointer((nint)address));
     }
 
     /// <summary>
@@ -52,7 +48,7 @@ public class PointerChainFollower {
         for (int i = 0; i < offsets.Count; ++i) {
             currentAddress = UIntPtr.Add(currentAddress, offsets[i]);
             if (i < offsets.Count - 1) {
-                currentAddress = ProcessoryClient.MemoryReader.ReadPointer<UIntPtr>((nint)currentAddress);
+                currentAddress = processoryClient.MemoryReader.ReadPointer<UIntPtr>((nint)currentAddress);
             }
         }
 
@@ -72,7 +68,7 @@ public class PointerChainFollower {
         for (int i = 0; i < offsets.Count; i++) {
             num = UIntPtr.Add(num, offsets[i]);
             if (i < offsets.Count - 1) {
-                num = ProcessoryClient.MemoryReader.ReadPointer<nuint>((nint)num);
+                num = processoryClient.MemoryReader.ReadPointer<nuint>((nint)num);
             }
         }
 

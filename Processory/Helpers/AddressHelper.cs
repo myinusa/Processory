@@ -25,7 +25,7 @@ public class AddressHelper {
         if (NativeMethods.VirtualQueryEx(ProcessoryClient.ProcessHandle, address, out mbi, (uint)Marshal.SizeOf(typeof(MEMORY_BASIC_INFORMATION))) == 0)
             return false;
 
-        bool isMemoryValid = mbi.State == (uint)Flags.MemoryState.MEM_COMMIT &&
+        bool isMemoryValid = mbi.State == (uint)MemoryState.MEM_COMMIT &&
                              (mbi.Protect == (uint)MemoryProtection.ReadWrite ||
                               mbi.Protect == (uint)MemoryProtection.ReadOnly ||
                               mbi.Protect == (uint)MemoryProtection.ExecuteRead ||
