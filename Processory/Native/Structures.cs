@@ -2,12 +2,12 @@
 
 namespace Processory.Native;
 
-public class Structures {
+public static class Structures {
     /// <summary>
     /// Defines the protection to be applied to a region of virtual memory
     /// </summary>
     [Flags]
-    public enum MemoryProtection : int {
+    public enum MemoryProtection {
         /// <summary>
         /// Disables all access to the region of virtual memory
         /// </summary>
@@ -83,7 +83,7 @@ public class Structures {
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct SYSTEM_INFO {
+    internal struct SystemInfo {
         /// <summary>
         /// The architecture of the processor.
         /// </summary>
@@ -139,7 +139,7 @@ public class Structures {
     ///     Contains information about a range of pages in the virtual address space of a process
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct MEMORY_BASIC_INFORMATION {
+    public struct MemoryBasicInformation {
         /// <summary>
         /// A pointer to the base address of a range of pages.
         /// </summary>

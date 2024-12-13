@@ -41,16 +41,16 @@ public static class NativeMethods {
     internal static extern IntPtr OpenProcess(Flags.ProcessAccess processAccess, bool bInheritHandle, int processId);
 
     [DllImport("kernel32.dll")]
-    internal static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
+    internal static extern void GetSystemInfo(out SystemInfo lpSystemInfo);
 
     [DllImport("kernel32.dll")]
-    internal static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, int dwLength);
+    internal static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MemoryBasicInformation lpBuffer, int dwLength);
 
     [DllImport("kernel32.dll")]
-    internal static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
+    internal static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MemoryBasicInformation lpBuffer, uint dwLength);
 
     [DllImport("kernel32.dll")]
-    internal static extern int VirtualQueryEx(IntPtr hProcess, UIntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
+    internal static extern int VirtualQueryEx(IntPtr hProcess, UIntPtr lpAddress, out MemoryBasicInformation lpBuffer, uint dwLength);
 
     [DllImport("kernel32.dll")]
     internal static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, IntPtr buffer, int size, IntPtr lpNumberOfBytesRead);

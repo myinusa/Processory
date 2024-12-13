@@ -3199,8 +3199,8 @@ dotnet_diagnostic.S1451.severity = none
 # # S2345: Flags enumerations should explicitly initialize all their members
 # dotnet_diagnostic.S2345.severity = warning
 
-# # S2346: Flags enumerations zero-value members should be named "None"
-# dotnet_diagnostic.S2346.severity = warning
+# S2346: Flags enumerations zero-value members should be named "None"
+dotnet_diagnostic.S2346.severity = none
 
 # # S2357: Fields should be private
 # dotnet_diagnostic.S2357.severity = warning
