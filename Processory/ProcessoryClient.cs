@@ -40,7 +40,7 @@ namespace Processory {
             InterfaceManager = new InterfaceManager(this, effectiveLoggerFactory);
             MemoryReader = new MemoryReader(this, effectiveLoggerFactory);
             KeyValueReader = new KeyValueReader(this, effectiveLoggerFactory);
-            MemoryStringReader = new MemoryStringReader(this);
+            MemoryStringReader = new MemoryStringReader(this, effectiveLoggerFactory);
             ProcessHandle = ProcessService.GetProcessHandle();
         }
 

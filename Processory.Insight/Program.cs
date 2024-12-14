@@ -24,7 +24,7 @@ public class Program {
         nuint defrOneAdd = processory.PointerChainFollower.DereferencePointer(addr1);
 
         // var breakpad_exception = processory.PointerChainFollower.ResolvePointerChain(defrOneAdd, new List<int> { 0x10, 0x28, 0x8, 0x4 });
-        var breakpad_exception = processory.MemoryReader.ResolveStringPointerList(defrOneAdd, new List<int> { 0x10, 0x28, 0x8, 0x4 });
+        var breakpad_exception = processory.MemoryStringReader.ResolveStringPointerList(defrOneAdd, [0x10, 0x28, 0x8, 0x4]);
 
         // Console.WriteLine("breakpad_exception: {0:X8}", breakpad_exception);
 
@@ -38,7 +38,7 @@ public class Program {
         Console.WriteLine("-------------------------------------------------------------");
         // Console.WriteLine($"{breakpad_exception:X8}");
         // Console.WriteLine("Total game info count: {0}", gameInfoValue.Count);
-        Console.WriteLine("Total game info count: {0}", breakpad_exception.Count);
+        // Console.WriteLine("Total game info count: {0}", breakpad_exception.Count);
         // 
         for (int i = 0; i < breakpad_exception.Count; i++) {
             Console.WriteLine("[{0}] | Game info: {1}", i, breakpad_exception[i]);
