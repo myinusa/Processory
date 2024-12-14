@@ -9,14 +9,9 @@ namespace Processory.Internal {
     /// <summary>
     /// Provides functionality to read memory from a process.
     /// </summary>
-    public class MemoryReader {
-        private readonly ProcessoryClient processoryClient;
-        private readonly ILogger logger;
-
-        public MemoryReader(ProcessoryClient processoryClient, ILoggerFactory loggerFactory) {
-            logger = loggerFactory.CreateLogger<MemoryReader>();
-            this.processoryClient = processoryClient ?? throw new ArgumentNullException(nameof(processoryClient));
-        }
+    public class MemoryReader(ProcessoryClient processoryClient, ILoggerFactory loggerFactory) {
+        private readonly ProcessoryClient processoryClient = processoryClient ?? throw new ArgumentNullException(nameof(processoryClient));
+        private readonly ILogger logger = loggerFactory.CreateLogger<MemoryReader>();
 
         /// <summary>
         /// Reads a specified number of bytes from the process memory at the given address.
@@ -155,17 +150,6 @@ namespace Processory.Internal {
             }
         }
 
-        public string ResolveStringPointerE(UIntPtr initialAddress, List<int> offsets) {
-            UIntPtr address = processoryClient.PointerChainFollower.FollowPointerChain(initialAddress, offsets);
-            var lengthOffset = new List<int>(offsets);
-            lengthOffset[lengthOffset.Count - 1] = 0x0;
-            var length = Read<int>(initialAddress, lengthOffset);
-
-            Span<byte> buffer = stackalloc byte[length];
-            ReadR(address, buffer);
-            return Encoding.UTF8.GetString(buffer);
-        }
-
         public T ReadUnsignedFileOffset<T>(UIntPtr address, string key)
             where T : unmanaged {
             Row foundRow = CSVDataOffsetManager.GetRowByStringName(key);
@@ -174,7 +158,7 @@ namespace Processory.Internal {
         }
 
         public string ReadOffsetString(UIntPtr address, string key) {
-            return processoryClient.MemoryReader.ResolveStringPointerE(address, CSVDataOffsetManager.GetOffsetsByRowName(key));
+            return processoryClient.MemoryStringReader.ResolveStringPointerE(address, CSVDataOffsetManager.GetOffsetsByRowName(key));
         }
     }
 }
