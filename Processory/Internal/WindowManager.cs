@@ -115,12 +115,12 @@ public class WindowManager {
             return;
         }
 
-        int monitorWidth = monitorInfo.Value.rcMonitor.Right - monitorInfo.Value.rcMonitor.Left;
-        int monitorHeight = monitorInfo.Value.rcMonitor.Bottom - monitorInfo.Value.rcMonitor.Top;
+        int monitorWidth = monitorInfo.Value.RcMonitor.Right - monitorInfo.Value.RcMonitor.Left;
+        int monitorHeight = monitorInfo.Value.RcMonitor.Bottom - monitorInfo.Value.RcMonitor.Top;
         int rightHalfWidth = monitorWidth / 2;
-        int rightHalfLeft = monitorInfo.Value.rcMonitor.Left + rightHalfWidth;
+        int rightHalfLeft = monitorInfo.Value.RcMonitor.Left + rightHalfWidth;
 
-        if (!MoveWindow(handle, rightHalfLeft, monitorInfo.Value.rcMonitor.Top, rightHalfWidth,
+        if (!MoveWindow(handle, rightHalfLeft, monitorInfo.Value.RcMonitor.Top, rightHalfWidth,
                 monitorHeight, true)) {
             int errorCode = Marshal.GetLastWin32Error();
             logger.LogWarning(

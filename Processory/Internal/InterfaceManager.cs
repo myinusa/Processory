@@ -18,7 +18,6 @@ namespace Processory.Internal {
             windowManager = new WindowManager(logger);
         }
 
-
         public void Run(string windowName) {
             try {
                 logger.LogDebug("Starting WindowService");
@@ -90,11 +89,11 @@ namespace Processory.Internal {
         }
 
         private void MoveMouseToCenterOfRightHalf(MonitorInfo monitorInfo) {
-            int monitorWidth = monitorInfo.rcMonitor.Right - monitorInfo.rcMonitor.Left;
+            int monitorWidth = monitorInfo.RcMonitor.Right - monitorInfo.RcMonitor.Left;
             int rightHalfWidth = monitorWidth / 2;
-            int rightHalfLeft = monitorInfo.rcMonitor.Left + rightHalfWidth;
+            int rightHalfLeft = monitorInfo.RcMonitor.Left + rightHalfWidth;
             int centerX = rightHalfLeft + (rightHalfWidth / 2);
-            int centerY = monitorInfo.rcMonitor.Top + ((monitorInfo.rcMonitor.Bottom - monitorInfo.rcMonitor.Top) / 2);
+            int centerY = monitorInfo.RcMonitor.Top + ((monitorInfo.RcMonitor.Bottom - monitorInfo.RcMonitor.Top) / 2);
 
             CursorManagement.SetCursorPos(centerX, centerY);
             logger.LogDebug("Mouse moved to center of the right half of the screen successfully.");

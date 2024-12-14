@@ -10,14 +10,11 @@ public class ProcessService {
     private const string FailedToOpenProcessMessage = "Failed to open process";
     //private const string FailedToCloseProcessMessage = "Failed to close process handle";
     public Process? ProcessHandle { get; set; }
-    private readonly ProcessoryClient processoryClient;
     private readonly string processName;
     private readonly ILogger logger;
 
     public ProcessService(ProcessoryClient processoryClient, ILoggerFactory loggerFactory) {
-        // this.logger = logger;
         logger = loggerFactory.CreateLogger<ProcessService>();
-        this.processoryClient = processoryClient;
         processName = processoryClient.ProcessName;
         GetProcessHandle();
     }
