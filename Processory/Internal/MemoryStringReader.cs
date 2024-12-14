@@ -6,6 +6,24 @@ public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactor
     private readonly ProcessoryClient processoryClient = processoryClient ?? throw new ArgumentNullException(nameof(processoryClient));
     private readonly ILogger logger = loggerFactory.CreateLogger<MemoryStringReader>();
 
+    /// <summary>
+    /// Reads a null-terminated string from the process memory at the specified offset.
+    /// </summary>
+    /// <param name="offset">The memory offset to read from.</param>
+    /// <param name="maxLength">The maximum length of the string to read.</param>
+    /// <returns>The string read from the memory.</returns>
+    public string ReadString(ulong offset, int maxLength = 1024) {
+        if (maxLength <= 0) {
+            throw new ArgumentOutOfRangeException(nameof(maxLength), "Max length must be greater than zero.");
+        }
+
+        byte[] buffer = processoryClient.MemoryReader.Read((nuint)offset, maxLength);
+        int nullTerminatorIndex = Array.IndexOf<byte>(buffer, 0);
+        int length = nullTerminatorIndex >= 0 ? nullTerminatorIndex : buffer.Length;
+        return Encoding.ASCII.GetString(buffer, 0, length);
+    }
+
+
     public string ResolveStringPointerE(UIntPtr initialAddress, List<int> offsets) {
         UIntPtr address = processoryClient.PointerChainFollower.FollowPointerChain(initialAddress, offsets);
         var lengthOffset = new List<int>(offsets);

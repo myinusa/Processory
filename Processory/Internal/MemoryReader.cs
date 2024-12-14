@@ -86,23 +86,6 @@ namespace Processory.Internal {
             return MethodsNative.ReadProcessMemory(processoryClient.ProcessHandle, location, (nuint)buffer, numBytes, out _);
         }
 
-        /// <summary>
-        /// Reads a null-terminated string from the process memory at the specified offset.
-        /// </summary>
-        /// <param name="offset">The memory offset to read from.</param>
-        /// <param name="maxLength">The maximum length of the string to read.</param>
-        /// <returns>The string read from the memory.</returns>
-        public string ReadString(ulong offset, int maxLength = 1024) {
-            if (maxLength <= 0) {
-                throw new ArgumentOutOfRangeException(nameof(maxLength), "Max length must be greater than zero.");
-            }
-
-            byte[] buffer = Read((nuint)offset, maxLength);
-            int nullTerminatorIndex = Array.IndexOf<byte>(buffer, 0);
-            int length = nullTerminatorIndex >= 0 ? nullTerminatorIndex : buffer.Length;
-            return Encoding.ASCII.GetString(buffer, 0, length);
-        }
-
         public nint ReadPointer(nint address) {
             byte[] buffer = Read((nuint)address, nint.Size);
 

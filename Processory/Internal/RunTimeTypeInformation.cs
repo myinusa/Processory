@@ -9,6 +9,7 @@ public class RunTimeTypeInformation {
     private const int BaseClassArrayOffsetPosition = 0x0C;
     private const int MaxBaseClassCount = 24;
     private readonly MemoryReader memoryReader;
+    private readonly MemoryStringReader memoryStringReader;
     private readonly int objectLocatorOffset = nint.Size;
 
     public ProcessoryClient ProcessoryClient { get; set; }
@@ -16,8 +17,8 @@ public class RunTimeTypeInformation {
     public RunTimeTypeInformation(ProcessoryClient processoryClient) {
         ProcessoryClient = processoryClient;
         memoryReader = ProcessoryClient.MemoryReader;
+        memoryStringReader = ProcessoryClient.MemoryStringReader;
     }
-
 
     private nuint GetClassHierarchyDescriptorPtr(nuint objectLocatorPtr, nuint baseAddress, int offsetPosition) {
         int offset = memoryReader.Read<int>(objectLocatorPtr + (nuint)offsetPosition);
@@ -74,7 +75,7 @@ public class RunTimeTypeInformation {
         // IntPtr typeDescriptorPtr = IntPtr.Zero;
         if (typeDescriptorPtr == nuint.Zero) return string.Empty;
 
-        string name = memoryReader.ReadString(typeDescriptorPtr + typeDescriptorPosition, maxNameLength);
+        string name = memoryStringReader.ReadString(typeDescriptorPtr + typeDescriptorPosition, maxNameLength);
         // string name = "";
         if (string.IsNullOrEmpty(name)) return string.Empty;
 
