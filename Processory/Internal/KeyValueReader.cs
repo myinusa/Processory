@@ -28,11 +28,11 @@ public class KeyValueReader(ProcessoryClient processoryClient, ILoggerFactory lo
     private T ReadFromParent<T>(Row foundRow)
         where T : unmanaged {
         var parentAddress = processoryClient.AddressService.GetAbsoluteAddress(foundRow.Parent);
-        logger.LogDebug("Parent: Key: {Name} | address {Parent:X}", foundRow.Parent, parentAddress);
+        // logger.LogDebug("Parent | Key: {Name} | address {Parent:X}", foundRow.Parent, parentAddress);
         var deferAddress = processoryClient.PointerChainFollower.DereferencePointer(parentAddress);
 
         var resolvedAddress = processoryClient.PointerChainFollower.FollowPointerChain(deferAddress, foundRow.Offsets);
-        logger.LogDebug("Resolved: {Name} | address {Resolved:X}", foundRow.Name, resolvedAddress);
+        // logger.LogDebug("Resolved | {Name} | address {Resolved:X}", foundRow.Name, resolvedAddress);
         return processoryClient.MemoryReader.Read<T>(resolvedAddress);
     }
 
