@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.23.0](https://github.com/myinusa/Processory/compare/v1.22.0...v1.23.0) (2024-12-14)
+
+
+### Features
+
+* **InterfaceManager:** Add support for logging to InterfaceManager ([f089cf8](https://github.com/myinusa/Processory/commit/f089cf89cfeb72b9d1433fb59c1de0e59a920586))
+* **MemoryReader:** Enhance MemoryReader to handle string pointers efficiently ([f089cf8](https://github.com/myinusa/Processory/commit/f089cf89cfeb72b9d1433fb59c1de0e59a920586))
+* **MemoryStringReader.cs:** Add MemoryStringReader class with ResolveStringPointerE method ([ec09dd3](https://github.com/myinusa/Processory/commit/ec09dd371ff1e8738650b345b5e659f9997fe307))
+* **Processory/Utilities/Row.cs:** Add DataType property to Row class ([ab542cc](https://github.com/myinusa/Processory/commit/ab542cc6e610d30ee7d6313b777287e8296b8740))
+* **Utilities/AddressService:** Add Category field to Row and update AddressService methods ([fa5c0c7](https://github.com/myinusa/Processory/commit/fa5c0c7e643389eef5b7018410b5043e3205c9c5))
+
+
+### Bug Fixes
+
+* **KeyValueReader:** Fix issue with KeyValueReader when resolving strings ([f089cf8](https://github.com/myinusa/Processory/commit/f089cf89cfeb72b9d1433fb59c1de0e59a920586))
+* **launchSettings.json:** Remove old launch settings configuration ([6c262f3](https://github.com/myinusa/Processory/commit/6c262f380b45f93ab16c8532d112630eaac3a821))
+* **MemoryReader.cs:** Remove console.WriteLine statement ([ec09dd3](https://github.com/myinusa/Processory/commit/ec09dd371ff1e8738650b345b5e659f9997fe307))
+* **Processory/Utilities/RowMap.cs:** Update DataType mapping in RowMap ([ab542cc](https://github.com/myinusa/Processory/commit/ab542cc6e610d30ee7d6313b777287e8296b8740))
+* **Utilities/RowMap.cs:** Update typeConverter property name from OffsetsConverter to OffsetsConverterType ([fa5c0c7](https://github.com/myinusa/Processory/commit/fa5c0c7e643389eef5b7018410b5043e3205c9c5))
+
+
+### Performance Improvements
+
+* **AssemblyInfo.cs:** Update AssemblyFileVersion and AssemblyInformationalVersion ([ec09dd3](https://github.com/myinusa/Processory/commit/ec09dd371ff1e8738650b345b5e659f9997fe307))
+
 ## [1.22.0](https://github.com/myinusa/Processory/compare/v1.21.0...v1.22.0) (2024-12-14)
 
 
