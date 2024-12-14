@@ -27,7 +27,7 @@ public class KeyValueReader(ProcessoryClient processoryClient, ILoggerFactory lo
 
     private T ReadFromParent<T>(Row foundRow)
         where T : unmanaged {
-        var parentAddress = processoryClient.AddressService.GetAbsoluteAddress(foundRow.Parent);
+        var parentAddress = Services.AddressService.GetAbsoluteAddress(foundRow.Parent);
         // logger.LogDebug("Parent | Key: {Name} | address {Parent:X}", foundRow.Parent, parentAddress);
         var deferAddress = processoryClient.PointerChainFollower.DereferencePointer(parentAddress);
 
@@ -38,7 +38,7 @@ public class KeyValueReader(ProcessoryClient processoryClient, ILoggerFactory lo
 
     private T ReadFromKey<T>(string key)
         where T : unmanaged {
-        var address = processoryClient.AddressService.GetAbsoluteAddress(key);
+        var address = Services.AddressService.GetAbsoluteAddress(key);
         return processoryClient.MemoryReader.Read<T>(address);
     }
 }

@@ -223,23 +223,6 @@ namespace Processory.Internal {
             return processoryClient.MemoryReader.Read<T>(addressChain);
         }
 
-        public T ReadAbsolute<T>(string key)
-            where T : unmanaged {
-            Row foundRow = CSVDataOffsetManager.GetRowByStringName(key);
-            if (foundRow.Parent != string.Empty) {
-                var parentAddress = processoryClient.AddressService.GetAbsoluteAddress(foundRow.Parent);
-                logger.LogDebug("Parent address {Parent:X}", parentAddress);
-                UIntPtr deferAddress = processoryClient.PointerChainFollower.DereferencePointer(parentAddress);
-
-                UIntPtr resolvedAddress = processoryClient.PointerChainFollower.FollowPointerChain(deferAddress, foundRow.Offsets);
-                logger.LogDebug("Resolved address {Resolved:X}", resolvedAddress);
-                return processoryClient.MemoryReader.Read<T>(resolvedAddress);
-            }
-
-            var address = processoryClient.AddressService.GetAbsoluteAddress(key);
-            return processoryClient.MemoryReader.Read<T>(address);
-        }
-
         public string ReadOffsetString(UIntPtr address, string key) {
             return processoryClient.MemoryReader.ResolveStringPointerE(address, CSVDataOffsetManager.GetOffsetsByRowName(key));
         }
