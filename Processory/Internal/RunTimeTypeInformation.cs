@@ -121,4 +121,6 @@ public class RunTimeTypeInformation {
 
         return GetBaseClassNames(baseClassArrayPtr, baseAddress, baseClassCount) ?? Array.Empty<string>();
     }
+
+    public string GetRTTIClassName(ulong address) => GetRTTIClass(address).FirstOrDefault() ?? string.Empty;
 }

@@ -43,6 +43,13 @@ namespace Processory.Internal {
             return value;
         }
 
+        /// <summary>
+        /// Reads a value of type T from the process memory at the specified offset after following a chain of pointers.
+        /// </summary>
+        /// <typeparam name="T">The type of value to read.</typeparam>
+        /// <param name="baseAddress">The starting memory address.</param>
+        /// <param name="offsets">The chain of offsets to follow.</param>
+        /// <returns>The value read from the memory after following the chain of pointers.</returns>
         public T Read<T>(ulong baseAddress, List<int> offsets)
             where T : unmanaged {
             nuint address = processoryClient.PointerChainFollower.FollowPointerChain(baseAddress, offsets);
@@ -119,7 +126,7 @@ namespace Processory.Internal {
         /// </summary>
         /// <param name="address">The memory address to read from.</param>
         /// <param name="buffer">The Span buffer to store the read data.</param>
-        public void ReadR(UIntPtr address, Span<byte> buffer) {
+        public void ReadSpanBytes(UIntPtr address, Span<byte> buffer) {
             if (buffer.Length == 0) {
                 return;
             }

@@ -31,7 +31,7 @@ public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactor
         var length = processoryClient.MemoryReader.Read<int>(initialAddress, lengthOffset);
 
         Span<byte> buffer = stackalloc byte[length];
-        processoryClient.MemoryReader.ReadR(address, buffer);
+        processoryClient.MemoryReader.ReadSpanBytes(address, buffer);
         return Encoding.UTF8.GetString(buffer);
     }
 
@@ -40,7 +40,7 @@ public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactor
         List<int> list = new List<int>(offsets);
         list[list.Count - 1] = 0;
         Span<byte> span = stackalloc byte[processoryClient.MemoryReader.Read<int>(initialAddress, list)];
-        processoryClient.MemoryReader.ReadR(address, span);
+        processoryClient.MemoryReader.ReadSpanBytes(address, span);
 
         // List to hold the found strings
         List<string> strings = new List<string>();
