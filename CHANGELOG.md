@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.22.0](https://github.com/myinusa/Processory/compare/v1.21.0...v1.22.0) (2024-12-14)
+
+
+### Features
+
+* **InterfaceManager:** Update window management and mouse move logic for better performance ([5404750](https://github.com/myinusa/Processory/commit/5404750b1d575b3419902aa54da58bc6b4c6d2be))
+* **Tools:** update .editorconfig to use more strict code analysis rules ([2622cb0](https://github.com/myinusa/Processory/commit/2622cb0cecad6ec603b039a16c5a278c3e6d77f8))
+
+
+### Bug Fixes
+
+* **.editorconfig:** remove unnecessary suppressions for CA1016 and S3904 ([2622cb0](https://github.com/myinusa/Processory/commit/2622cb0cecad6ec603b039a16c5a278c3e6d77f8))
+* **AssemblyInfo.cs:** Update assembly version from 1.21.0 to 1.21.241214.1151 ([5404750](https://github.com/myinusa/Processory/commit/5404750b1d575b3419902aa54da58bc6b4c6d2be))
+* **PointerChainFollower.cs:** ensure the pointer dereference and address following methods use correct processoryClient references ([2622cb0](https://github.com/myinusa/Processory/commit/2622cb0cecad6ec603b039a16c5a278c3e6d77f8))
+* **Row.cs:** add a missing closing curly brace ([2622cb0](https://github.com/myinusa/Processory/commit/2622cb0cecad6ec603b039a16c5a278c3e6d77f8))
+* **WindowManager, MonitorInfo:** Correct monitor information types to match C# conventions ([5404750](https://github.com/myinusa/Processory/commit/5404750b1d575b3419902aa54da58bc6b4c6d2be))
+
 ## [1.21.0](https://github.com/myinusa/Processory/compare/v1.20.0...v1.21.0) (2024-12-12)
 
 
