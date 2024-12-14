@@ -13,6 +13,7 @@ namespace Processory {
     public class ProcessoryClient {
         public MemoryReader MemoryReader { get; }
         public KeyValueReader KeyValueReader { get; }
+        public MemoryStringReader MemoryStringReader { get; }
         public ProcessService ProcessService { get; }
         public InterfaceManager InterfaceManager { get; }
         public CSVDataOffsetManager CSVDataOffsetManager { get; }
@@ -39,6 +40,7 @@ namespace Processory {
             InterfaceManager = new InterfaceManager(this, effectiveLoggerFactory);
             MemoryReader = new MemoryReader(this, effectiveLoggerFactory);
             KeyValueReader = new KeyValueReader(this, effectiveLoggerFactory);
+            MemoryStringReader = new MemoryStringReader(this);
             ProcessHandle = ProcessService.GetProcessHandle();
         }
 

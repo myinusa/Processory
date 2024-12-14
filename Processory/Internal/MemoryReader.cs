@@ -175,7 +175,7 @@ namespace Processory.Internal {
 
             // List to hold the found strings
             List<string> strings = new List<string>();
-            Console.WriteLine(span.Length);
+            // Console.WriteLine(span.Length);
 
             // Iterate through the span to find segments separated by null terminators
             int startIndex = 0;
