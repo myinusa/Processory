@@ -105,16 +105,16 @@ public class RunTimeTypeInformation {
         if (structAddr == nuint.Zero) return Array.Empty<string>();
 
         nuint objectLocatorPtr = memoryReader.Read<nuint>(structAddr - (nuint)objectLocatorOffset);
-        if (objectLocatorPtr == nuint.Zero) return Array.Empty<string>();
+        if (objectLocatorPtr == nuint.Zero) return [];
 
         var baseOffset = memoryReader.Read<int>((ulong)objectLocatorPtr + BaseOffsetPosition);
         nuint baseAddress = nuint.Subtract(objectLocatorPtr, baseOffset);
 
         nuint classHierarchyDescriptorPtr = GetClassHierarchyDescriptorPtr(objectLocatorPtr, baseAddress, ClassHierarchyDescriptorOffsetPosition);
-        if (classHierarchyDescriptorPtr == nuint.Zero) return Array.Empty<string>();
+        if (classHierarchyDescriptorPtr == nuint.Zero) return [];
 
         int baseClassCount = memoryReader.Read<int>((ulong)classHierarchyDescriptorPtr + BaseClassCountPosition);
-        if (baseClassCount == 0 || baseClassCount > MaxBaseClassCount) return Array.Empty<string>();
+        if (baseClassCount == 0 || baseClassCount > MaxBaseClassCount) return [];
 
         nuint baseClassArrayPtr = GetBaseClassArrayPtr(classHierarchyDescriptorPtr, baseAddress, BaseClassArrayOffsetPosition);
         if (baseClassArrayPtr == nuint.Zero) return Array.Empty<string>();

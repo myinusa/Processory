@@ -24,8 +24,7 @@ public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactor
         return Encoding.ASCII.GetString(buffer, 0, length);
     }
 
-
-    public string ResolveStringPointerE(UIntPtr initialAddress, List<int> offsets) {
+    public string GetStringFromPointerChain(UIntPtr initialAddress, List<int> offsets) {
         UIntPtr address = processoryClient.PointerChainFollower.FollowPointerChain(initialAddress, offsets);
         var lengthOffset = new List<int>(offsets);
         lengthOffset[lengthOffset.Count - 1] = 0x0;
@@ -87,7 +86,7 @@ public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactor
     }
 
     public string ReadOffsetString(UIntPtr address, string key) {
-        return processoryClient.MemoryStringReader.ResolveStringPointerE(address, CSVDataOffsetManager.GetOffsetsByRowName(key));
+        return processoryClient.MemoryStringReader.GetStringFromPointerChain(address, CSVDataOffsetManager.GetOffsetsByRowName(key));
     }
 
 }
