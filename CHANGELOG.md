@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.23.1](https://github.com/myinusa/Processory/compare/v1.23.0...v1.23.1) (2024-12-15)
+
+
+### Bug Fixes
+
+* **Processory/Internal/MemoryReader.cs:** Add documentation for Read&lt;T&gt; method, change ReadR to ReadSpanBytes for consistency and clarity. ([2c2229d](https://github.com/myinusa/Processory/commit/2c2229d790466bd0897e297e4290e7f9f15599ab))
+* **Processory/Internal/RunTimeTypeInformation.cs:** Read class hierarchy descriptor pointer by offset instead of direct address ([21ea796](https://github.com/myinusa/Processory/commit/21ea79600352a199007ab953ee2b11a4abdc0ffc))
+* **Processory/Processory.csproj:** Update version prefix to reflect changes made to MemoryReader class. ([2c2229d](https://github.com/myinusa/Processory/commit/2c2229d790466bd0897e297e4290e7f9f15599ab))
+* **Processory/Properties/AssemblyInfo.cs:** Update assembly version and informational version accordingly. ([2c2229d](https://github.com/myinusa/Processory/commit/2c2229d790466bd0897e297e4290e7f9f15599ab))
+
 ## [1.23.0](https://github.com/myinusa/Processory/compare/v1.22.0...v1.23.0) (2024-12-14)
 
 
