@@ -1,6 +1,5 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using Processory.Native;
 using Processory.Utilities;
@@ -145,10 +144,6 @@ namespace Processory.Internal {
             Row foundRow = CSVDataOffsetManager.GetRowByStringName(key);
             UIntPtr addressChain = processoryClient.PointerChainFollower.FollowPointerChain(address.ToUInt64(), foundRow.Offsets);
             return processoryClient.MemoryReader.Read<T>(addressChain);
-        }
-
-        public string ReadOffsetString(UIntPtr address, string key) {
-            return processoryClient.MemoryStringReader.ResolveStringPointerE(address, CSVDataOffsetManager.GetOffsetsByRowName(key));
         }
     }
 }

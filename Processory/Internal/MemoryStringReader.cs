@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.Extensions.Logging;
+using Processory.Utilities;
 
 namespace Processory.Internal;
 public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactory loggerFactory) {
@@ -83,6 +84,10 @@ public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactor
         }
 
         return strings; // Return the list of strings
+    }
+
+    public string ReadOffsetString(UIntPtr address, string key) {
+        return processoryClient.MemoryStringReader.ResolveStringPointerE(address, CSVDataOffsetManager.GetOffsetsByRowName(key));
     }
 
 }
