@@ -47,6 +47,21 @@ namespace Processory.Internal {
             var windowStatus = GetWindowStatus(handle);
             logger.LogDebug("Window status: {WindowStatus}", windowStatus);
 
+            // if (windowStatus == WindowStatus.Minimized) {
+            if (windowStatus == "Minimized") {
+                logger.LogDebug("Window is minimized, attempting to restore.");
+                windowManager.RestoreWindow(handle);
+                Thread.Sleep(MillisecondsTimeout);
+            }
+
+            if (windowStatus == "Restored") {
+                logger.LogDebug("Window is Restored, attempting to restore.");
+                windowManager.MinimizeWindow(handle);
+                Thread.Sleep(MillisecondsTimeout);
+                windowManager.RestoreWindow(handle);
+                Thread.Sleep(MillisecondsTimeout);
+            }
+
             int retryCount = 0;
             const int maxRetries = 3;
 

@@ -59,6 +59,22 @@ public class WindowManager {
         }
     }
 
+    public void MinimizeWindow(IntPtr handle) {
+        if (!IsIconic(handle)) {
+            logger.LogDebug("Window is not minimized, attempting to minimize.");
+            if (ShowWindow(handle, (int)ShowCommands.SW_MINIMIZE)) {
+                logger.LogDebug("Window minimized successfully.");
+            }
+            else {
+                int errorCode = Marshal.GetLastWin32Error();
+                logger.LogWarning("Failed to minimize the window. Error code: {ErrorCode}", errorCode);
+            }
+        }
+        else {
+            logger.LogDebug("Window is already minimized.");
+        }
+    }
+
     public void SetWindowToForeground(IntPtr handle) {
         if (SetForegroundWindow(handle)) {
             logger.LogDebug("Window set to foreground successfully.");
