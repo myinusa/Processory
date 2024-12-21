@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.24.0](https://github.com/myinusa/Processory/compare/v1.23.0...v1.24.0) (2024-12-21)
+
+
+### Features
+
+* **Processory/Internal/InterfaceManager.cs:** Added logic to handle minimized and restored window statuses ([87d4d0a](https://github.com/myinusa/Processory/commit/87d4d0a2f1ad6c24ed691f1c694e78bedc4b9b4f))
+
+
+### Bug Fixes
+
+* Ensure that the `InterfaceManager` correctly handles various window states, including minimizing and restoring. ([0e1af71](https://github.com/myinusa/Processory/commit/0e1af713a327db0609a0d37e21a6dfa184aafcb7))
+* **Processorory/Internal/WindowManager.cs:** Fixed issue with minimizing and restoring windows ([87d4d0a](https://github.com/myinusa/Processory/commit/87d4d0a2f1ad6c24ed691f1c694e78bedc4b9b4f))
+* **Processorory/Properties/AssemblyInfo.cs:** Updated assembly information to match version prefix ([87d4d0a](https://github.com/myinusa/Processory/commit/87d4d0a2f1ad6c24ed691f1c694e78bedc4b9b4f))
+* **Processory/Internal/MemoryReader.cs:** Add documentation for Read&lt;T&gt; method, change ReadR to ReadSpanBytes for consistency and clarity. ([2c2229d](https://github.com/myinusa/Processory/commit/2c2229d790466bd0897e297e4290e7f9f15599ab))
+* **Processory/Internal/RunTimeTypeInformation.cs:** Read class hierarchy descriptor pointer by offset instead of direct address ([21ea796](https://github.com/myinusa/Processory/commit/21ea79600352a199007ab953ee2b11a4abdc0ffc))
+* **Processory/Processory.csproj:** Update version prefix to reflect changes made to MemoryReader class. ([2c2229d](https://github.com/myinusa/Processory/commit/2c2229d790466bd0897e297e4290e7f9f15599ab))
+* **Processory/Properties/AssemblyInfo.cs:** Update assembly version and informational version accordingly. ([2c2229d](https://github.com/myinusa/Processory/commit/2c2229d790466bd0897e297e4290e7f9f15599ab))
+
 ## [1.23.0](https://github.com/myinusa/Processory/compare/v1.22.0...v1.23.0) (2024-12-14)
 
 
