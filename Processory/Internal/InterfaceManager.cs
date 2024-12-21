@@ -47,7 +47,24 @@ namespace Processory.Internal {
             var windowStatus = GetWindowStatus(handle);
             logger.LogDebug("Window status: {WindowStatus}", windowStatus);
 
-            // if (windowStatus == WindowStatus.Minimized) {
+            HandleWindowState(handle, windowStatus);
+
+            if (!BringWindowToForeground(handle)) {
+                return false;
+            }
+            windowManager.EnsureWindowIsForeground(handle);
+            PerformWindowOperations(handle);
+
+            var monitorInfo = windowManager.GetMonitorInfo(handle);
+            if (monitorInfo == null) {
+                return false;
+            }
+
+            MoveMouseToCenterOfRightHalf(monitorInfo.Value);
+            return true;
+        }
+
+        private void HandleWindowState(IntPtr handle, string windowStatus) {
             if (windowStatus == "Minimized") {
                 logger.LogDebug("Window is minimized, attempting to restore.");
                 windowManager.RestoreWindow(handle);
@@ -55,13 +72,15 @@ namespace Processory.Internal {
             }
 
             if (windowStatus == "Restored") {
-                logger.LogDebug("Window is Restored, attempting to restore.");
+                logger.LogDebug("Window is restored, attempting to minimize and restore.");
                 windowManager.MinimizeWindow(handle);
                 Thread.Sleep(MillisecondsTimeout);
                 windowManager.RestoreWindow(handle);
                 Thread.Sleep(MillisecondsTimeout);
             }
+        }
 
+        private bool BringWindowToForeground(IntPtr handle) {
             int retryCount = 0;
             const int maxRetries = 3;
 
@@ -75,32 +94,21 @@ namespace Processory.Internal {
                     retryCount++;
                 }
                 else {
-                    break;
+                    return true;
                 }
             }
 
-            if (retryCount == maxRetries) {
-                logger.LogWarning("Failed to bring the window to the foreground after {MaxRetries} attempts.", maxRetries);
-                return false;
-            }
+            logger.LogWarning("Failed to bring the window to the foreground after {MaxRetries} attempts.", maxRetries);
+            return false;
+        }
 
-            windowManager.EnsureWindowIsForeground(handle);
-
+        private void PerformWindowOperations(IntPtr handle) {
             windowManager.RestoreWindow(handle);
             Thread.Sleep(MillisecondsTimeout);
             windowManager.BringWindowToFront(handle);
             Thread.Sleep(MillisecondsTimeout);
             windowManager.SnapWindowToRightHalf(handle);
             Thread.Sleep(MillisecondsTimeout);
-            // windowManager.SetWindowToForeground(handle);
-
-            var monitorInfo = windowManager.GetMonitorInfo(handle);
-            if (monitorInfo == null) {
-                return false;
-            }
-
-            MoveMouseToCenterOfRightHalf(monitorInfo.Value);
-            return true;
         }
 
         private void MoveMouseToCenterOfRightHalf(MonitorInfo monitorInfo) {

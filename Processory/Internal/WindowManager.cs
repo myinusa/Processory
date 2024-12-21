@@ -75,16 +75,6 @@ public class WindowManager {
         }
     }
 
-    public void SetWindowToForeground(IntPtr handle) {
-        if (SetForegroundWindow(handle)) {
-            logger.LogDebug("Window set to foreground successfully.");
-        }
-        else {
-            logger.LogError("Failed to set the window to foreground.");
-            // Environment.Exit(1);
-        }
-    }
-
     public void BringWindowToFront(IntPtr handle) {
         if (handle == IntPtr.Zero) {
             logger.LogError("Invalid window handle.");
