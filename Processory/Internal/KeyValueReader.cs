@@ -25,6 +25,21 @@ public class KeyValueReader(ProcessoryClient processoryClient, ILoggerFactory lo
         return ReadFromKey<T>(key);
     }
 
+    public nuint GetAddress(string key, HashSet<string>? validKeys = null) {
+        validKeys ??= this.validKeys;
+
+        if (!validKeys.Contains(key)) {
+            throw new RowNotFoundException(string.Format(RowNotFoundErrorMessage, key));
+        }
+
+        var foundRow = CSVDataOffsetManager.GetRowByStringName(key);
+        if (!string.IsNullOrEmpty(foundRow.Parent)) {
+            return ResolveRowWithParent(foundRow);
+        }
+
+        return 0;
+    }
+
     private T ReadFromParent<T>(Row foundRow)
         where T : unmanaged {
         var parentAddress = Services.AddressService.GetAbsoluteAddress(foundRow.Parent);
@@ -36,9 +51,20 @@ public class KeyValueReader(ProcessoryClient processoryClient, ILoggerFactory lo
         return processoryClient.MemoryReader.Read<T>(resolvedAddress);
     }
 
+    private nuint ResolveRowWithParent(Row foundRow) {
+        var parentAddress = Services.AddressService.GetAbsoluteAddress(foundRow.Parent);
+        var deferAddress = processoryClient.PointerChainFollower.DereferencePointer(parentAddress);
+        return processoryClient.PointerChainFollower.FollowPointerChain(deferAddress, foundRow.Offsets);
+    }
+
     private T ReadFromKey<T>(string key)
         where T : unmanaged {
         var address = Services.AddressService.GetAbsoluteAddress(key);
         return processoryClient.MemoryReader.Read<T>(address);
     }
+
+    // private nuint ResolveAddressFromKey<T>(string key) {
+    //     var address = Services.AddressService.GetAbsoluteAddress(key);
+    //     return processoryClient.MemoryReader.Read(address);
+    // }
 }
