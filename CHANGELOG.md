@@ -1,5 +1,41 @@
 # Changelog
 
+## [1.24.0](https://github.com/myinusa/Processory/compare/v1.23.0...v1.24.0) (2025-01-05)
+
+
+### Features
+
+* **Internal/ProcessoryClient:** Add AddressInfoFactory class with ReadAddressInfo and ReadAddressPointer methods. ([a754341](https://github.com/myinusa/Processory/commit/a754341a41370fd62938ade66c77dfaf95f67206))
+* **Internal:** Add new classes and methods to read memory and pointers ([cd15179](https://github.com/myinusa/Processory/commit/cd15179863fe104979044752bab860fb35b5e2ed))
+* **MemoryReader.cs:** Add `ReadAddressInfo&lt;T&gt;` method to return an AddressInfo instance ([cd15179](https://github.com/myinusa/Processory/commit/cd15179863fe104979044752bab860fb35b5e2ed))
+* **MemoryReader.cs:** Add `ReadNo&lt;T&gt;` for reading unmanaged types without a reference ([cd15179](https://github.com/myinusa/Processory/commit/cd15179863fe104979044752bab860fb35b5e2ed))
+* **MemoryReader.cs:** Add `ReadNoRef&lt;T&gt;` for reading unmanaged types into a ref variable ([cd15179](https://github.com/myinusa/Processory/commit/cd15179863fe104979044752bab860fb35b5e2ed))
+* **MemoryReader.cs:** Add `ReadPointerCE` method to dereference a pointer using CE techniques ([cd15179](https://github.com/myinusa/Processory/commit/cd15179863fe104979044752bab860fb35b5e2ed))
+* **MemoryReader.cs:** Add `ReadPointerInfo` method to read and dereference pointers ([cd15179](https://github.com/myinusa/Processory/commit/cd15179863fe104979044752bab860fb35b5e2ed))
+* **Processory.Tests:** add new test classes for common functionality ([f52ad7d](https://github.com/myinusa/Processory/commit/f52ad7d6366ee7277862f66ef2007f2fff7af382))
+* **Processory.Tests:** add test for AddressPointerInfo ([2ecf487](https://github.com/myinusa/Processory/commit/2ecf4874127b0ca4380a2d69b73dbec23e3cf505))
+* **Processory/Helpers:** Add IsValidAddress method to AddressHelper class ([d3b716f](https://github.com/myinusa/Processory/commit/d3b716fb2032750671603dddd56f05ee2a187cb3))
+* **Processory/Internal/AddressPointer.cs:** Add AddressPointer class for reading pointers in memory ([b495b46](https://github.com/myinusa/Processory/commit/b495b46e919df1154c7e115735c09825bcecdad6))
+* **Processory/Internal/InterfaceManager.cs:** Added logic to handle minimized and restored window statuses ([87d4d0a](https://github.com/myinusa/Processory/commit/87d4d0a2f1ad6c24ed691f1c694e78bedc4b9b4f))
+* **Processory/Internal/MemoryReader.cs:** Replace hardcoded `MemoryReader` with `processoryClient.AddressInfoFactory.ReadAddressInfo&lt;T&gt;()` in `ReadAddressInfo<T>(ulong address)` method ([ccf84c7](https://github.com/myinusa/Processory/commit/ccf84c7fd2671a29a6bc7b05bf74c9ad1b486fff))
+* **Processory/ProcessoryClient.cs:** Add AddressInfoFactory service to the container with `GetService&lt;AddressInfoFactory&gt;()` method ([ccf84c7](https://github.com/myinusa/Processory/commit/ccf84c7fd2671a29a6bc7b05bf74c9ad1b486fff))
+
+
+### Bug Fixes
+
+* Ensure that the `InterfaceManager` correctly handles various window states, including minimizing and restoring. ([0e1af71](https://github.com/myinusa/Processory/commit/0e1af713a327db0609a0d37e21a6dfa184aafcb7))
+* **Processorory/Internal/WindowManager.cs:** Fixed issue with minimizing and restoring windows ([87d4d0a](https://github.com/myinusa/Processory/commit/87d4d0a2f1ad6c24ed691f1c694e78bedc4b9b4f))
+* **Processorory/Properties/AssemblyInfo.cs:** Updated assembly information to match version prefix ([87d4d0a](https://github.com/myinusa/Processory/commit/87d4d0a2f1ad6c24ed691f1c694e78bedc4b9b4f))
+* **Processory.Tests/UnitMemoryTest.cs:** Add protected memory reader property to unit tests ([e1391f5](https://github.com/myinusa/Processory/commit/e1391f585e73cdc6970fa5aed0d90792732547b9))
+* **Processory/Helpers:** Correct memory query logic in IsValidPointer method ([d3b716f](https://github.com/myinusa/Processory/commit/d3b716fb2032750671603dddd56f05ee2a187cb3))
+* **Processory/Internal/MemoryReader.cs:** Add documentation for Read&lt;T&gt; method, change ReadR to ReadSpanBytes for consistency and clarity. ([2c2229d](https://github.com/myinusa/Processory/commit/2c2229d790466bd0897e297e4290e7f9f15599ab))
+* **Processory/Internal/MemoryReader.cs:** Remove unused default return statement from `ReadAddressPointer&lt;TAddressValue, TPointerValue&gt;(ulong address)` method ([ccf84c7](https://github.com/myinusa/Processory/commit/ccf84c7fd2671a29a6bc7b05bf74c9ad1b486fff))
+* **Processory/Internal/RunTimeTypeInformation.cs:** Read class hierarchy descriptor pointer by offset instead of direct address ([21ea796](https://github.com/myinusa/Processory/commit/21ea79600352a199007ab953ee2b11a4abdc0ffc))
+* **Processory/Processory.csproj:** Update version prefix to reflect changes made to MemoryReader class. ([2c2229d](https://github.com/myinusa/Processory/commit/2c2229d790466bd0897e297e4290e7f9f15599ab))
+* **Processory/Properties/AssemblyInfo.cs:** Update assembly version and informational version accordingly. ([2c2229d](https://github.com/myinusa/Processory/commit/2c2229d790466bd0897e297e4290e7f9f15599ab))
+* **UnitMemoryTest.cs:** Corrected logic for logging and validation ([ae2c6e5](https://github.com/myinusa/Processory/commit/ae2c6e5568f0c3adf902aec2892d21e45f40b982))
+* **UnitMemoryTest.cs:** replace placeholders with valid values and addresses ([f52ad7d](https://github.com/myinusa/Processory/commit/f52ad7d6366ee7277862f66ef2007f2fff7af382))
+
 ## [1.23.0](https://github.com/myinusa/Processory/compare/v1.22.0...v1.23.0) (2024-12-14)
 
 
