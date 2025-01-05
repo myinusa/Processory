@@ -6,6 +6,19 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) : CommonTestB
     private readonly ProcessoryClient processoryClient = new("fm", new LoggerFactory());
     private const ulong BaseAddress = 0x140000000;
     private const ulong GameExceptionHandlerOffset = 0x04d50e30;
+    protected Internal.MemoryReader MemoryReader => processoryClient.MemoryReader;
+
+
+    [Fact]
+    public void TestReadBytes() {
+        const ulong address = 0x140000000;
+        const int size = 4;
+        byte[] result = MemoryReader.Read((nuint)address, size);
+
+        Logger.LogInformation("Read bytes: {0}", BitConverter.ToString(result));
+
+        Assert.NotEmpty(result);
+    }
 
 
     [Fact]
