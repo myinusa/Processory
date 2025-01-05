@@ -75,14 +75,6 @@ namespace Processory.Internal {
             }
         }
 
-        public void ReadNoRef<T>(ulong offset, ref T value)
-            where T : unmanaged {
-            Span<byte> buffer = MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref value, 1));
-            if (!ReadProcessMemory((nuint)offset, buffer.ToArray(), (nuint)buffer.Length, out _)) {
-                //throw new InvalidOperationException($"Failed to read memory at offset 0x{offset:X} with size {sizeof(T)}.");
-            }
-        }
-
         /// <summary>
         /// Reads process memory using native methods.
         /// </summary>
@@ -110,32 +102,6 @@ namespace Processory.Internal {
             where T : unmanaged {
             var value = Read<T>(address);
             return new AddressInfo<T>(address, value);
-        }
-
-        public AddressPointer<TAddressValue, TPointerValue> ReadAddressPointer<TAddressValue, TPointerValue>(ulong address)
-            where TAddressValue : unmanaged
-            where TPointerValue : unmanaged {
-            var addressInfo = ReadAddressInfo<TAddressValue>(address);
-
-            var pointerAddress = processoryClient.PointerChainFollower.DereferencePointer(address);
-            var pointerValue = Read<TPointerValue>(pointerAddress);
-
-            var pointerInfo = new AddressInfo<TPointerValue>(pointerAddress, pointerValue);
-
-            return new AddressPointer<TAddressValue, TPointerValue>(addressInfo, pointerInfo);
-        }
-
-        /// <summary>
-        /// Reads a ulong address and returns its pointer value, reference, and the address being pointed to.
-        /// </summary>
-        /// <param name="address">The address to read from.</param>
-        /// <returns>An instance of PointerInfo containing the pointer value, reference, and address being pointed to.</returns>
-        public PointerInfo ReadPointerInfo(ulong address) {
-            var pointerValue = Read<nuint>(address);
-            var reference = processoryClient.PointerChainFollower.DereferencePointer(pointerValue);
-            var addressBeingPointedTo = Read<nuint>(reference);
-
-            return new PointerInfo(pointerValue, reference, addressBeingPointedTo);
         }
 
         public nuint ReadPointerCE(ulong address) {
