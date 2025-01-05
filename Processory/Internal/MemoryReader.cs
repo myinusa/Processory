@@ -55,6 +55,12 @@ namespace Processory.Internal {
             return Read<T>(address);
         }
 
+        public T ReadNo<T>(ulong baseAddress)
+            where T : unmanaged {
+            // nuint address = processoryClient.PointerChainFollower.FollowPointerChain(baseAddress, offsets);
+            return Read<T>(baseAddress);
+        }
+
         /// <summary>
         /// Reads a value of type T from the process memory at the specified offset into a reference.
         /// </summary>
@@ -65,6 +71,14 @@ namespace Processory.Internal {
             where T : unmanaged {
             void* buffer = Unsafe.AsPointer(ref value);
             if (!ReadProcessMemoryUnsafe((nuint)offset, buffer, (nuint)sizeof(T))) {
+                //throw new InvalidOperationException($"Failed to read memory at offset 0x{offset:X} with size {sizeof(T)}.");
+            }
+        }
+
+        public void ReadNoRef<T>(ulong offset, ref T value)
+            where T : unmanaged {
+            Span<byte> buffer = MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref value, 1));
+            if (!ReadProcessMemory((nuint)offset, buffer.ToArray(), (nuint)buffer.Length, out _)) {
                 //throw new InvalidOperationException($"Failed to read memory at offset 0x{offset:X} with size {sizeof(T)}.");
             }
         }
@@ -90,6 +104,30 @@ namespace Processory.Internal {
         /// <returns>True if the read operation succeeds, false otherwise.</returns>
         internal unsafe bool ReadProcessMemoryUnsafe(nuint location, void* buffer, nuint numBytes) {
             return MethodsNative.ReadProcessMemory(processoryClient.ProcessHandle, location, (nuint)buffer, numBytes, out _);
+        }
+
+        public AddressInfo<T> ReadAddressInfo<T>(ulong address)
+            where T : unmanaged {
+            var value = Read<T>(address);
+            return new AddressInfo<T>(address, value);
+        }
+
+        /// <summary>
+        /// Reads a ulong address and returns its pointer value, reference, and the address being pointed to.
+        /// </summary>
+        /// <param name="address">The address to read from.</param>
+        /// <returns>An instance of PointerInfo containing the pointer value, reference, and address being pointed to.</returns>
+        public PointerInfo ReadPointerInfo(ulong address) {
+            var pointerValue = Read<nuint>(address);
+            var reference = processoryClient.PointerChainFollower.DereferencePointer(pointerValue);
+            var addressBeingPointedTo = Read<nuint>(reference);
+
+            return new PointerInfo(pointerValue, reference, addressBeingPointedTo);
+        }
+
+        public nuint ReadPointerCE(ulong address) {
+            var addr1 = Read<nuint>(address);
+            return processoryClient.PointerChainFollower.DereferencePointer(addr1);
         }
 
         public nint ReadPointer(nint address) {
