@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Processory.Internal;
 using Xunit.Abstractions;
 
 namespace Processory.Tests;
@@ -134,7 +135,9 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
         const ulong address = BaseAddress + GameExceptionHandlerOffset;
 
         // Act
-        var addressInfo = MemoryReader.ReadAddressInfo<int>(address);
+        // var addressInfo = MemoryReader.ReadAddressInfo<int>(address);
+        var addressInfo = processoryClient.AddressInfoFactory.ReadAddressInfo<int>(address);
+
 
         // var addressInfoCE = MemoryReader.ReadPointerCE(address);
         var pointerAddress = processoryClient.PointerChainFollower.DereferencePointer(address);
@@ -158,7 +161,9 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
     public void ReadAddressPointerInfo() {
         const ulong address = BaseAddress + GameExceptionHandlerOffset;
 
-        var addressPointerInfo = MemoryReader.ReadAddressPointer<int, int>(address);
+        // var addressPointerInfo = MemoryReader.ReadAddressPointer<int, int>(address);
+        var addressPointerInfo = processoryClient.AddressInfoFactory.ReadAddressPointer<int, int>(address);
+
 
         testOutputHelper.WriteLine("=======================");
         testOutputHelper.WriteLine("Address: {0:X8}", addressPointerInfo.AddressInfo.Address);

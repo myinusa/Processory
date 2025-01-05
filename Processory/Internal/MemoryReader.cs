@@ -115,16 +115,15 @@ namespace Processory.Internal {
         public AddressPointer<TAddressValue, TPointerValue> ReadAddressPointer<TAddressValue, TPointerValue>(ulong address)
             where TAddressValue : unmanaged
             where TPointerValue : unmanaged {
-                var addressInfo = ReadAddressInfo<TAddressValue>(address);
+            var addressInfo = ReadAddressInfo<TAddressValue>(address);
 
-                var pointerAddress = processoryClient.PointerChainFollower.DereferencePointer(address);
-                var pointerValue = Read<TPointerValue>(pointerAddress);
+            var pointerAddress = processoryClient.PointerChainFollower.DereferencePointer(address);
+            var pointerValue = Read<TPointerValue>(pointerAddress);
 
-                var pointerInfo = new AddressInfo<TPointerValue>(pointerAddress, pointerValue);
+            var pointerInfo = new AddressInfo<TPointerValue>(pointerAddress, pointerValue);
 
-                // return default;
-                return new AddressPointer<TAddressValue, TPointerValue>(addressInfo, pointerInfo);
-            }
+            return new AddressPointer<TAddressValue, TPointerValue>(addressInfo, pointerInfo);
+        }
 
         /// <summary>
         /// Reads a ulong address and returns its pointer value, reference, and the address being pointed to.
