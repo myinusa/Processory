@@ -17,6 +17,12 @@ public class AddressHelper {
         return result != 0 && (mbi.State & (uint)MemoryState.MEM_COMMIT) != 0 && (mbi.Protect & (uint)MemoryState.PAGE_READWRITE) != 0;
     }
 
+    public bool IsValidAddress(ulong address) {
+        IntPtr addressPtr = new IntPtr((long)address);
+        int result = NativeMethods.VirtualQueryEx(ProcessoryClient.ProcessHandle, addressPtr, out MemoryBasicInformation mbi, (uint)Marshal.SizeOf(typeof(MemoryBasicInformation)));
+        return result != 0 && (mbi.State & (uint)MemoryState.MEM_COMMIT) != 0 && (mbi.Protect & (uint)MemoryState.PAGE_READWRITE) != 0;
+    }
+
     public bool IsValidPointer(nuint address, out nuint endAddress) {
         endAddress = nuint.Zero;
 
@@ -40,7 +46,6 @@ public class AddressHelper {
             endAddress = new nuint(regionEnd);
             return true;
         }
-        // }
 
         return false;
     }
