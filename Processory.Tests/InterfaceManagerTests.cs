@@ -5,11 +5,11 @@ using Processory.Internal;
 namespace Processory.Tests;
 
 public class InterfaceManagerTests {
-    private readonly ProcessoryClient _processoryClient;
-    private readonly ILoggerFactory _loggerFactory;
-    private readonly ILogger<InterfaceManager> _logger;
-    private readonly WindowManager _windowManager;
-    private readonly InterfaceManager _interfaceManager;
+    // private readonly ProcessoryClient _processoryClient;
+    // private readonly ILoggerFactory _loggerFactory;
+    // private readonly ILogger<InterfaceManager> _logger;
+    // private readonly WindowManager _windowManager;
+    // private readonly InterfaceManager _interfaceManager;
     private readonly ProcessoryClient processoryClient = new("fm", new LoggerFactory());
     
     [Fact]
