@@ -24,14 +24,60 @@ public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactor
         return Encoding.ASCII.GetString(buffer, 0, length);
     }
 
+    /// <summary>
+    /// Reads a string from a pointer chain in the process memory.
+    /// </summary>
+    /// <param name="initialAddress">The initial address of the pointer chain.</param>
+    /// <param name="offsets">The offsets to apply to the pointer chain.</param>
+    /// <returns>The string read from the memory.</returns>
     public string GetStringFromPointerChain(UIntPtr initialAddress, List<int> offsets) {
+        // Follow the pointer chain to get the final address of the string
         UIntPtr address = processoryClient.PointerChainFollower.FollowPointerChain(initialAddress, offsets);
+        // logger.LogDebug("Resolved address: {Address:X}", address);
+
+        // Create a new list of offsets by cloning the original list
         var lengthOffset = new List<int>(offsets);
+
+        // Replace the last offset with 0 to get the length of the string
         lengthOffset[lengthOffset.Count - 1] = 0x0;
+
+        // Read the length of the string from the memory
         var length = processoryClient.MemoryReader.Read<int>(initialAddress, lengthOffset);
 
+        // Allocate a span to store the string
         Span<byte> buffer = stackalloc byte[length];
+
+        // Read the string from the memory
         processoryClient.MemoryReader.ReadSpanBytes(address, buffer);
+
+        // Convert the span to a string
+        return Encoding.UTF8.GetString(buffer);
+    }
+
+    public string GetStringChain(UIntPtr initialAddress, List<int> offsets) {
+        // Follow the pointer chain to get the final address of the string
+        // UIntPtr address = processoryClient.PointerChainFollower.DereferencePointer(initialAddress);
+        UIntPtr address = initialAddress;
+        // UIntPtr address = processoryClient.MemoryReader.ReadNo<UIntPtr>(initialAddress);
+        logger.LogDebug("Resolved address: {Address:X}", address);
+
+        // Create a new list of offsets by cloning the original list
+        var lengthOffset = new List<int>(offsets);
+
+        // Replace the last offset with 0 to get the length of the string
+        lengthOffset[lengthOffset.Count - 1] = 0x0;
+
+        // Read the length of the string from the memory
+        var length = processoryClient.MemoryReader.Read<int>(address, lengthOffset);
+        logger.LogDebug("Length: {Length}", length);
+
+        // Allocate a span to store the string
+        Span<byte> buffer = stackalloc byte[length];
+
+        // Read the string from the memory
+        processoryClient.MemoryReader.ReadSpanBytes(address, buffer);
+
+        // Convert the span to a string
         return Encoding.UTF8.GetString(buffer);
     }
 
@@ -89,4 +135,7 @@ public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactor
         return processoryClient.MemoryStringReader.GetStringFromPointerChain(address, CSVDataOffsetManager.GetOffsetsByRowName(key));
     }
 
+    public string ReadStringOffset(UIntPtr address, string key) {
+        return processoryClient.MemoryStringReader.GetStringChain(address, CSVDataOffsetManager.GetOffsetsByRowName(key));
+    }
 }
