@@ -21,7 +21,7 @@ public class InterfaceManager {
     public void Run(string windowName) {
         try {
             logger.LogDebug("Starting WindowService");
-            if (MoveMouseToCenterOfMonitor(windowName)) {
+            if (PrepareWindowAndMouse(windowName)) {
                 logger.LogDebug("Mouse moved to center of monitor successfully.");
             }
             else {
@@ -35,7 +35,7 @@ public class InterfaceManager {
         }
     }
 
-    public bool MoveMouseToCenterOfMonitor(string windowTitle) {
+    public bool PrepareWindowAndMouse(string windowTitle) {
         var handle = processoryClient.ProcessService.ProcessHandle!.MainWindowHandle;
         var mainWindowTitle = processoryClient.ProcessService.ProcessHandle.MainWindowTitle;
 
