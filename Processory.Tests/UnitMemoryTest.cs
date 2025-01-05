@@ -152,4 +152,24 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
         Assert.Equal(address, addressInfo.Address);
         Assert.NotEqual(default, addressInfo.Value);
     }
+
+    [Fact]
+    [Trait("Category", "Address")]
+    public void ReadAddressPointerInfo() {
+        const ulong address = BaseAddress + GameExceptionHandlerOffset;
+
+        var addressPointerInfo = MemoryReader.ReadAddressPointer<int, int>(address);
+
+        testOutputHelper.WriteLine("=======================");
+        testOutputHelper.WriteLine("Address: {0:X8}", addressPointerInfo.AddressInfo.Address);
+        testOutputHelper.WriteLine("Value: {0}", addressPointerInfo.AddressInfo.Value);
+        testOutputHelper.WriteLine("=======================");
+
+        testOutputHelper.WriteLine("P->Address: {0:X8}", addressPointerInfo.PointerInfo.Address);
+        testOutputHelper.WriteLine("P->Value: {0}", addressPointerInfo.PointerInfo.Value);
+        testOutputHelper.WriteLine("=======================");
+
+        Assert.Equal(address, addressPointerInfo.AddressInfo.Address);
+        Assert.NotEqual(default, addressPointerInfo.AddressInfo.Value);
+    }
 }
