@@ -2812,8 +2812,8 @@ dotnet_diagnostic.RCS1213.severity = none
 # # S1006: Method overrides should not change parameter defaults
 # dotnet_diagnostic.S1006.severity = warning
 
-# # S101: Types should be named in PascalCase
-# dotnet_diagnostic.S101.severity = warning
+# S101: Types should be named in PascalCase
+dotnet_diagnostic.S101.severity = none
 
 # # S103: Lines should not be too long
 # dotnet_diagnostic.S103.severity = suggestion
