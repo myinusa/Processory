@@ -8,9 +8,9 @@ namespace Processory.Internal {
     /// <summary>
     /// Provides functionality to read memory from a process.
     /// </summary>
-    public class MemoryReader(ProcessoryClient processoryClient, ILoggerFactory loggerFactory) {
+    public class MemoryReader(ProcessoryClient processoryClient) {
         private readonly ProcessoryClient processoryClient = processoryClient ?? throw new ArgumentNullException(nameof(processoryClient));
-        private readonly ILogger logger = loggerFactory.CreateLogger<MemoryReader>();
+        // private readonly ILogger logger = loggerFactory.CreateLogger<MemoryReader>();
 
         /// <summary>
         /// Reads a specified number of bytes from the process memory at the given address.

@@ -38,7 +38,7 @@ namespace Processory {
             ProcessService = new ProcessService(this, effectiveLoggerFactory);
             CSVDataOffsetManager = new CSVDataOffsetManager(effectiveLoggerFactory, nameOfCSV, csvPath);
             InterfaceManager = new InterfaceManager(this, effectiveLoggerFactory);
-            MemoryReader = new MemoryReader(this, effectiveLoggerFactory);
+            MemoryReader = new MemoryReader(this);
             KeyValueReader = new KeyValueReader(this, effectiveLoggerFactory);
             MemoryStringReader = new MemoryStringReader(this, effectiveLoggerFactory);
             ProcessHandle = ProcessService.GetProcessHandle();

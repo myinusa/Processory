@@ -1,38 +1,44 @@
+using Processory.Pointers;
+
 namespace Processory.Internal;
 
 /// <summary>
 /// Factory class for creating memory address objects and managing memory addresses.
 /// </summary>
 public class MemoryAddressFactory(ProcessoryClient processoryClient) {
-    /// <summary>
-    /// Reads a value of type T from a specified memory address.
-    /// </summary>
-    /// <typeparam name="T">The type of the value to read. Must be an unmanaged type.</typeparam>
-    /// <param name="address">The memory address to read from.</param>
-    /// <returns>A MemoryAddress object containing the address and the read value.</returns>
-    public MemoryAddress<T> Read<T>(ulong address)
-        where T : unmanaged {
-        var value = processoryClient.MemoryReader.Read<T>(address);
-        return new MemoryAddress<T>(address, value);
+    private readonly RunTimeTypeInformation runTimeTypeInformation = new(processoryClient);
+    private readonly MemoryPointer memoryPointer = new(processoryClient);
+    private readonly MemoryReader memoryReader = new(processoryClient);
+
+    public MemoryAddress<T> ReadMemoryLocation<T>(ulong memoryAddress)
+    where T : unmanaged {
+        return new MemoryAddress<T>(memoryAddress, memoryReader.Read<T>(memoryAddress));
     }
 
-    /// <summary>
-    /// Reads an address and its pointer value from a specified memory address.
-    /// </summary>
-    /// <typeparam name="TAddress">The type of the address to read. Must be an unmanaged type.</typeparam>
-    /// <typeparam name="TPointer">The type of the pointer value to read. Must be an unmanaged type.</typeparam>
-    /// <param name="address">The memory address to read from.</param>
-    /// <returns>An AddressManager object containing both the address and pointer information.</returns>
-    public AddressManager<TAddress, TPointer> Read<TAddress, TPointer>(ulong address)
+    private MemoryAddress<TPointer> GetPointerValue<TPointer>(ulong address)
+        where TPointer : unmanaged {
+        var pointerAddress = memoryPointer.Dereference(address);
+        var pointerValue = memoryReader.Read<TPointer>(pointerAddress);
+        return new MemoryAddress<TPointer>(pointerAddress, pointerValue);
+    }
+
+    public PointerInfo<TAddress, TPointer> Read<TAddress, TPointer>(ulong address)
         where TAddress : unmanaged
         where TPointer : unmanaged {
-        var addressInfo = Read<TAddress>(address);
+        var location = ReadMemoryLocation<TAddress>(address);
+        var pointerInfo = GetPointerValue<TPointer>(address);
 
-        var pointerAddress = processoryClient.MemoryPointer.Dereference(address);
-        var pointerValue = processoryClient.MemoryReader.Read<TPointer>(pointerAddress);
+        return new PointerInfo<TAddress, TPointer>(location, pointerInfo);
+    }
 
-        var pointerInfo = new MemoryAddress<TPointer>(pointerAddress, pointerValue);
+    public AddressManagerWithRTTI<TAddress, TPointer> ReadWithRTTI<TAddress, TPointer>(ulong address)
+        where TAddress : unmanaged
+        where TPointer : unmanaged {
+        var location = ReadMemoryLocation<TAddress>(address);
+        var pointerInfo = GetPointerValue<TPointer>(address);
 
-        return new AddressManager<TAddress, TPointer>(addressInfo, pointerInfo);
+        var rttiClassName = runTimeTypeInformation.GetRTTIClassName(address);
+
+        return new AddressManagerWithRTTI<TAddress, TPointer>(location, pointerInfo, rttiClassName);
     }
 }
