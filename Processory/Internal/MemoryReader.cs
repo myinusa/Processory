@@ -106,7 +106,7 @@ namespace Processory.Internal {
 
         public nuint ReadPointerCE(ulong address) {
             var addr1 = Read<nuint>(address);
-            return processoryClient.MemoryPointer.DereferencePointer(addr1);
+            return processoryClient.MemoryPointer.Dereference(addr1);
         }
 
         public nint ReadPointer(nint address) {

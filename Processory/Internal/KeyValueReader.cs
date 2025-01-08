@@ -44,7 +44,7 @@ public class KeyValueReader(ProcessoryClient processoryClient, ILoggerFactory lo
         where T : unmanaged {
         var parentAddress = Services.AddressService.GetAbsoluteAddress(foundRow.Parent);
         // logger.LogDebug("Parent | Key: {Name} | address {Parent:X}", foundRow.Parent, parentAddress);
-        var deferAddress = processoryClient.MemoryPointer.DereferencePointer(parentAddress);
+        var deferAddress = processoryClient.MemoryPointer.Dereference(parentAddress);
 
         var resolvedAddress = processoryClient.MemoryPointer.FollowPointerChain(deferAddress, foundRow.Offsets);
         // logger.LogDebug("Resolved | {Name} | address {Resolved:X}", foundRow.Name, resolvedAddress);
@@ -53,7 +53,7 @@ public class KeyValueReader(ProcessoryClient processoryClient, ILoggerFactory lo
 
     private nuint ResolveRowWithParent(Row foundRow) {
         var parentAddress = Services.AddressService.GetAbsoluteAddress(foundRow.Parent);
-        var deferAddress = processoryClient.MemoryPointer.DereferencePointer(parentAddress);
+        var deferAddress = processoryClient.MemoryPointer.Dereference(parentAddress);
         return processoryClient.MemoryPointer.FollowPointerChain(deferAddress, foundRow.Offsets);
     }
 

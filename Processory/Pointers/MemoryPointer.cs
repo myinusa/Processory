@@ -14,15 +14,11 @@ public class MemoryPointer(ProcessoryClient processoryClient) {
     /// ulong offset = 0x10;
     /// ulong combinedAddress = baseAddress + offset;
     ///
-    /// UIntPtr pointerAddress = memoryReader.DereferencePointer(combinedAddress);
+    /// UIntPtr pointerAddress = memoryReader.Dereference(combinedAddress);
     /// </code>
-    /// In this example, `DereferencePointer` reads the pointer value at the combined address (base address plus offset)
+    /// In this example, `Dereference` reads the pointer value at the combined address (base address plus offset)
     /// and returns the actual address that the pointer points to.
     /// </example>
-    public UIntPtr DereferencePointer(ulong address) {
-        return new UIntPtr((uint)processoryClient.MemoryReader.ReadPointer((nint)address));
-    }
-
     public UIntPtr Dereference(ulong address) {
         return new UIntPtr((uint)processoryClient.MemoryReader.ReadPointer((nint)address));
     }

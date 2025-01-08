@@ -87,7 +87,7 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
         var addr1 = MemoryReader.ReadNo<nuint>(addr);
 
         // var offsets = new List<int> { 0x0 };
-        var result = processoryClient.MemoryPointer.DereferencePointer(addr1);
+        var result = processoryClient.MemoryPointer.Dereference(addr1);
 
         testOutputHelper.WriteLine("Read int with pointer chain: {0}", result);
 
@@ -140,7 +140,7 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
 
 
         // var addressInfoCE = MemoryReader.ReadPointerCE(address);
-        var pointerAddress = processoryClient.MemoryPointer.DereferencePointer(address);
+        var pointerAddress = processoryClient.MemoryPointer.Dereference(address);
         var pointerValue = MemoryReader.Read<int>(pointerAddress);
 
         testOutputHelper.WriteLine("=======================");

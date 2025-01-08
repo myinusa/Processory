@@ -56,7 +56,7 @@ public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactor
 
     public string GetStringChain(UIntPtr initialAddress, List<int> offsets) {
         // Follow the pointer chain to get the final address of the string
-        // UIntPtr address = processoryClient.MemoryPointer.DereferencePointer(initialAddress);
+        // UIntPtr address = processoryClient.MemoryPointer.Dereference(initialAddress);
         UIntPtr address = initialAddress;
         // UIntPtr address = processoryClient.MemoryReader.ReadNo<UIntPtr>(initialAddress);
         logger.LogDebug("Resolved address: {Address:X}", address);
