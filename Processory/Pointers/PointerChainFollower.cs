@@ -1,8 +1,6 @@
 namespace Processory.Pointers;
 
 public class PointerChainFollower(ProcessoryClient processoryClient) {
-    private readonly ProcessoryClient processoryClient = processoryClient;
-
     /// <summary>
     /// Reads a pointer value from the specified address and returns it as a <see cref="UIntPtr"/>.
     /// This method is useful for dereferencing an address that hasn't been read as a pointer yet.
@@ -22,6 +20,10 @@ public class PointerChainFollower(ProcessoryClient processoryClient) {
     /// and returns the actual address that the pointer points to.
     /// </example>
     public UIntPtr DereferencePointer(ulong address) {
+        return new UIntPtr((uint)processoryClient.MemoryReader.ReadPointer((nint)address));
+    }
+
+    public UIntPtr Dereference(ulong address) {
         return new UIntPtr((uint)processoryClient.MemoryReader.ReadPointer((nint)address));
     }
 
