@@ -98,10 +98,10 @@ namespace Processory.Internal {
             return MethodsNative.ReadProcessMemory(processoryClient.ProcessHandle, location, (nuint)buffer, numBytes, out _);
         }
 
-        public AddressInfo<T> ReadAddressInfo<T>(ulong address)
+        public MemoryAddress<T> ReadAddressInfo<T>(ulong address)
             where T : unmanaged {
             var value = Read<T>(address);
-            return new AddressInfo<T>(address, value);
+            return new MemoryAddress<T>(address, value);
         }
 
         public nuint ReadPointerCE(ulong address) {
