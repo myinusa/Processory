@@ -5,10 +5,10 @@
         }
     ],
     "settings": {
-        "dotnet.defaultSolution": "Processory.sln",
+        // "dotnet.defaultSolution": "Processory.sln",
         "workbench.colorCustomizations": {
-            "dotnetAcquisitionExtension.enableTelemetry": true,
-            "dotnet.backgroundAnalysis.analyzerDiagnosticsScope": "openFiles",
+            // "dotnetAcquisitionExtension.enableTelemetry": true,
+            // "dotnet.backgroundAnalysis.analyzerDiagnosticsScope": "openFiles",
             "cSpell.words": [
                 "appsettings"
             ],

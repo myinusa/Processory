@@ -136,7 +136,7 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
 
         // Act
         // var addressInfo = MemoryReader.ReadAddressInfo<int>(address);
-        var addressInfo = processoryClient.AddressInfoFactory.ReadAddressInfo<int>(address);
+        var addressInfo = processoryClient.MemoryAddressFactory.ReadAddress<int>(address);
 
 
         // var addressInfoCE = MemoryReader.ReadPointerCE(address);
@@ -162,19 +162,19 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
         const ulong address = BaseAddress + GameExceptionHandlerOffset;
 
         // var addressPointerInfo = MemoryReader.ReadAddressPointer<int, int>(address);
-        var addressPointerInfo = processoryClient.AddressInfoFactory.ReadAddressPointer<int, int>(address);
+        var addressPointerInfo = processoryClient.MemoryAddressFactory.Read<int, int>(address);
 
 
         testOutputHelper.WriteLine("=======================");
-        testOutputHelper.WriteLine("Address: {0:X8}", addressPointerInfo.AddressInfo.Address);
-        testOutputHelper.WriteLine("Value: {0}", addressPointerInfo.AddressInfo.Value);
+        testOutputHelper.WriteLine("Address: {0:X8}", addressPointerInfo.Address.Address);
+        testOutputHelper.WriteLine("Value: {0}", addressPointerInfo.Address.Value);
         testOutputHelper.WriteLine("=======================");
 
-        testOutputHelper.WriteLine("P->Address: {0:X8}", addressPointerInfo.PointerInfo.Address);
-        testOutputHelper.WriteLine("P->Value: {0}", addressPointerInfo.PointerInfo.Value);
+        testOutputHelper.WriteLine("P->Address: {0:X8}", addressPointerInfo.Pointer.Address);
+        testOutputHelper.WriteLine("P->Value: {0}", addressPointerInfo.Pointer.Value);
         testOutputHelper.WriteLine("=======================");
 
-        Assert.Equal(address, addressPointerInfo.AddressInfo.Address);
-        Assert.NotEqual(default, addressPointerInfo.AddressInfo.Value);
+        Assert.Equal(address, addressPointerInfo.Address.Address);
+        Assert.NotEqual(default, addressPointerInfo.Address.Value);
     }
 }
