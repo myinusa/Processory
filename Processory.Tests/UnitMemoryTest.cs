@@ -136,7 +136,7 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
 
         // Act
         // var addressInfo = MemoryReader.ReadAddressInfo<int>(address);
-        var addressInfo = processoryClient.MemoryAddressFactory.ReadAddress<int>(address);
+        var addressInfo = processoryClient.MemoryAddressFactory.Read<int>(address);
 
 
         // var addressInfoCE = MemoryReader.ReadPointerCE(address);
