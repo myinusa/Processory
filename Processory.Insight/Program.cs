@@ -21,18 +21,18 @@ public class Program {
         }
 
         var addr1 = BaseAddress + GameExceptionHandlerOffset;
-        nuint defrOneAdd = processory.PointerChainFollower.DereferencePointer(addr1);
+        nuint defrOneAdd = processory.MemoryPointer.DereferencePointer(addr1);
 
-        // var breakpad_exception = processory.PointerChainFollower.ResolvePointerChain(defrOneAdd, new List<int> { 0x10, 0x28, 0x8, 0x4 });
+        // var breakpad_exception = processory.MemoryPointer.ResolvePointerChain(defrOneAdd, new List<int> { 0x10, 0x28, 0x8, 0x4 });
         var breakpad_exception = processory.MemoryStringReader.ResolveStringPointerList(defrOneAdd, [0x10, 0x28, 0x8, 0x4]);
 
         // Console.WriteLine("breakpad_exception: {0:X8}", breakpad_exception);
 
         var screenClient = (ulong)(baseAddress + 0x4C7FF08);
-        var deferAdd = processory.PointerChainFollower.DereferencePointer(screenClient);
+        var deferAdd = processory.MemoryPointer.DereferencePointer(screenClient);
         var screenClientValue = processory.MemoryReader.Read<uint>(deferAdd);
 
-        var gameInfoAddress = processory.PointerChainFollower.ResolvePointerChain(defrOneAdd, new List<int> { 0x20, 0x4 });
+        var gameInfoAddress = processory.MemoryPointer.ResolvePointerChain(defrOneAdd, new List<int> { 0x20, 0x4 });
         // var gameInfoValue = processory.MemoryReader.ResolveStringPointer(defrOneAdd, new List<int> { 0x20, 0x4 });
         // var gameInfoValue = processory.MemoryReader.ResolveStringPointerList(defrOneAdd, new List<int> { 0x20, 0x4 });
         Console.WriteLine("-------------------------------------------------------------");

@@ -1,6 +1,6 @@
 namespace Processory.Pointers;
 
-public class PointerChainFollower(ProcessoryClient processoryClient) {
+public class MemoryPointer(ProcessoryClient processoryClient) {
     /// <summary>
     /// Reads a pointer value from the specified address and returns it as a <see cref="UIntPtr"/>.
     /// This method is useful for dereferencing an address that hasn't been read as a pointer yet.

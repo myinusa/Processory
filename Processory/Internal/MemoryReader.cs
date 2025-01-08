@@ -51,13 +51,13 @@ namespace Processory.Internal {
         /// <returns>The value read from the memory after following the chain of pointers.</returns>
         public T Read<T>(ulong baseAddress, List<int> offsets)
             where T : unmanaged {
-            nuint address = processoryClient.PointerChainFollower.FollowPointerChain(baseAddress, offsets);
+            nuint address = processoryClient.MemoryPointer.FollowPointerChain(baseAddress, offsets);
             return Read<T>(address);
         }
 
         public T ReadNo<T>(ulong baseAddress)
             where T : unmanaged {
-            // nuint address = processoryClient.PointerChainFollower.FollowPointerChain(baseAddress, offsets);
+            // nuint address = processoryClient.MemoryPointer.FollowPointerChain(baseAddress, offsets);
             return Read<T>(baseAddress);
         }
 
@@ -106,7 +106,7 @@ namespace Processory.Internal {
 
         public nuint ReadPointerCE(ulong address) {
             var addr1 = Read<nuint>(address);
-            return processoryClient.PointerChainFollower.DereferencePointer(addr1);
+            return processoryClient.MemoryPointer.DereferencePointer(addr1);
         }
 
         public nint ReadPointer(nint address) {
@@ -159,7 +159,7 @@ namespace Processory.Internal {
         public T ReadUnsignedFileOffset<T>(UIntPtr address, string key)
             where T : unmanaged {
             Row foundRow = CSVDataOffsetManager.GetRowByStringName(key);
-            UIntPtr addressChain = processoryClient.PointerChainFollower.FollowPointerChain(address.ToUInt64(), foundRow.Offsets);
+            UIntPtr addressChain = processoryClient.MemoryPointer.FollowPointerChain(address.ToUInt64(), foundRow.Offsets);
             return processoryClient.MemoryReader.Read<T>(addressChain);
         }
     }

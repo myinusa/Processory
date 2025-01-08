@@ -32,7 +32,7 @@ public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactor
     /// <returns>The string read from the memory.</returns>
     public string GetStringFromPointerChain(UIntPtr initialAddress, List<int> offsets) {
         // Follow the pointer chain to get the final address of the string
-        UIntPtr address = processoryClient.PointerChainFollower.FollowPointerChain(initialAddress, offsets);
+        UIntPtr address = processoryClient.MemoryPointer.FollowPointerChain(initialAddress, offsets);
         // logger.LogDebug("Resolved address: {Address:X}", address);
 
         // Create a new list of offsets by cloning the original list
@@ -56,7 +56,7 @@ public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactor
 
     public string GetStringChain(UIntPtr initialAddress, List<int> offsets) {
         // Follow the pointer chain to get the final address of the string
-        // UIntPtr address = processoryClient.PointerChainFollower.DereferencePointer(initialAddress);
+        // UIntPtr address = processoryClient.MemoryPointer.DereferencePointer(initialAddress);
         UIntPtr address = initialAddress;
         // UIntPtr address = processoryClient.MemoryReader.ReadNo<UIntPtr>(initialAddress);
         logger.LogDebug("Resolved address: {Address:X}", address);
@@ -82,7 +82,7 @@ public class MemoryStringReader(ProcessoryClient processoryClient, ILoggerFactor
     }
 
     public List<string> ResolveStringPointerList(nuint initialAddress, List<int> offsets) {
-        nuint address = processoryClient.PointerChainFollower.FollowPointerChain(initialAddress, offsets);
+        nuint address = processoryClient.MemoryPointer.FollowPointerChain(initialAddress, offsets);
         List<int> list = new List<int>(offsets);
         list[list.Count - 1] = 0;
         Span<byte> span = stackalloc byte[processoryClient.MemoryReader.Read<int>(initialAddress, list)];

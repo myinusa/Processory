@@ -11,7 +11,7 @@ public class MemoryAddressFactory(ProcessoryClient processoryClient) {
         where TPointer : unmanaged {
         var addressInfo = ReadAddress<TAddress>(address);
 
-        var pointerAddress = processoryClient.PointerChainFollower.Dereference(address);
+        var pointerAddress = processoryClient.MemoryPointer.Dereference(address);
         var pointerValue = processoryClient.MemoryReader.Read<TPointer>(pointerAddress);
 
         var pointerInfo = new MemoryAddress<TPointer>(pointerAddress, pointerValue);

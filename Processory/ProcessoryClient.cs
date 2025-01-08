@@ -19,7 +19,7 @@ namespace Processory {
         public CSVDataOffsetManager CSVDataOffsetManager { get; }
         public string ProcessName { get; }
         public nint ProcessHandle { get; }
-        public PointerChainFollower PointerChainFollower => GetService<PointerChainFollower>();
+        public MemoryPointer MemoryPointer => GetService<MemoryPointer>();
         public MemoryAddressFactory MemoryAddressFactory => GetService<MemoryAddressFactory>();
         public RunTimeTypeInformation RunTimeTypeInformation => GetService<RunTimeTypeInformation>();
         public AddressHelper AddressHelper => GetService<AddressHelper>();
@@ -56,7 +56,7 @@ namespace Processory {
             }
 
             return typeof(T) switch {
-                var t when t == typeof(PointerChainFollower) => new PointerChainFollower(this) as T,
+                var t when t == typeof(MemoryPointer) => new MemoryPointer(this) as T,
                 var t when t == typeof(MemoryAddressFactory) => new MemoryAddressFactory(this) as T,
                 var t when t == typeof(RunTimeTypeInformation) => new RunTimeTypeInformation(this) as T,
                 var t when t == typeof(AddressHelper) => new AddressHelper(this) as T,
