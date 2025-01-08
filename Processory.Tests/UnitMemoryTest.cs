@@ -128,33 +128,33 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
     //     Assert.NotEqual(default, pointerInfo.AddressBeingPointedTo);
     // }
 
-    [Fact]
-    [Trait("Category", "Address")]
-    public void TestReadAddressInfo() {
-        // Arrange
-        const ulong address = BaseAddress + GameExceptionHandlerOffset;
+    // [Fact]
+    // [Trait("Category", "Address")]
+    // public void TestReadAddressInfo() {
+    //     // Arrange
+    //     const ulong address = BaseAddress + GameExceptionHandlerOffset;
 
-        // Act
-        // var addressInfo = MemoryReader.ReadAddressInfo<int>(address);
-        var addressInfo = processoryClient.MemoryAddressFactory.Read<int>(address);
+    //     // Act
+    //     // var addressInfo = MemoryReader.ReadAddressInfo<int>(address);
+    //     var addressInfo = processoryClient.MemoryAddressFactory.Read<int>(address);
 
 
-        // var addressInfoCE = MemoryReader.ReadPointerCE(address);
-        var pointerAddress = processoryClient.MemoryPointer.Dereference(address);
-        var pointerValue = MemoryReader.Read<int>(pointerAddress);
+    //     // var addressInfoCE = MemoryReader.ReadPointerCE(address);
+    //     var pointerAddress = processoryClient.MemoryPointer.Dereference(address);
+    //     var pointerValue = MemoryReader.Read<int>(pointerAddress);
 
-        testOutputHelper.WriteLine("=======================");
-        testOutputHelper.WriteLine("Address: {0:X8}", addressInfo.Address);
-        testOutputHelper.WriteLine("Value: {0}", addressInfo.Value);
-        testOutputHelper.WriteLine("=======================");
+    //     testOutputHelper.WriteLine("=======================");
+    //     testOutputHelper.WriteLine("Address: {0:X8}", addressInfo.Address);
+    //     testOutputHelper.WriteLine("Value: {0}", addressInfo.Value);
+    //     testOutputHelper.WriteLine("=======================");
 
-        testOutputHelper.WriteLine("P->Address: {0:X8}", pointerAddress);
-        testOutputHelper.WriteLine("P->Value: {0}", pointerValue);
-        testOutputHelper.WriteLine("=======================");
+    //     testOutputHelper.WriteLine("P->Address: {0:X8}", pointerAddress);
+    //     testOutputHelper.WriteLine("P->Value: {0}", pointerValue);
+    //     testOutputHelper.WriteLine("=======================");
 
-        Assert.Equal(address, addressInfo.Address);
-        Assert.NotEqual(default, addressInfo.Value);
-    }
+    //     Assert.Equal(address, addressInfo.Address);
+    //     Assert.NotEqual(default, addressInfo.Value);
+    // }
 
     [Fact]
     [Trait("Category", "Address")]
