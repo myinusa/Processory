@@ -15,7 +15,7 @@ public class MemoryAddressFactory(ProcessoryClient processoryClient) {
         return new MemoryAddress<T>(memoryAddress, memoryReader.Read<T>(memoryAddress));
     }
 
-    private MemoryAddress<TPointer> GetPointerValue<TPointer>(ulong address)
+    private MemoryAddress<TPointer> DereferencePointer<TPointer>(ulong address)
         where TPointer : unmanaged {
         var pointerAddress = memoryPointer.Dereference(address);
         var pointerValue = memoryReader.Read<TPointer>(pointerAddress);
@@ -26,7 +26,7 @@ public class MemoryAddressFactory(ProcessoryClient processoryClient) {
         where TAddress : unmanaged
         where TPointer : unmanaged {
         var location = ReadMemoryLocation<TAddress>(address);
-        var pointerInfo = GetPointerValue<TPointer>(address);
+        var pointerInfo = DereferencePointer<TPointer>(address);
 
         return new PointerInfo<TAddress, TPointer>(location, pointerInfo);
     }
@@ -35,7 +35,7 @@ public class MemoryAddressFactory(ProcessoryClient processoryClient) {
         where TAddress : unmanaged
         where TPointer : unmanaged {
         var location = ReadMemoryLocation<TAddress>(address);
-        var pointerInfo = GetPointerValue<TPointer>(address);
+        var pointerInfo = DereferencePointer<TPointer>(address);
 
         var rttiClassName = runTimeTypeInformation.GetRTTIClassName(address);
 
