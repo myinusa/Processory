@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.25.0](https://github.com/myinusa/Processory/compare/v1.24.0...v1.25.0) (2025-01-14)
+
+
+### Features
+
+* **Processory/Internal/MemoryAddress.cs:** Added `PointerInfo` class and `AddressManagerWithRTTI` ([19d00f0](https://github.com/myinusa/Processory/commit/19d00f06dd6b4b05c9378e56385029d466dcd75c))
+* **Processory/Internal/MemoryAddress.cs:** introduce new classes `MemoryAddress&lt;T&gt;` and `AddressManager<TAddress, TPointer>` ([3e7e8e7](https://github.com/myinusa/Processory/commit/3e7e8e7f9f07137a3ab79626a5231af367b98b98))
+* **Processory/Internal/MemoryAddressFactory.cs:** add method `Read&lt;TAddress, TPointer&gt;` to return an `AddressManager` ([3e7e8e7](https://github.com/myinusa/Processory/commit/3e7e8e7f9f07137a3ab79626a5231af367b98b98))
+* **Processory/Internal/MemoryAddressFactory.cs:** Modified to use new classes for handling memory addresses with RTTI information ([19d00f0](https://github.com/myinusa/Processory/commit/19d00f06dd6b4b05c9378e56385029d466dcd75c))
+
+
+### Bug Fixes
+
+* **Processory.Insight:** Update memory dereferencing methods to use `Dereference` instead of `DereferencePointer` ([076e74e](https://github.com/myinusa/Processory/commit/076e74ee73b5322c1fd0b58888c189413384756e))
+* **Processory.Tests/UnitMemoryTest.cs:** Remove redundant line about reading addressInfoCE. ([71c1d4c](https://github.com/myinusa/Processory/commit/71c1d4c9db00e3c64d0a3144f2e987d0dcb94548))
+* **Processory.Tests/UnitMemoryTest.cs:** Update test methods to use processoryClient instead of MemoryReader. Removed old AddressInfoCE and replaced with Dereference method. Added more detailed logging in tests. ([598fadf](https://github.com/myinusa/Processory/commit/598fadfcc70d4c6d60ec69b49bc185562e18168e))
+
 ## [1.24.0](https://github.com/myinusa/Processory/compare/v1.23.0...v1.24.0) (2025-01-05)
 
 
