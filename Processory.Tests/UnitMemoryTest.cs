@@ -26,7 +26,7 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
     // }
 
 
-    [Fact]
+    [Fact(Skip = "Requires a running Football Manager process.")]
     public void TestProcessIsValid() {
         const ulong validAddress = BaseAddress + GameExceptionHandlerOffset;
 
@@ -38,7 +38,7 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
         Assert.True(isValid, "The address should be valid.");
     }
 
-    [Fact]
+    [Fact(Skip = "Requires a running Football Manager process.")]
     public void TestReadMemory() {
 
         const ulong addr1 = BaseAddress + GameExceptionHandlerOffset;
@@ -66,7 +66,7 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
     //     Assert.NotEqual(default, result);
     // }
 
-    [Fact]
+    [Fact(Skip = "Requires a running Football Manager process.")]
     [Trait("Category", "Pointer")]
     public void ResolvePointerChain() {
         var addr = ModuleBaseAddress + GameExceptionHandlerOffset;
@@ -80,7 +80,7 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
         Assert.NotEqual(default, result);
     }
 
-    [Fact]
+    [Fact(Skip = "Requires a running Football Manager process.")]
     [Trait("Category", "Pointer")]
     public void DeferencePointer() {
         var addr = ModuleBaseAddress + GameExceptionHandlerOffset;
@@ -94,7 +94,7 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
         Assert.NotEqual(default, result);
     }
 
-    [Fact]
+    [Fact(Skip = "Requires a running Football Manager process.")]
     [Trait("Category", "Pointer")]
     public void ReadPointerCE() {
         var addr1 = ModuleBaseAddress + GameExceptionHandlerOffset;
@@ -156,7 +156,7 @@ public class MemoryReaderTests(ITestOutputHelper testOutputHelper) {
     //     Assert.NotEqual(default, addressInfo.Value);
     // }
 
-    [Fact]
+    [Fact(Skip = "Requires a running Football Manager process.")]
     [Trait("Category", "Address")]
     public void ReadAddressPointerInfo() {
         const ulong address = BaseAddress + GameExceptionHandlerOffset;

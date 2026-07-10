@@ -12,7 +12,7 @@ public class InterfaceManagerTests {
     // private readonly InterfaceManager _interfaceManager;
     private readonly ProcessoryClient processoryClient = new("fm", new LoggerFactory());
     
-    [Fact]
+    [Fact(Skip = "Requires a running Football Manager process.")]
     public void Run_ShouldLogDebugMessages_WhenMouseMovedSuccessfully() {
         // Arrange
         var windowName = "TestWindow";
